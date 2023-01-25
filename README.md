@@ -1,5 +1,15 @@
-# SpaceTeam
-SOEN 341 Project, Space Team
+# SOEN 341
 
-Example 1
-usmanwkwnjf
+## Objective
+
+
+## Project
+
+
+
+
+## Team Members
+*
+* 
+
+## Technologies
