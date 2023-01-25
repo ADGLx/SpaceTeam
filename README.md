@@ -1,7 +1,7 @@
 # SOEN 341
 
 ## 🎯 Objective
-The scope of this project is to establish a simplified version of a job application website which will allow the users of the website to browse and apply for avaliable job vacancies.In addition to that, the features of the website will allow the users to receive interview requests, receive acceptance or rejection decisions and the possibility to edit the job advertisement in real time. These objectives can only be acquired with the assistance of certain technologies that are avaliable online.
+The scope of this project is to establish a simplified version of a job application website which will allow the users to browse and apply for various avaliable job vacancies.In addition to that, the users shall be able to receive interview requests, receive acceptance or rejection decisions from the employee and the possibility to edit the job advertisement in real time. These objectives can only be acquired with the assistance of certain technologies that will be utilized to establish the website. 
 ## Project
 
 
