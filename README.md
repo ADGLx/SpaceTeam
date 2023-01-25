@@ -9,7 +9,7 @@ The main objective of this project is to establish a simplified version of a job
 
 ## Team Members
 *Saravan Thungavelu
-*
+*Tharushi Rathnayaka
 
 ## Technologies
 
