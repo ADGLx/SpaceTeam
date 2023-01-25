@@ -47,7 +47,7 @@ The scope of this project is to establish a simplified version of a job applicat
 </table>
 
 ## Technologies
-# REACT
-# Node.js
-# Express
+* REACT
+* Node.js
+* Express
 
