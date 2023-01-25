@@ -5,7 +5,6 @@ The scope of this project is to establish a simplified version of a job applicat
 ## :blue_book: Project
 
 
-
 ## :busts_in_silhouette:Team Members
 <table>
   <tr>
