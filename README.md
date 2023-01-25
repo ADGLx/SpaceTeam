@@ -1,7 +1,7 @@
 # SOEN 341
 
-## Objective
-The main objective of this project is to establish a simplified version of a job application which will allow the users of the website to browse and apply for avaliable job vacancies.
+## 🎯 Objective
+The scope of this project is to establish a simplified version of a job application website which will allow the users of the website to browse and apply for avaliable job vacancies.In addition to that, the features of the website will allow the users to receive interview requests, receive acceptance or rejection decisions and the possibility to edit the job advertisement in real time. These objectives can only be acquired with the assistance of certain technologies that are avaliable online.
 ## Project
 
 
@@ -36,7 +36,7 @@ The main objective of this project is to establish a simplified version of a job
   <tr>
     <td>Krupesh Patel</td>
     <td>40175794</td>
-    <td><a href="https://github.com/Saravan00" target="_blank">github.com/Saravan00</a></td>
+    <td><a href="https://github.com/Krupesh2001" target="_blank">github.com/Krupesh2001</a></td>
   </tr>
   <tr>
     <td>Dimitri Karagiannakis</td>
