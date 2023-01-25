@@ -9,9 +9,9 @@ The main objective of this project is to establish a simplified version of a job
 ## :busts_in_silhouette:Team Members
 <table>
   <tr>
-    <th>Name</th>
-    <th>Student ID</th>
-    <th>GitHub Username</th>
+    <th>Team Member</th>
+    <th>Student Identification Number</th>
+    <th>GitHub Account</th>
   </tr>
   <tr>
     <td>Alvaro David Gonzalez Lopez (Leader)</td>
@@ -45,9 +45,6 @@ The main objective of this project is to establish a simplified version of a job
   </tr>
   <tr>
 </table>
-*Saravan Thungavelu
-*Tharushi Rathnayaka
-Muhammad Usman
 
 ## Technologies
 
