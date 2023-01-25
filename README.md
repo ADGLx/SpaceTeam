@@ -1,3 +1,16 @@
-# SpaceTeam
-SOEN 341 Project, Space Team
+# SOEN 341
+
+## Objective
+
+
+## Project
+
+
+
+
+## Team Members
+*
+*
+
+## Technologies
 
