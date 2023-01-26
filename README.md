@@ -7,6 +7,12 @@ The search for a job can be a daunting task for a student looking for an interns
 
 Finally, to ensure a safe and friendly user experience, there will be moderators that can be flagged when an issue has occurred. The moderators can temporarily remove things like false applications or job postings and gain access to the accounts associated with the misconduct. After reviewing them, the moderator can send a request to the admin to take appropriate action. The admin can remove any false postings and ban any user that breaks the application guidelines. This ensures that both students and employers can have a safe and easy-to-use platform.
 
+## Core Features
+* Applying for jobs
+* Browsing job applicants
+* Selecting candidates for interviews
+
+
 ## :busts_in_silhouette:Team Members
 <table>
   <tr>
