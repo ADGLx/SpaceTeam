@@ -64,4 +64,5 @@ Finally, to ensure a safe and friendly user experience, there will be moderators
 * REACT
 * Node.js
 * Express
+* JavaScript
 
