@@ -61,8 +61,19 @@ Finally, to ensure a safe and friendly user experience, there will be moderators
 </table>
 
 ## :computer: Technologies
-* REACT
-* Node.js
-* Express
-* JavaScript
+<div>
+    <img src="https://user-images.githubusercontent.com/60637956/215360434-d2ad462a-0183-42d5-8c0b-c6ebfe3eb80d.png" width= "200" height="100" alt="REACT">
+  </div>
+  <div>
+    <img src="https://user-images.githubusercontent.com/60637956/215360432-3bedb49b-873d-4b09-a6a4-f4521a3ce07f.png" width= "200" height="100" alt="Node JS">
+</div>
+<div>
+    <img src="https://user-images.githubusercontent.com/60637956/215360429-a3c58e28-b1c2-485f-9351-26c6919870b4.jpg" width= "200" height="100" alt="Express">
+</div>
+<div>
+    <img src="https://user-images.githubusercontent.com/60637956/215360435-3dfbbb03-64b0-4633-985b-f364b6fe45dc.png" width= "200" height="100" alt="SQL">
+</div>
+<div>
+    <img src="https://user-images.githubusercontent.com/60637956/215360431-7b686c67-2974-4909-b645-57c4b17ade82.png" width= "200" height="100" alt="JavaScript">
+</div>
 
