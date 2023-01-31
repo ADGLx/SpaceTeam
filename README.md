@@ -25,37 +25,37 @@ Finally, to ensure a safe and friendly user experience, there will be moderators
     <td>Alvaro David Gonzalez Lopez (Leader)</td>
     <td>40153040</td>
     <td><a href="https://github.com/ADGLx" target="_blank">github.com/ADGLx</a></td>
-    <td> </td>
+    <td> Backend, Server Manager</td>
  </tr>
  <tr>
     <td>Muhammad Usman</td>
     <td>40176930</td>
     <td><a href="https://github.com/MuhammadUsman20002" target="_blank">github.com/MuhammadUsman20002</a></td>
-    <td> </td>
+    <td> Frontend </td>
  </tr>
   <tr>
     <td>Tharushi Rathnayaka</td>
     <td>40126072</td>
     <td><a href="https://github.com/TharushiRathnayaka" target="_blank">github.com/TharushiRathnayaka</a></td>
-    <td> </td>
+    <td> Frontend </td>
   </tr>
   <tr>
     <td>Saravan Thungavelu</td>
     <td>40151539</td>
     <td><a href="https://github.com/Saravan00" target="_blank">github.com/Saravan00</a></td>
-    <td> </td>
+    <td> Frontend </td>
   </tr>
   <tr>
     <td>Krupesh Patel</td>
     <td>40175794</td>
     <td><a href="https://github.com/Krupesh2001" target="_blank">github.com/Krupesh2001</a></td>
-    <td> </td>
+    <td> Backend </td>
   </tr>
   <tr>
     <td>Dimitri Karagiannakis</td>
     <td>40097824</td>
     <td><a href="https://github.com/DimitriKaragiannakis99" target="_blank">github.com/DimitriKaragiannakis99</a></td>
-    <td> </td>
+    <td> Backend,Database Manager </td>
   </tr>
   <tr>
 </table>
