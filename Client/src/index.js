@@ -24,14 +24,14 @@ const Routing = () => {
   return(
     <Routes>
       {/* Handle login here */}
-        <Route path="/" element={
+        <Route path="/profile" element={
           <ProtectedRoute> 
-            <Album/>
+           {/*  <Album/> */}
         </ProtectedRoute>
         } />
     
         <Route path="Sign-In" element={<SignInSide />} />
-
+        <Route path="/" element={<Album/>} />
         {/* <Route path="*" element={<NoMatch />} /> */}
       </Routes>
   )
