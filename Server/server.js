@@ -11,15 +11,6 @@ const mysql = require('mysql')
 
 app.use(express.json());//This is used to parse what comes 
 
-//This should always trigger
-// router.use('/user/:id', (req, res, next) => {
-//     console.log('Request URL:', req.originalUrl)
-//     next()
-//   }, (req, res, next) => {
-//     console.log('Request Type:', req.method)
-//     next()
-//   })
-
 //Connecting to the db
 var db = mysql.createConnection({
     host: 'localhost',
@@ -65,12 +56,6 @@ app.post('/login', function (req,res){
         }
     )
 
-})
-
-//This is to setReminders
-app.post('/setReminder', function (req, res) {
-
-    const userID = req.body.userID;
 })
 
 // Basically in here we have whatever random back end api we want 
