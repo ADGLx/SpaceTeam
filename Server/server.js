@@ -19,7 +19,7 @@ var db = mysql.createConnection({
     database: 'default'
 });
 
-db.connect();
+//db.connect(); Change so it runs without sql
 console.log("Connected to db!");
 
 
