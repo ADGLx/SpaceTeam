@@ -49,7 +49,7 @@ export default function Album() {
         <Toolbar>
           <CameraIcon sx={{ mr: 2 }} />
           <Typography variant="h6" color="inherit" noWrap>
-            hello
+            Concordia
           </Typography>
         </Toolbar>
       </AppBar>
