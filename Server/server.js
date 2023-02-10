@@ -12,14 +12,22 @@ const mysql = require('mysql')
 app.use(express.json());//This is used to parse what comes 
 
 //Connecting to the db
+// var db = mysql.createConnection({
+//     host: 'localhost',
+//     user: 'root',
+//     password: 'SQLPass1',
+//     database: 'default'
+// });
+
+//This connects to the remote db
 var db = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: 'admin',
+    host: '143.198.41.117',
+    user: 'admin',
+    password: 'SQLPass1.',
     database: 'default'
 });
 
-//db.connect(); Change so it runs without sql
+db.connect(); //Change so it runs without sql
 console.log("Connected to db!");
 
 
