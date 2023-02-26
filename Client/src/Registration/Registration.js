@@ -17,7 +17,8 @@ import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
-
+import Axios from "axios";
+import { useNavigate } from 'react-router-dom';
 
 function Copyright(props) {
   return (
@@ -35,6 +36,8 @@ function Copyright(props) {
 const theme = myTheme;
 
 export default function SignUp() {
+  const navigate = useNavigate();
+  
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -50,6 +53,33 @@ export default function SignUp() {
     setAge(event.target.value);
   };
 
+  const handleRegisterUser = (event) => 
+  {
+    event.preventDefault();
+
+    const data = new FormData(event.currentTarget);
+
+    const sentObj = {
+      username: data.get('Name'),
+      email: data.get('email'),
+      password: data.get('password'),
+      type: data.get('type')
+    }
+
+      Axios.post('/register', sentObj)
+      .then((response) => {
+          //Handle here the login automatically once the server replies with true
+          if(response.data)
+          {
+            //In here send the user to the login page back so they log in 
+            navigate('/Sign-In');
+
+          } else 
+          {
+            console.log("Something went wrong!");
+          }
+      })
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -69,27 +99,33 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+          <Box component="form" noValidate onSubmit={handleRegisterUser} sx={{ mt: 3 }}>
+          <Grid container spacing={2}>
+          <Grid item xs={12} >
+                <InputLabel id="demo-simple-select-label">Account Type</InputLabel>
+                <FormControl fullWidth>
+                  <Select
+                  labelId="demo-simple-select-label"
+                  id="type"
+                  name ="type"
+                  value={age}
+                  label="Account Type"
+                  onChange={handleChange}
+                  >
+                  <MenuItem value={"Job Seeker"}>Job Seeker</MenuItem>
+                  <MenuItem value={"Employer"}>Employer</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item xs={12}>
                 <TextField
                   autoComplete="given-name"
-                  name="firstName"
+                  name="Name"
                   required
                   fullWidth
-                  id="firstName"
-                  label="First Name"
+                  id="Name"
+                  label="Personal or Company Name"
                   autoFocus
-                />
-              </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
                 />
               </Grid>
               <Grid item xs={12}>
@@ -111,27 +147,6 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                />
-              </Grid>
-              <Grid item xs={12}>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
-              <FormControl fullWidth>
-                <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={age}
-                label="Age"
-                onChange={handleChange}
-                >
-                <MenuItem value={10}>Job Seeker</MenuItem>
-                <MenuItem value={20}>Employer</MenuItem>
-                </Select>
-      </FormControl>
-              </Grid>
-              <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
                 />
               </Grid>
             </Grid>
