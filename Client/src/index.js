@@ -5,6 +5,8 @@ import { ThemeProvider } from '@mui/material/styles';
 
 import Album from './Album';
 import theme from './theme';
+import EmployerDashboard from './EmployerDashboard/EmployerDashboard';
+import UserReports from './UserReports/UserReports';
 import SignInSide from './Sign-In/SignInSide';
 //Implementing the routing
 import {BrowserRouter} from "react-router-dom";
@@ -31,6 +33,9 @@ const Routing = () => {
         } />
     
         <Route path="Sign-In" element={<SignInSide />} />
+        <Route path="EmployerDashboard" element={<EmployerDashboard />} />
+        <Route path="UserReports" element={<UserReports />} />
+
         <Route path="/" element={<Album/>} />
         {/* <Route path="*" element={<NoMatch />} /> */}
       </Routes>
