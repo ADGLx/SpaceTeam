@@ -22,6 +22,9 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 
+import mytheme from '../theme';
+
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -81,8 +84,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const mdTheme = createTheme();
+//const mdTheme = createTheme();
 
+const mdTheme = mytheme;
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
