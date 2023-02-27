@@ -224,8 +224,8 @@ export default function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
+                  <Link href="/Sign-Up" variant="body2">
+                    Dont have an account? Register here
                   </Link>
                 </Grid>
                 <Grid item>
