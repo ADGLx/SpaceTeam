@@ -14,6 +14,7 @@ import {BrowserRouter} from "react-router-dom";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import ProtectedRoute from './util/ProtectedRoute';
+import PageBar from './JobListingsPage/PageBar';
 
 
 const rootElement = document.getElementById('root');
@@ -38,6 +39,8 @@ const Routing = () => {
         <Route path="EmployerDashboard" element={<EmployerDashboard />} />
         <Route path="UserReports" element={<UserReports />} />
         <Route path="/" element={<Album/>} />
+        <Route path="JobListingsPage" element={<PageBar />} />
+        
         {/* <Route path="*" element={<NoMatch />} /> */}
       </Routes>
   )
