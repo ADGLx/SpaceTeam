@@ -28,9 +28,10 @@ const Routing = () => {
   return(
     <Routes>
       {/* Handle login here */}
-        <Route path="/profile" element={
+        <Route path="/" element={
           <ProtectedRoute> 
            {/*  <Album/> */}
+           <PageBar />
         </ProtectedRoute>
         } />
     
@@ -38,8 +39,8 @@ const Routing = () => {
         <Route path="Sign-Up" element={<Registration />} />
         <Route path="EmployerDashboard" element={<EmployerDashboard />} />
         <Route path="UserReports" element={<UserReports />} />
-        <Route path="/" element={<Album/>} />
-        <Route path="JobListingsPage" element={<PageBar />} />
+        {/* <Route path="/" element={<Album/>} />
+        <Route path="JobListingsPage" element={<PageBar />} /> */}
         
         {/* <Route path="*" element={<NoMatch />} /> */}
       </Routes>
