@@ -19,6 +19,7 @@ app.use(express.json());//This is used to parse what comes
 //     database: 'default'
 // });
 
+
 //This connects to the remote db
 var db = mysql.createConnection({
     host: '143.198.41.117',
@@ -112,3 +113,71 @@ app.listen(PORT, function(err){
     console.log("Server listening on PORT", PORT);
  });
 //To run server just use "npm run dev"
+
+
+// Registering a job listing as an employer
+//Not sure if Krupesh will take over this ??
+app.post('/registerJob', function (req, res) {
+
+    //Collect information
+    const EmployerID = req.body.EmployerID; 
+    const JobID = req.body.JobID;
+
+    const CompanyName = req.body.CompanyName;
+    const Position = req.body.Position;
+    const PositionInfo = req.body.PositionInfo;
+    const Report = 0; // Every post begins with an okay status 
+
+    //Insert information into db
+    db.query(
+        "INSERT INTO JobListing(`ID`, `jobID`, `CompanyName`, `Position`, `PositionInfo`, `Report`) VALUES (?, ?, ?, ?, ?, ?);", 
+        [JobID, EmployerID, CompanyName, Position, PositionInfo, Report], function (error, results,fields) {
+            if(error){
+                console.log(error);
+                res.send(false);//An error occured
+            }
+            else {
+                console.log("A job was listed");
+                res.send(true);
+            }
+        }
+    );
+})
+
+    //Retrieve all job vacancies from job listing table
+    //Send all information received to frontend
+    app.post('/displayJobs', function(req, res) {
+
+        //collect EmployerID info
+        const EmployerID = req.body.EmployerID;
+
+        db.query(
+            "SELECT JobID, ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants WHERE EmployerID = ?",
+            [EmployerID], function (error, results, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    res.send(results);
+                }
+            }
+            );
+    })
+
+
+    //Receive List of job listings from db and send information to frontend
+    app.post('/jobApplicants', function(req,res){        
+        db.query(
+            "SELECT * FROM JobListing",
+            //"SELECT CompanyName, Position, PositionInfo, Report FROM JobListing",
+            function(error, result, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    console.log(result);
+                }
+            }
+        );
+
+    })
