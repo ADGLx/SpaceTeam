@@ -73,7 +73,7 @@ app.post('/login', function (req,res){
     const username= req.body.username;
     const password = req.body.password;
     db.query(
-        "SELECT * FROM users WHERE username = ? AND password = ?", 
+        "SELECT * FROM users WHERE email = ? AND password = ?", 
         [username, password], function (error, results,fields) {
             if(error){
                 console.log(error);

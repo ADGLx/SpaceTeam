@@ -130,10 +130,10 @@ export default function SignInSide() {
       required
       fullWidth
       id="username"
-      label="Username"
+      label="Email"
       name="username"
       autoFocus
-       helperText= {"Wrong username/password"}
+       helperText= {"Wrong email/password"}
     />
     <TextField
     error
@@ -153,7 +153,7 @@ export default function SignInSide() {
       required
       fullWidth
       id="username"
-      label="Username"
+      label="Email"
       name="username"
       autoFocus
       // helperText= {}
