@@ -66,6 +66,7 @@ useEffect(() => {
   handleApplicantList();
  },[])
 
+ 
 function handleApplicantList()
 {
     //Hard code to test job applications on employer dashboard
@@ -73,6 +74,7 @@ function handleApplicantList()
       EmployerID: 3
     }
       //Post changes to the server
+      //Access local storage and retrieve ID 
       Axios.post('/displayJobs', sentObj). //Figure out how to import user data!
       then(function (response) {
         var newData = []
