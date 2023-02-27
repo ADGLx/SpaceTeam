@@ -21,6 +21,10 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
+import myTheme from '../theme';
+import { useState,useEffect } from 'react';
+import Axios from 'axios';
+import { TableRow } from '@mui/material';
 
 function Copyright(props) {
   return (
@@ -81,10 +85,11 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
   }),
 );
 
-const mdTheme = createTheme();
+const mdTheme = myTheme;
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
+
   const toggleDrawer = () => {
     setOpen(!open);
   };

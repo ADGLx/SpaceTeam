@@ -100,11 +100,51 @@ app.post('/login', function (req,res){
 })
 
 // Basically in here we have whatever random back end api we want 
-app.get("/api", (req,res)=>{
-    res.json({
-        "users": ["obamo", "trolito", "juan"]
-    })
+
+//Basically get all user reports when logged in as a moderator
+app.get("/getUserReports",(req,res)=>
+{
+    db.query(
+        "SELECT * FROM JobListing WHERE Report = 1", 
+        [], function (error, results,fields) {
+            if(error){
+                console.log(error);
+            }
+           // console.log(results);
+            //Ger reminders here
+            if(results.length>0)
+            {
+                //Send all reminders here, but first 
+                res.send(JSON.stringify(results))
+            } else 
+            {
+                //send message with error
+                console.log("There are no reports to show");
+                res.send("error") //It sends an error
+            }
+    
+        })
+    
 })
+
+//Deleting a posting with a user report
+app.post("/deletePost", (req, res) => {
+    const id = req.body['PostID']; //only the id should be deleted
+
+    db.query(
+        "DELETE FROM JobListing WHERE JobID = ?", 
+        [id], function (error, results,fields) {
+            if(error){
+                console.log(error);
+                res.send(false);
+            }
+
+            res.send(true);
+    
+        })
+})
+
+
 
 // Listening to the port
 app.listen(PORT, function(err){
