@@ -30,6 +30,39 @@ var db = mysql.createConnection({
 db.connect(); //Change so it runs without sql
 console.log("Connected to db!");
 
+//This is to register
+app.post('/register', function (req, res) {
+
+    //Getting all the info
+    const username = req.body.username;
+    const email = req.body.email;
+    const password = req.body.password;
+    const type = req.body.type;
+
+
+   // console.log(date + " aaa"+ time);
+    // I should probably wrap this for errors or sum later
+    db.query(
+        "INSERT INTO users(`username`, `email`, `password`, `type`) VALUES (?, ?, ?, ?);", 
+        [username, email, password, type], function (error, results,fields) {
+            if(error){
+                console.log(error);
+                res.send(false);//An error occured
+              
+            }
+          //  console.log(results);
+
+          //Oh wait there is no result? Or is it
+          console.log("A user was registered: "+ email);
+        res.send(true);
+          //It is normal that the result is empty because it was inserted
+
+        }
+    )
+
+
+})
+
 
 //This is the login function
 app.post('/login', function (req,res){
