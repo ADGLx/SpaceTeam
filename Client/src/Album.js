@@ -17,8 +17,30 @@ import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import myTheme from "./theme";
 import { Routes, Route, Outlet } from "react-router-dom";
-
+import Rating from '@mui/material/Rating';
 //So this would be sort of like the landing page 
+ function BasicRating() {
+  const [value, setValue] = React.useState(2);
+  return (
+    <Box
+      sx={{
+        '& > legend': { mt: 2 },
+      }}
+    >
+      <Typography component="legend">Controlled</Typography>
+      <Rating
+        name="simple-controlled"
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
+      />
+    
+      <Typography component="legend">No rating given</Typography>
+      <Rating name="no-value" value={null} />
+    </Box>
+  );
+}
 
 function Copyright() {
   return (
@@ -47,7 +69,7 @@ export default function Album() {
       <CssBaseline />
       <AppBar position="relative">
         <Toolbar>
-          <CameraIcon sx={{ mr: 2 }} />
+          <CameraIcon sx={{ mr: 3 }} />
           <Typography variant="h6" color="inherit" noWrap>
             Concordia
           </Typography>
@@ -117,7 +139,9 @@ export default function Album() {
                   <CardActions>
                     <Button size="small">View</Button>
                     <Button size="small">Edit</Button>
+                    <Rating name="half-rating" defaultValue={2.5} precision={0.5} />
                   </CardActions>
+                  
                 </Card>
               </Grid>
             ))}

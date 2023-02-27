@@ -4,6 +4,7 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
 import Album from './Album';
+import Candidate_info from './Candidate_info';
 import theme from './theme';
 import SignInSide from './Sign-In/SignInSide';
 //Implementing the routing
@@ -32,6 +33,7 @@ const Routing = () => {
     
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="/" element={<Album/>} />
+        <Route path="candidate-info" element={<Candidate_info/>} />
         {/* <Route path="*" element={<NoMatch />} /> */}
       </Routes>
   )
