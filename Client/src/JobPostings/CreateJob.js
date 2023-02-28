@@ -10,10 +10,8 @@ import Axios from "axios";
 
 export default function CreateJob() {
   const [open, setOpen] = React.useState(false);
-  const [CompanyName, setCompanyName] =React.useState('');
   const [Position, setPosition]= React.useState('');
   const [PositionInfo,setPositionInfo]=React.useState('');
-  const [Report,setReport] = React.useState(0); 
   const [publicationStatus, setPublicationStatus]= React.useState(null);
 
   const handleClickOpen = () => {
@@ -26,9 +24,13 @@ export default function CreateJob() {
   
   const handlePublish = () => {
 
-   
+    const EmployerID = JSON.parse(localStorage.getItem('user-token'))['ID'];
+   const CompanyName = JSON.parse(localStorage.getItem('user-token'))['username'];
+   const Report = false;
 
-    Axios.post('/create-job', {CompanyName,Position,PositionInfo,Report})
+  // console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
+
+    Axios.post('/create-job', {EmployerID, CompanyName,Position,PositionInfo,Report})
     .then(response => {
     if(response.status===200){
       
@@ -39,7 +41,7 @@ export default function CreateJob() {
     }
   })
   .catch(error => {
-    console.error('Error creating job posting.', error);
+   // console.error('Error creating job posting.', error);
     setPublicationStatus('Failed to publish.');
   })
   .finally(()=>{
@@ -57,17 +59,6 @@ export default function CreateJob() {
         <DialogTitle>New Job Posting</DialogTitle>
         <DialogContent>
 
-        <TextField
-            autoFocus
-            margin="dense"
-            id="CompName"
-            label="Company Name"
-            type="name"
-            fullWidth
-            variant="standard"
-            value= {CompanyName}
-            onChange={(event) => setCompanyName(event.target.value)}
-          />
           <TextField
             autoFocus
             margin="dense"

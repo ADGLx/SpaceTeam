@@ -159,19 +159,17 @@ app.listen(PORT, function(err){
 // Registering a job listing as an employer
 app.post('/create-job', function (req, res) {
 
+    const EmployerID = req.body.EmployerID;
     const CompanyName =req.body.CompanyName;
     const Position =req.body.Position;
     const PositionInfo = req.body.PositionInfo;
     const Report= req.body.Report;
     
-    db.connect (function(error){
-        if (error)throw error;
-    })
-    
-    //Insert information into db
+    console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
+   //Insert information into db
     db.query(
-        "INSERT INTO JobListing (`CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?, ?, ?, ?);", 
-        [CompanyName, Position, PositionInfo, Report], function
+        "INSERT INTO JobListing (`EmployerID`, `CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?,?, ?, ?, ?);", 
+        [EmployerID,CompanyName, Position, PositionInfo, Report], function
         (error, results,fields){
             if(error){
                 console.error("Error creating job posting", error);
@@ -181,7 +179,6 @@ app.post('/create-job', function (req, res) {
                 console.log("Job posting was created successfully");
                 res.sendStatus(200);            
             }
-            db.end();
         }
     );
 })
