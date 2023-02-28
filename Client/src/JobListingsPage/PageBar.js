@@ -160,8 +160,14 @@ export default function PageBar(props) {
   }
 
   function ShowCards()
+  
   {
-      var eachCard = (<Grid item xs = {12} sm = {6} lg={4} >
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
+      var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
         <Card sx={{ minWidth: 200 }}>
       <CardActionArea>
       <CardMedia
@@ -181,20 +187,45 @@ export default function PageBar(props) {
       </Typography>
       </CardContent>
       </CardActionArea>
-      <CardActions>
-      <Button size="small" color="primary">
+     
+      <CardActions disableSpacing>
+      <Button size="medium" color="primary">
+      Apply
+      </Button>
+            <IconButton aria-label="report" sx={{color: "#FC0"}}>
+               <ReportIcon /> 
+            </IconButton>
+            <ExpandMore
+              expand={expanded}
+              onClick={handleExpandClick}
+              aria-expanded={expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </ExpandMore>
+      </CardActions>
+      <Collapse in={expanded} timeout="auto" unmountOnExit>
+      <CardContent>
+              <Typography paragraph>Details:</Typography>
+              <Typography paragraph>
+              <Button size="small" color="primary">
       Organic Chemistry Expert
       </Button>
       <Button size="small" color="primary">
       Material Analysis
       </Button>
-      <Button size="small" color="primary">
-      Full time
-      </Button>
-      
-      
-      </CardActions>
-      
+              </Typography>
+              <Typography paragraph>
+               An expert in chemical industry who is aware of analysis on organic compounds
+              </Typography>
+              {/* <Typography paragraph>
+            
+              </Typography>
+              <Typography>
+                
+              </Typography> */}
+            </CardContent>
+          </Collapse>
       </Card>
        </Grid>
       )
@@ -228,23 +259,26 @@ export default function PageBar(props) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     JOB LISTINGS
             </Typography>
-            <Button color="inherit">Login</Button>
+            {/* <Button color="inherit">Login</Button> */}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
       <Toolbar />
       <Container>
       <Typography variant="h8" component="div" color= 'White'>
+      <Grid container spacing={1}  >
+            <Grid item xs = {12} sm = {12} lg={12}>
       <Box sx={{
-          fontSize: '1.99rem',
+          fontSize: '1.88rem',
           fontWeight: '700',
           position: 'absolute',
-          bgcolor: (theme) => (theme.palette.mode === 'dark' ? 'grey.800' : '#fff'),
-          top: 100,
-          left: '31%',
+          top: 105,
+          left: '32%',
           zIndex: 'mobile stepper',}}>   
           WELCOME TO THE JOB POSTINGS PAGE
         </Box>
+        </Grid>
+        </Grid>
             </Typography>
             </Container>
         {/* <Box sx={{
