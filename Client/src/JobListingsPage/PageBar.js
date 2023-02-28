@@ -106,26 +106,31 @@ export default function PageBar(props) {
 
       //Report Button
     //In the button we need the info about 
-    function handleApply(EmployerID,JobID, Position, CompanyName) 
+    function handleApply(data) 
     {
       //Fixes ghetoness
       var UserID= JSON.parse(localStorage.getItem('user-token'))["ID"];
-      var newJobID = EmployerID.jobID;
-      var newEmployerID= EmployerID.EmployerID;
+      var newJobID = data.jobID;
+      var newEmployerID= data.EmployerID;
+      var newPosition = data.Position;
+      var newCompanyName = data.Position;
       var name= JSON.parse(localStorage.getItem('user-token'))["username"];
+      var Email= JSON.parse(localStorage.getItem('user-token'))["email"];
  
-      var todaysDate = Date();
+      //console.log(EmployerID)
+      var todaysDate = new Date().toLocaleDateString();
 
         const sentObj = {
           jobID : newJobID,
           userID: UserID,
           employerID: newEmployerID,
-          position: Position,
-          companyName: CompanyName,
+          position: newPosition,
+          companyName: newCompanyName,
           username: name,
-          date: todaysDate
+          date: todaysDate,
+          email: Email
         };
-        console.log(sentObj)
+       // console.log(sentObj)
 
         Axios.post('/apply', sentObj).then (function (response) 
         {
@@ -152,7 +157,7 @@ export default function PageBar(props) {
         const Position = cardsInfo[index]['Position'];
         const PositionInfo = cardsInfo[index]['PositionInfo'];
         const EmployerID = cardsInfo[index]['EmployerID'];
-       // console.log(jobID)
+        //console.log(Position)
 
 
         var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
@@ -177,7 +182,7 @@ export default function PageBar(props) {
         </CardActionArea>
        
         <CardActions disableSpacing>
-        <Button size="medium" color="primary" name={jobID} onClick={() => handleApply({EmployerID,jobID, Position, CompanyName})}>
+        <Button size="medium" color="primary" name={jobID} onClick={() => handleApply({EmployerID,jobID,Position,CompanyName})}>
         Apply
         </Button>
               <IconButton aria-label="report" sx={{color: "#FC0"}} name={jobID} onClick={() => handleReport({jobID})}>
