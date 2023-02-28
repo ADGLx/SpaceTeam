@@ -142,7 +142,7 @@ function createCard(){
 
 export default function PageBar(props) {
   const [cards, setCards] = React.useState(0);
-  
+  const [cardsInfo, setCardsInfo] = React.useState([]);
   //Calls everytime page is rendered
   useEffect(() => {
     handleJobListings();
@@ -153,20 +153,27 @@ export default function PageBar(props) {
     Axios.get('/jobListings').
     then(function(response) {
       var newData = []
-     
+     // console.log(response.data);
       setCards(response.data.length);
-
+      response.data.forEach(element => {
+        newData.push(element);
+      });
+        setCardsInfo(newData);
+  
+  
     })
   }
 
   function ShowCards()
-  
   {
+   // console.log(cardsInfo)
     const [expanded, setExpanded] = React.useState(false);
 
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
+
+
       var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
         <Card sx={{ minWidth: 200 }}>
       <CardActionArea>
@@ -232,9 +239,81 @@ export default function PageBar(props) {
 
       var returnValue = []
       for (let index = 0; index < cards; index++) {
+        //In here we basically change the stuff 
+        console.log(cardsInfo[index])
+        const jobID = cardsInfo[index]['JobID'];
+        const CompanyName = cardsInfo[index]['CompanyName'];
+        const Position = cardsInfo[index]['Position'];
+        const PositionInfo = cardsInfo[index]['PositionInfo'];
+       // console.log(jobID)
+
+
+        var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
+          <Card sx={{ minWidth: 200 }}>
+        <CardActionArea>
+        <CardMedia
+        component="img"
+        height="200"
+        image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
+        alt="Chemist Handling Funnels"
+        zIndex = 'tooltip'
+        />
+        <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+         {Position}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+
+         {CompanyName}
+        </Typography>
+        </CardContent>
+        </CardActionArea>
+       
+        <CardActions disableSpacing>
+        <Button size="medium" color="primary" name={jobID}>
+        Apply
+        </Button>
+              <IconButton aria-label="report" sx={{color: "#FC0"}} name={jobID}>
+                 <ReportIcon /> 
+              </IconButton>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+                <Typography paragraph>Details:</Typography>
+                <Typography paragraph>
+                <Button size="small" color="primary">
+        PLACEHOLDER_INFO
+        </Button>
+        <Button size="small" color="primary">
+        PLACEHOLDER_INFO
+        </Button>
+                </Typography>
+                <Typography paragraph>
+                {PositionInfo}
+                </Typography>
+                {/* <Typography paragraph>
+              
+                </Typography>
+                <Typography>
+                  
+                </Typography> */}
+              </CardContent>
+            </Collapse>
+        </Card>
+         </Grid>
+        )
+
+
+        
         returnValue.push(eachCard)
-        
-        
       }
 
       return returnValue;
