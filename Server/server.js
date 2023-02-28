@@ -39,6 +39,7 @@ app.post('/register', function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
     const type = req.body.type;
+    
 
 
    // console.log(date + " aaa"+ time);
@@ -156,29 +157,27 @@ app.listen(PORT, function(err){
 
 
 // Registering a job listing as an employer
-//Not sure if Krupesh will take over this ??
-app.post('/registerJob', function (req, res) {
+app.post('/create-job', function (req, res) {
 
-    //Collect information
-    const EmployerID = req.body.EmployerID; 
-    const JobID = req.body.JobID;
-
-    const CompanyName = req.body.CompanyName;
-    const Position = req.body.Position;
+    const EmployerID = req.body.EmployerID;
+    const CompanyName =req.body.CompanyName;
+    const Position =req.body.Position;
     const PositionInfo = req.body.PositionInfo;
-    const Report = 0; // Every post begins with an okay status 
-
-    //Insert information into db
+    const Report= req.body.Report;
+    
+    console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
+   //Insert information into db
     db.query(
-        "INSERT INTO JobListing(`ID`, `jobID`, `CompanyName`, `Position`, `PositionInfo`, `Report`) VALUES (?, ?, ?, ?, ?, ?);", 
-        [JobID, EmployerID, CompanyName, Position, PositionInfo, Report], function (error, results,fields) {
+        "INSERT INTO JobListing (`EmployerID`, `CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?,?, ?, ?, ?);", 
+        [EmployerID,CompanyName, Position, PositionInfo, Report], function
+        (error, results,fields){
             if(error){
-                console.log(error);
-                res.send(false);//An error occured
+                console.error("Error creating job posting", error);
+                res.sendStatus(500);
             }
             else {
-                console.log("A job was listed");
-                res.send(true);
+                console.log("Job posting was created successfully");
+                res.sendStatus(200);            
             }
         }
     );

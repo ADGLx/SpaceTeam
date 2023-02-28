@@ -6,9 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Axios from "axios";
 
 export default function CreateJob() {
   const [open, setOpen] = React.useState(false);
+  const [Position, setPosition]= React.useState('');
+  const [PositionInfo,setPositionInfo]=React.useState('');
+  const [publicationStatus, setPublicationStatus]= React.useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,6 +21,34 @@ export default function CreateJob() {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  const handlePublish = () => {
+
+    const EmployerID = JSON.parse(localStorage.getItem('user-token'))['ID'];
+   const CompanyName = JSON.parse(localStorage.getItem('user-token'))['username'];
+   const Report = false;
+
+  // console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
+
+    Axios.post('/create-job', {EmployerID, CompanyName,Position,PositionInfo,Report})
+    .then(response => {
+    if(response.status===200){
+      
+      setPublicationStatus('Job posting created successfully!');
+      handleClose();
+    } else{
+      throw new Error(`Failed to create job posting: ${response.statusText}`);
+    }
+  })
+  .catch(error => {
+   // console.error('Error creating job posting.', error);
+    setPublicationStatus('Failed to publish.');
+  })
+  .finally(()=>{
+    setTimeout(()=>{setPublicationStatus(null);},3000);
+    handleClose();
+  });
+  }
 
   return (
     <div>
@@ -35,6 +67,8 @@ export default function CreateJob() {
             type="name"
             fullWidth
             variant="standard"
+            value= {Position}
+            onChange={(event) => setPosition(event.target.value)}
           />
           <TextField
             autoFocus
@@ -44,13 +78,18 @@ export default function CreateJob() {
             type="Des"
             fullWidth
             variant="standard"
+            value= {PositionInfo}
+            onChange={(event) => setPositionInfo(event.target.value)}
           />
+          
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Publish</Button>
+          <Button onClick={handlePublish}>Publish</Button>
         </DialogActions>
       </Dialog>
+      {publicationStatus && <p>{publicationStatus}</p>}{/*show message if it exists */}
     </div>
   );
 }
