@@ -66,80 +66,6 @@ HideOnScroll.propTypes = {
   window: PropTypes.func,
 };
 
-//JS to create a job posting card
-function createCard(){
-  const [expanded, setExpanded] = React.useState(false);
-
-  const handleExpandClick = () => {
-    setExpanded(!expanded);
-  };
-  return (
-   
-    <Grid item xs = {12} sm = {6} lg={4} >
-    <Card sx={{ minWidth: 200 }}>
-  <CardActionArea>
-  <CardMedia
-  component="img"
-  height="200"
-  image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
-  alt="Chemist Handling Funnels"
-  zIndex = 'tooltip'
-  />
-  <CardContent>
-  <Typography gutterBottom variant="h5" component="div">
-   Chemical Engineer (Specialist)
-  </Typography>
-  <Typography variant="body2" color="text.secondary">
-   Looking for some with 10+ years of experience in industry 
-  
-  </Typography>
-  </CardContent>
-  </CardActionArea>
- 
-  <CardActions disableSpacing>
-  <Button size="medium" color="primary">
-  Apply
-  </Button>
-        <IconButton aria-label="report" sx={{color: "#FC0"}}>
-           <ReportIcon /> 
-        </IconButton>
-        <ExpandMore
-          expand={expanded}
-          onClick={handleExpandClick}
-          aria-expanded={expanded}
-          aria-label="show more"
-        >
-          <ExpandMoreIcon />
-        </ExpandMore>
-  </CardActions>
-  <Collapse in={expanded} timeout="auto" unmountOnExit>
-  <CardContent>
-          <Typography paragraph>Details:</Typography>
-          <Typography paragraph>
-          <Button size="small" color="primary">
-  Organic Chemistry Expert
-  </Button>
-  <Button size="small" color="primary">
-  Material Analysis
-  </Button>
-          </Typography>
-          <Typography paragraph>
-           An expert in chemical industry who is aware of analysis on organic compounds
-          </Typography>
-          {/* <Typography paragraph>
-        
-          </Typography>
-          <Typography>
-            
-          </Typography> */}
-        </CardContent>
-      </Collapse>
-  </Card>
-   </Grid>
-  
-  )
-}
-
 export default function PageBar(props) {
   const [cards, setCards] = React.useState(0);
   const [cardsInfo, setCardsInfo] = React.useState([]);
@@ -164,6 +90,20 @@ export default function PageBar(props) {
     })
   }
 
+  //Report Button
+    //In the button we need the info about 
+    function handleReport(JobID) 
+    {
+        const jsonID = {
+          jobID : JobID
+        };
+        Axios.post('/report', jsonID).then (function (response) 
+        {
+          //In here we put message like 
+          console.log("Job Reported");
+        });
+    }
+
   function ShowCards()
   {
    // console.log(cardsInfo)
@@ -172,70 +112,6 @@ export default function PageBar(props) {
     const handleExpandClick = () => {
       setExpanded(!expanded);
     };
-
-
-      var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
-        <Card sx={{ minWidth: 200 }}>
-      <CardActionArea>
-      <CardMedia
-      component="img"
-      height="200"
-      image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
-      alt="Chemist Handling Funnels"
-      zIndex = 'tooltip'
-      />
-      <CardContent>
-      <Typography gutterBottom variant="h5" component="div">
-       Chemical Engineer (Specialist)
-      </Typography>
-      <Typography variant="body2" color="text.secondary">
-       Looking for some with 10+ years of experience in industry 
-      
-      </Typography>
-      </CardContent>
-      </CardActionArea>
-     
-      <CardActions disableSpacing>
-      <Button size="medium" color="primary">
-      Apply
-      </Button>
-            <IconButton aria-label="report" sx={{color: "#FC0"}}>
-               <ReportIcon /> 
-            </IconButton>
-            <ExpandMore
-              expand={expanded}
-              onClick={handleExpandClick}
-              aria-expanded={expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
-            </ExpandMore>
-      </CardActions>
-      <Collapse in={expanded} timeout="auto" unmountOnExit>
-      <CardContent>
-              <Typography paragraph>Details:</Typography>
-              <Typography paragraph>
-              <Button size="small" color="primary">
-      Organic Chemistry Expert
-      </Button>
-      <Button size="small" color="primary">
-      Material Analysis
-      </Button>
-              </Typography>
-              <Typography paragraph>
-               An expert in chemical industry who is aware of analysis on organic compounds
-              </Typography>
-              {/* <Typography paragraph>
-            
-              </Typography>
-              <Typography>
-                
-              </Typography> */}
-            </CardContent>
-          </Collapse>
-      </Card>
-       </Grid>
-      )
 
       var returnValue = []
       for (let index = 0; index < cards; index++) {
@@ -273,7 +149,7 @@ export default function PageBar(props) {
         <Button size="medium" color="primary" name={jobID}>
         Apply
         </Button>
-              <IconButton aria-label="report" sx={{color: "#FC0"}} name={jobID}>
+              <IconButton aria-label="report" sx={{color: "#FC0"}} name={jobID} onClick={() => handleReport({jobID})}>
                  <ReportIcon /> 
               </IconButton>
               <ExpandMore

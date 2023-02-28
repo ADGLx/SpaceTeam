@@ -221,3 +221,24 @@ app.post('/registerJob', function (req, res) {
         )
 
     })
+
+    //Change report entry when report has been triggered
+    app.post('/report', function(req, res){
+
+        //collect JobID info to report
+        const JobID = req.body.jobID.jobID;
+
+        db.query(
+            "UPDATE JobListing SET Report = 1 WHERE JobID = ?",
+            [JobID], function(error, result, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    console.log("Successfuly reported listing!");
+                    res.send(result);
+                }
+            }
+
+        )
+    })
