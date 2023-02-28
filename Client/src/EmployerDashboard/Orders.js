@@ -70,12 +70,15 @@ useEffect(() => {
 function handleApplicantList()
 {
     //Hard code to test job applications on employer dashboard
+   // var userInfo = //JSON.parse(localStorage.getItem('user-token'))
+   // var currentUser = 3 //userInfo[''];
+
     const sentObj = {
       EmployerID: 3
     }
       //Post changes to the server
       //Access local storage and retrieve ID 
-      Axios.post('/displayJobs', sentObj). //Figure out how to import user data!
+      Axios.post('/displayJobs', sentObj). 
       then(function (response) {
         var newData = []
 
@@ -96,7 +99,7 @@ function handleApplicantList()
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Job Title</TableCell>
+            <TableCell>Job Posting</TableCell>
             <TableCell>Email</TableCell>
             <TableCell align="right">Job number</TableCell>
           </TableRow>

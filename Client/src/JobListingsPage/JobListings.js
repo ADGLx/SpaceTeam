@@ -6,6 +6,7 @@ import Typography from '@mui/material/Typography';
 import { Button, CardActionArea, CardActions } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
+
 export default function JobListings() {
   return (
     <Card sx={{ minWidth: 200 }}>
