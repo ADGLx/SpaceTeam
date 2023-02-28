@@ -201,15 +201,14 @@ app.post('/registerJob', function (req, res) {
                     res.send(results);
                 }
             }
-            )
+            );
     })
 
 
     //Receive List of job listings from db and send information to frontend
-    app.get('/jobListings', function(req,res){  
+    app.post('/jobApplicants', function(req,res){        
         db.query(
-            "SELECT * FROM JobListing",
-            //"SELECT CompanyName, Position, PositionInfo, Report FROM JobListing",
+            "SELECT CompanyName, Position, PositionInfo, Report FROM JobListing",
             function(error, result, fields) {
                 if(error){
                     console.log(error);
@@ -218,6 +217,26 @@ app.post('/registerJob', function (req, res) {
                     res.send(result);
                 }
             }
-        )
+        );
 
+    })
+
+    //Change report entry when report has been triggered
+    app.post('/report', function(req, res){
+
+        //collect JobID info to report
+        const JobID = req.body.JobID;
+        db.query(
+            "UPDATE JobListing SET Report = '1' WHERE Report = '0' AND JobID = ?",
+            [JobID], function(error, result, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    console.log("Successfuly reported listing!");
+                    res.send(result);
+                }
+            }
+
+        )
     })
