@@ -29,7 +29,7 @@ export const mainListItems = (
       <ListItemIcon>
         <LayersIcon />
       </ListItemIcon>
-      <ListItemText primary="Applicants" />
+      <ListItemText primary="Job Postings" />
     </ListItemButton>
     <ListItemButton>
       <ListItemIcon>
