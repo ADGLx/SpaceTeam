@@ -15,6 +15,7 @@ import { Routes, Route, Outlet } from "react-router-dom";
 import JobPostings from './JobPostings/JobPostings';
 import ProtectedRoute from './util/ProtectedRoute';
 import PageBar from './JobListingsPage/PageBar';
+import Candidate_info from './Candidate_info';
 
 
 const rootElement = document.getElementById('root');
@@ -34,7 +35,7 @@ const Routing = () => {
            <PageBar />
         </ProtectedRoute>
         } />
-    
+        <Route path="CandidateInfo" element={<Candidate_info />} />
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="Sign-Up" element={<Registration />} />
         <Route path="EmployerDashboard" element={<EmployerDashboard />} />
