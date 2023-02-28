@@ -10,9 +10,11 @@ import Axios from "axios";
 
 export default function CreateJob() {
   const [open, setOpen] = React.useState(false);
+  const [CompanyName, setCompanyName] =React.useState('');
   const [Position, setPosition]= React.useState('');
-  const [Description,setDescription]=React.useState('');
-  const [Report,setReport] = React.useState(0); // all new job posting start at 0
+  const [PositionInfo,setPositionInfo]=React.useState('');
+  const [Report,setReport] = React.useState(0); 
+  const [publicationStatus, setPublicationStatus]= React.useState(null);
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -24,19 +26,25 @@ export default function CreateJob() {
   
   const handlePublish = () => {
 
-    //Removed the ID, since it is assigned automatically by the db,
-    const createdAt = new Date().toISOString;
+   
 
-    Axios.post('/create-job', {Position,Description,Report, createdAt})
+    Axios.post('/create-job', {CompanyName,Position,PositionInfo,Report})
     .then(response => {
     if(response.status===200){
+      
+      setPublicationStatus('Job posting created successfully!');
       handleClose();
     } else{
-      throw new Error('Failed to create job posting: ${response.statusText');
+      throw new Error(`Failed to create job posting: ${response.statusText}`);
     }
   })
   .catch(error => {
-    console.error('Error creating job posting', error);
+    console.error('Error creating job posting.', error);
+    setPublicationStatus('Failed to publish.');
+  })
+  .finally(()=>{
+    setTimeout(()=>{setPublicationStatus(null);},3000);
+    handleClose();
   });
   }
 
@@ -49,6 +57,17 @@ export default function CreateJob() {
         <DialogTitle>New Job Posting</DialogTitle>
         <DialogContent>
 
+        <TextField
+            autoFocus
+            margin="dense"
+            id="CompName"
+            label="Company Name"
+            type="name"
+            fullWidth
+            variant="standard"
+            value= {CompanyName}
+            onChange={(event) => setCompanyName(event.target.value)}
+          />
           <TextField
             autoFocus
             margin="dense"
@@ -68,15 +87,18 @@ export default function CreateJob() {
             type="Des"
             fullWidth
             variant="standard"
-            value= {Description}
-            onChange={(event) => setDescription(event.target.value)}
+            value= {PositionInfo}
+            onChange={(event) => setPositionInfo(event.target.value)}
           />
+          
+          
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
           <Button onClick={handlePublish}>Publish</Button>
         </DialogActions>
       </Dialog>
+      {publicationStatus && <p>{publicationStatus}</p>}{/*show message if it exists */}
     </div>
   );
 }

@@ -39,6 +39,7 @@ app.post('/register', function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
     const type = req.body.type;
+    
 
 
    // console.log(date + " aaa"+ time);
@@ -156,17 +157,22 @@ app.listen(PORT, function(err){
 
 
 // Registering a job listing as an employer
-app.post('/create-job', (req, res) => {
+app.post('/create-job', function (req, res) {
 
-    const{Position,Description, Report, createdAt}=req.body;
-
-    const values = [ Position, Description, Report ,createdAt];
-
+    const CompanyName =req.body.CompanyName;
+    const Position =req.body.Position;
+    const PositionInfo = req.body.PositionInfo;
+    const Report= req.body.Report;
+    
+    db.connect (function(error){
+        if (error)throw error;
+    })
+    
     //Insert information into db
     db.query(
-        "INSERT INTO JobListing( `Position`, `Description`,`Report`,`Created_at` ) VALUES ($1, $2, $3, $4);", 
-        values,
-        (error, results)=> {
+        "INSERT INTO JobListing (`CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?, ?, ?, ?);", 
+        [CompanyName, Position, PositionInfo, Report], function
+        (error, results,fields){
             if(error){
                 console.error("Error creating job posting", error);
                 res.sendStatus(500);
@@ -175,6 +181,7 @@ app.post('/create-job', (req, res) => {
                 console.log("Job posting was created successfully");
                 res.sendStatus(200);            
             }
+            db.end();
         }
     );
 })
