@@ -242,3 +242,28 @@ app.post('/registerJob', function (req, res) {
 
         )
     })
+
+     //Change report entry when report has been triggered
+     app.post('/apply', function(req, res){
+
+        //collect JobID info to report
+        const JobID = req.body.jobID;
+        const UserID = req.body.userID;
+        const EmployerID = req.body.employerID;
+       // console.log(req.body);
+
+
+        // db.query(
+        //     "INSERT INTO JobApplicants(`ApplicantID`, `EmployerID`, `CompanyName`, `Position`, `PositionInfo`, `Report`) VALUES (?, ?, ?, ?, ?, ?);",
+        //     [JobID], function(error, result, fields) {
+        //         if(error){
+        //             console.log(error);
+        //         }
+        //         else{
+        //             console.log("Successfuly reported listing!");
+        //             res.send(result);
+        //         }
+        //     }
+
+        // )
+    })

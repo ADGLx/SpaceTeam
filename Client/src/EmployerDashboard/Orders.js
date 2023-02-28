@@ -70,11 +70,11 @@ useEffect(() => {
 function handleApplicantList()
 {
     //Hard code to test job applications on employer dashboard
-   // var userInfo = //JSON.parse(localStorage.getItem('user-token'))
-   // var currentUser = 3 //userInfo[''];
+    var userInfo = JSON.parse(localStorage.getItem('user-token'))
+    var currentUser = userInfo['ID'];
 
     const sentObj = {
-      EmployerID: 3
+      EmployerID: currentUser
     }
       //Post changes to the server
       //Access local storage and retrieve ID 
