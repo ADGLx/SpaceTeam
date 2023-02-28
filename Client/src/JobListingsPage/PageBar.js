@@ -20,7 +20,7 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea, CardActions } from '@mui/material';
-import { useEffect } from 'react';
+import { useState,useEffect } from 'react';
 import Axios from 'axios';
 
 
@@ -93,23 +93,73 @@ function createCard(){
 }
 
 export default function PageBar(props) {
- 
+  const [cards, setCards] = React.useState(0);
+  
   //Calls everytime page is rendered
   useEffect(() => {
     handleJobListings();
-  },[])
+  },[cards])
 
   function handleJobListings()
   {
     Axios.get('/jobListings').
     then(function(response) {
       var newData = []
-      var amountOfCards = response.data.length;
+     
+      setCards(response.data.length);
 
-      console.log(amountOfCards)
     })
   }
 
+  function ShowCards()
+  {
+      var eachCard = (<Grid item xs = {12} sm = {6} lg={4} >
+        <Card sx={{ minWidth: 200 }}>
+      <CardActionArea>
+      <CardMedia
+      component="img"
+      height="200"
+      image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
+      alt="Chemist Handling Funnels"
+      zIndex = 'tooltip'
+      />
+      <CardContent>
+      <Typography gutterBottom variant="h5" component="div">
+       Chemical Engineer (Specialist)
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+       Looking for some with 10+ years of experience in industry 
+      
+      </Typography>
+      </CardContent>
+      </CardActionArea>
+      <CardActions>
+      <Button size="small" color="primary">
+      Organic Chemistry Expert
+      </Button>
+      <Button size="small" color="primary">
+      Material Analysis
+      </Button>
+      <Button size="small" color="primary">
+      Full time
+      </Button>
+      
+      
+      </CardActions>
+      
+      </Card>
+       </Grid>
+      )
+
+      var returnValue = []
+      for (let index = 0; index < cards; index++) {
+        returnValue.push(eachCard)
+        
+        
+      }
+
+      return returnValue;
+  }
   return (
     
     <React.Fragment>
@@ -237,9 +287,7 @@ export default function PageBar(props) {
     }}>
      
         <Grid container spacing={3}>
-          {createCard()}
-          {createCard()}
-          {createCard()}
+          <ShowCards />
         </Grid>
         </Box>
    
