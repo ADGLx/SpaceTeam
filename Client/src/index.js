@@ -12,6 +12,11 @@ import {BrowserRouter} from "react-router-dom";
 import { Routes, Route, Outlet } from "react-router-dom";
 
 import ProtectedRoute from './util/ProtectedRoute';
+<<<<<<< Updated upstream
+=======
+import PageBar from './JobListingsPage/PageBar';
+import JobPosting from './JobPostings/JobPostings';
+>>>>>>> Stashed changes
 
 
 const rootElement = document.getElementById('root');
@@ -32,8 +37,18 @@ const Routing = () => {
         } />
     
         <Route path="Sign-In" element={<SignInSide />} />
+<<<<<<< Updated upstream
         <Route path="/" element={<Album/>} />
         <Route path="candidate-info" element={<Candidate_info/>} />
+=======
+        <Route path="Sign-Up" element={<Registration />} />
+        <Route path="EmployerDashboard" element={<EmployerDashboard />} />
+        <Route path="UserReports" element={<UserReports />} />
+        <Route path="JobPostings" element={<JobPosting />} />
+        {/* <Route path="/" element={<Album/>} />
+        <Route path="JobListingsPage" element={<PageBar />} /> */}
+        
+>>>>>>> Stashed changes
         {/* <Route path="*" element={<NoMatch />} /> */}
       </Routes>
   )
