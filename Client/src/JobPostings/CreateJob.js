@@ -6,9 +6,13 @@ import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
+import Axios from "axios";
 
 export default function CreateJob() {
   const [open, setOpen] = React.useState(false);
+  const [Position, setPosition]= React.useState('');
+  const [Description,setDescription]=React.useState('');
+  const [Report,setReport] = React.useState(0); // all new job posting start at 0
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -17,6 +21,24 @@ export default function CreateJob() {
   const handleClose = () => {
     setOpen(false);
   };
+  
+  const handlePublish = () => {
+
+    const id = Date.now().toString(); //this should be random enough since our app has low traffic anyways
+    const createdAt = new Date().toISOString;
+
+    Axios.post('/create-job', {ID,Position,Description,Report, createdAt})
+    .then(response => {
+    if(response.status===200){
+      handleClose();
+    } else{
+      throw new Error('Failed to create job posting: ${response.statusText');
+    }
+  })
+  .catch(error => {
+    console.error('Error creating job posting', error);
+  });
+  }
 
   return (
     <div>
@@ -35,6 +57,8 @@ export default function CreateJob() {
             type="name"
             fullWidth
             variant="standard"
+            value= {Position}
+            onChange={(event) => setPosition(event.target.value)}
           />
           <TextField
             autoFocus
@@ -44,11 +68,13 @@ export default function CreateJob() {
             type="Des"
             fullWidth
             variant="standard"
+            value= {Description}
+            onChange={(event) => setDescription(event.target.value)}
           />
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleClose}>Publish</Button>
+          <Button onClick={handlePublish}>Publish</Button>
         </DialogActions>
       </Dialog>
     </div>

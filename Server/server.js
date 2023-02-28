@@ -156,29 +156,24 @@ app.listen(PORT, function(err){
 
 
 // Registering a job listing as an employer
-//Not sure if Krupesh will take over this ??
-app.post('/registerJob', function (req, res) {
+app.post('/create-job', (req, res) => {
 
-    //Collect information
-    const EmployerID = req.body.EmployerID; 
-    const JobID = req.body.JobID;
+    const{ID,Position,Description, Report, createdAt}=req.body;
 
-    const CompanyName = req.body.CompanyName;
-    const Position = req.body.Position;
-    const PositionInfo = req.body.PositionInfo;
-    const Report = 0; // Every post begins with an okay status 
+    const values = [ID, Position, Description, Report ,createdAt];
 
     //Insert information into db
     db.query(
-        "INSERT INTO JobListing(`ID`, `jobID`, `CompanyName`, `Position`, `PositionInfo`, `Report`) VALUES (?, ?, ?, ?, ?, ?);", 
-        [JobID, EmployerID, CompanyName, Position, PositionInfo, Report], function (error, results,fields) {
+        "INSERT INTO JobListing(`ID`, `Position`, `Description`,`Report`,`Created_at` ) VALUES ($1, $2, $3, $4, $5);", 
+        values,
+        (error, results)=> {
             if(error){
-                console.log(error);
-                res.send(false);//An error occured
+                console.error("Error creating job posting", error);
+                res.sendStatus(500);
             }
             else {
-                console.log("A job was listed");
-                res.send(true);
+                console.log("Job posting was created successfully");
+                res.sendStatus(200);            
             }
         }
     );
