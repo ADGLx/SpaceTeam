@@ -22,7 +22,24 @@ import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea, CardActions } from '@mui/material';
 import { useEffect } from 'react';
 import Axios from 'axios';
+import WorkIcon from '@mui/icons-material/Work';
+import ReportIcon from '@mui/icons-material/Report';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Collapse from '@mui/material/Collapse';
+import { styled } from '@mui/material/styles';
 
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -51,8 +68,13 @@ HideOnScroll.propTypes = {
 
 //JS to create a job posting card
 function createCard(){
+  const [expanded, setExpanded] = React.useState(false);
 
+  const handleExpandClick = () => {
+    setExpanded(!expanded);
+  };
   return (
+   
     <Grid item xs = {12} sm = {6} lg={4} >
     <Card sx={{ minWidth: 200 }}>
   <CardActionArea>
@@ -73,22 +95,48 @@ function createCard(){
   </Typography>
   </CardContent>
   </CardActionArea>
-  <CardActions>
-  <Button size="small" color="primary">
+ 
+  <CardActions disableSpacing>
+  <Button size="medium" color="primary">
+  Apply
+  </Button>
+        <IconButton aria-label="report" sx={{color: "#FC0"}}>
+           <ReportIcon /> 
+        </IconButton>
+        <ExpandMore
+          expand={expanded}
+          onClick={handleExpandClick}
+          aria-expanded={expanded}
+          aria-label="show more"
+        >
+          <ExpandMoreIcon />
+        </ExpandMore>
+  </CardActions>
+  <Collapse in={expanded} timeout="auto" unmountOnExit>
+  <CardContent>
+          <Typography paragraph>Details:</Typography>
+          <Typography paragraph>
+          <Button size="small" color="primary">
   Organic Chemistry Expert
   </Button>
   <Button size="small" color="primary">
   Material Analysis
   </Button>
-  <Button size="small" color="primary">
-  Full time
-  </Button>
-  
-  
-  </CardActions>
-  
+          </Typography>
+          <Typography paragraph>
+           An expert in chemical industry who is aware of analysis on organic compounds
+          </Typography>
+          {/* <Typography paragraph>
+        
+          </Typography>
+          <Typography>
+            
+          </Typography> */}
+        </CardContent>
+      </Collapse>
   </Card>
    </Grid>
+  
   )
 }
 
