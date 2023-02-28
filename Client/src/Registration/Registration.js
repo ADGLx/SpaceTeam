@@ -19,6 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 function Copyright(props) {
   return (
@@ -150,6 +151,19 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+            <Button
+              variant="contained"
+              component="label"
+              type="submit"
+              fullWidth
+               sx={{ mt: 3, mb: 2 }}
+              >
+               Upload File (JobSeeker Only)  <UploadFileIcon/>
+                <input
+              type="file"
+                 hidden
+                 />
+               </Button>
             <Button
               type="submit"
               fullWidth
