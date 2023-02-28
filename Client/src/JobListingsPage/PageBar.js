@@ -20,7 +20,26 @@ import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea, CardActions } from '@mui/material';
+import { useState,useEffect } from 'react';
+import Axios from 'axios';
+import WorkIcon from '@mui/icons-material/Work';
+import ReportIcon from '@mui/icons-material/Report';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Collapse from '@mui/material/Collapse';
+import { styled } from '@mui/material/styles';
 
+
+const ExpandMore = styled((props) => {
+  const { expand, ...other } = props;
+  return <IconButton {...other} />;
+})(({ theme, expand }) => ({
+  transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
+  marginLeft: 'auto',
+  transition: theme.transitions.create('transform', {
+    duration: theme.transitions.duration.shortest,
+  }),
+}));
 
 function HideOnScroll(props) {
   const { children, window } = props;
@@ -48,6 +67,133 @@ HideOnScroll.propTypes = {
 };
 
 export default function PageBar(props) {
+  const [cards, setCards] = React.useState(0);
+  const [cardsInfo, setCardsInfo] = React.useState([]);
+  //Calls everytime page is rendered
+  useEffect(() => {
+    handleJobListings();
+  },[cards])
+
+  function handleJobListings()
+  {
+    Axios.get('/jobListings').
+    then(function(response) {
+      var newData = []
+     // console.log(response.data);
+      setCards(response.data.length);
+      response.data.forEach(element => {
+        newData.push(element);
+      });
+        setCardsInfo(newData);
+  
+  
+    })
+  }
+
+  //Report Button
+    //In the button we need the info about 
+    function handleReport(JobID) 
+    {
+        const jsonID = {
+          jobID : JobID
+        };
+        Axios.post('/report', jsonID).then (function (response) 
+        {
+          //In here we put message like 
+          console.log("Job Reported");
+        });
+    }
+
+  function ShowCards()
+  {
+   // console.log(cardsInfo)
+    const [expanded, setExpanded] = React.useState(false);
+
+    const handleExpandClick = () => {
+      setExpanded(!expanded);
+    };
+
+      var returnValue = []
+      for (let index = 0; index < cards; index++) {
+        //In here we basically change the stuff 
+        console.log(cardsInfo[index])
+        const jobID = cardsInfo[index]['JobID'];
+        const CompanyName = cardsInfo[index]['CompanyName'];
+        const Position = cardsInfo[index]['Position'];
+        const PositionInfo = cardsInfo[index]['PositionInfo'];
+       // console.log(jobID)
+
+
+        var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
+          <Card sx={{ minWidth: 200 }}>
+        <CardActionArea>
+        <CardMedia
+        component="img"
+        height="200"
+        image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
+        alt="Chemist Handling Funnels"
+        zIndex = 'tooltip'
+        />
+        <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+         {Position}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+
+         {CompanyName}
+        </Typography>
+        </CardContent>
+        </CardActionArea>
+       
+        <CardActions disableSpacing>
+        <Button size="medium" color="primary" name={jobID}>
+        Apply
+        </Button>
+              <IconButton aria-label="report" sx={{color: "#FC0"}} name={jobID} onClick={() => handleReport({jobID})}>
+                 <ReportIcon /> 
+              </IconButton>
+              <ExpandMore
+                expand={expanded}
+                onClick={handleExpandClick}
+                aria-expanded={expanded}
+                aria-label="show more"
+              >
+                <ExpandMoreIcon />
+              </ExpandMore>
+        </CardActions>
+        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <CardContent>
+                <Typography paragraph>Details:</Typography>
+                <Typography paragraph>
+                <Button size="small" color="primary">
+        PLACEHOLDER_INFO
+        </Button>
+        <Button size="small" color="primary">
+        PLACEHOLDER_INFO
+        </Button>
+                </Typography>
+                <Typography paragraph>
+                {PositionInfo}
+                </Typography>
+                {/* <Typography paragraph>
+              
+                </Typography>
+                <Typography>
+                  
+                </Typography> */}
+              </CardContent>
+            </Collapse>
+        </Card>
+         </Grid>
+        )
+
+
+        
+        returnValue.push(eachCard)
+      }
+
+      return returnValue;
+  }
   return (
     
     <React.Fragment>
@@ -68,23 +214,26 @@ export default function PageBar(props) {
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     JOB LISTINGS
             </Typography>
-            <Button color="inherit">Login</Button>
+            {/* <Button color="inherit">Login</Button> */}
           </Toolbar>
         </AppBar>
       </HideOnScroll>
       <Toolbar />
       <Container>
       <Typography variant="h8" component="div" color= 'White'>
+      <Grid container spacing={1}  >
+            <Grid item xs = {12} sm = {12} lg={12}>
       <Box sx={{
-          fontSize: '1.99rem',
+          fontSize: '1.88rem',
           fontWeight: '700',
           position: 'absolute',
-          bgcolor: (theme) => (theme.palette.mode === 'dark' ? 'grey.800' : '#fff'),
-          top: 100,
-          left: '31%',
+          top: 105,
+          left: '32%',
           zIndex: 'mobile stepper',}}>   
           WELCOME TO THE JOB POSTINGS PAGE
         </Box>
+        </Grid>
+        </Grid>
             </Typography>
             </Container>
         {/* <Box sx={{
@@ -174,210 +323,8 @@ export default function PageBar(props) {
          left: '5%'
     }}>
      
-        <Grid container spacing={3} >
-            <Grid item xs = {12} sm = {6} lg={4}>
-            <Card sx={{ minWidth: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image="https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/813A9484-FD5C-4440-88E7EF9A3A31BD94/44A44EE2-9EE4-4B29-AA19F61A992900BB/WebsiteJpg_XL-FPACE_Main%20Visual_Cyan_Website.jpg"
-          alt="Aircraft"
-          zIndex = 'tooltip'
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Aerospace Engineer (Avionics)
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Looking for some with 10+ years of experience in industry
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          C++ Expert
-        </Button>
-        <Button size="small" color="primary">
-          MATLAB Expert
-        </Button>
-        <Button size="small" color="primary">
-          Full time
-        </Button>
-        
-      </CardActions>
-    
-    </Card>
-            </Grid>
-            <Grid item xs = {12} sm = {6} lg={4} >
-            <Card sx={{ minWidth: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image="https://d92mrp7hetgfk.cloudfront.net/images/sites/H2B/software-engineers/original.jpg?1532640476"
-          alt="Software Engineer"
-          zIndex = 'tooltip'
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Software Engineer (BackEnd Developer)
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Looking for some with 10+ years of experience in industry 
-           
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          JavaScript Expert
-        </Button>
-        <Button size="small" color="primary">
-          Node/Express Expert
-        </Button>
-        <Button size="small" color="primary">
-          Part time
-        </Button>
-        
-      </CardActions>
-    
-    </Card>
-            </Grid>
-             <Grid item xs = {12} sm = {6} lg={4} >
-             <Card sx={{ minWidth: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
-          alt="Chemist Handling Funnels"
-          zIndex = 'tooltip'
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Chemical Engineer (Specialist)
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Looking for some with 10+ years of experience in industry 
-           
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          Organic Chemistry Expert
-        </Button>
-        <Button size="small" color="primary">
-          Material Analysis
-        </Button>
-        <Button size="small" color="primary">
-          Full time
-        </Button>
-        
-        
-      </CardActions>
-    
-    </Card>
-            </Grid>
-            <Grid item xs = {12} sm = {6} lg={4} >
-            <Card sx={{ minWidth: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image="https://th.bing.com/th/id/R.2eecc8144092c889d7203356d5b0144a?rik=l7I9E82eGKm1Yw&pid=ImgRaw&r=0"
-          alt="Building Engineering Job"
-          zIndex = 'tooltip'
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Building Engineer
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Looking for some with 10+ years of experience in industry 
-           
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          C++ Expert
-        </Button>
-        <Button size="small" color="primary">
-          MATLAB Expert
-        </Button>
-        
-        
-      </CardActions>
-    
-    </Card>
-            </Grid>
-            <Grid item xs = {12} sm = {6} lg={4} >
-            <Card sx={{ minWidth: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image="https://th.bing.com/th/id/R.e5dbf187c7b41e76484191b762034b8d?rik=8IUqPo77eHv5rA&riu=http%3a%2f%2fwonderfulengineering.com%2fwp-content%2fuploads%2f2013%2f06%2fMechanical-engineering-wallpaper-01.jpg&ehk=OKob8%2f1RVsV%2bSc55dF%2bbduqKSr7zfyKh7IK0JjOJxho%3d&risl=&pid=ImgRaw&r=0"
-          alt="PipeLines"
-          zIndex = 'tooltip'
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Mechanical Engineer
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Looking for some with 10+ years of experience in industry 
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          FLUIDS EXPERT
-        </Button>
-        <Button size="small" color="primary">
-          CFD ANALYSIS EXPERT
-        </Button>
-        
-        
-      </CardActions>
-    
-    </Card>
-            </Grid>
-            <Grid item xs = {12} sm = {6} lg={4} >
-            <Card sx={{ minWidth: 200 }}>
-      <CardActionArea>
-        <CardMedia
-          component="img"
-          height="200"
-          image="https://d2csxpduxe849s.cloudfront.net/media/E32629C6-9347-4F84-81FEAEF7BFA342B3/813A9484-FD5C-4440-88E7EF9A3A31BD94/44A44EE2-9EE4-4B29-AA19F61A992900BB/WebsiteJpg_XL-FPACE_Main%20Visual_Cyan_Website.jpg"
-          alt="green iguana"
-          zIndex = 'tooltip'
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
-            Avionics Engineer (Aerospace)
-          </Typography>
-          <Typography variant="body2" color="text.secondary">
-            Looking for some with 10+ years of experience in industry 
-           
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary">
-          C++ Expert
-        </Button>
-        <Button size="small" color="primary">
-          MATLAB Expert
-        </Button>
-        
-        
-      </CardActions>
-    
-    </Card>
-            </Grid>
+        <Grid container spacing={3}>
+          <ShowCards />
         </Grid>
         </Box>
    
