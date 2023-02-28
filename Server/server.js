@@ -158,13 +158,13 @@ app.listen(PORT, function(err){
 // Registering a job listing as an employer
 app.post('/create-job', (req, res) => {
 
-    const{ID,Position,Description, Report, createdAt}=req.body;
+    const{Position,Description, Report, createdAt}=req.body;
 
-    const values = [ID, Position, Description, Report ,createdAt];
+    const values = [ Position, Description, Report ,createdAt];
 
     //Insert information into db
     db.query(
-        "INSERT INTO JobListing(`ID`, `Position`, `Description`,`Report`,`Created_at` ) VALUES ($1, $2, $3, $4, $5);", 
+        "INSERT INTO JobListing( `Position`, `Description`,`Report`,`Created_at` ) VALUES ($1, $2, $3, $4);", 
         values,
         (error, results)=> {
             if(error){

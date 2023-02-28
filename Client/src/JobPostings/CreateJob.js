@@ -24,10 +24,10 @@ export default function CreateJob() {
   
   const handlePublish = () => {
 
-    const id = Date.now().toString(); //this should be random enough since our app has low traffic anyways
+    //Removed the ID, since it is assigned automatically by the db,
     const createdAt = new Date().toISOString;
 
-    Axios.post('/create-job', {ID,Position,Description,Report, createdAt})
+    Axios.post('/create-job', {Position,Description,Report, createdAt})
     .then(response => {
     if(response.status===200){
       handleClose();
