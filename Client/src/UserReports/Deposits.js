@@ -22,11 +22,8 @@ export default function Deposits() {
         Axios.get('/getUserReports').
         then(function (response) {
           //Create a quick new array
-
-           response.data.forEach(element => 
-            {
-              setReports(reports +1);
-           });
+          console.log(response.data)
+              setReports(response.data.length);
         })
   }
 

@@ -122,9 +122,9 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              Employer Dashboard
+              {JSON.parse(localStorage.getItem('user-token'))['username']}'s Employer Dashboard
             </Typography>
-            <IconButton color="inherit">
+            <IconButton disabled color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>

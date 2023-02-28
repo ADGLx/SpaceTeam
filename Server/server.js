@@ -122,7 +122,7 @@ app.get("/getUserReports",(req,res)=>
             {
                 //send message with error
                 console.log("There are no reports to show");
-                res.send("error") //It sends an error
+                res.send([]) //It sends an error
             }
     
         })
@@ -165,7 +165,7 @@ app.post('/create-job', function (req, res) {
     const PositionInfo = req.body.PositionInfo;
     const Report= req.body.Report;
     
-    console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
+    //console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
    //Insert information into db
     db.query(
         "INSERT INTO JobListing (`EmployerID`, `CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?,?, ?, ?, ?);", 
@@ -189,6 +189,7 @@ app.post('/create-job', function (req, res) {
 
         //collect EmployerID info
         const EmployerID = req.body.EmployerID;
+        //console.log("Showing Jobs for "+ EmployerID)
 
         db.query(
             "SELECT JobID, ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants WHERE EmployerID = ?",
@@ -197,6 +198,7 @@ app.post('/create-job', function (req, res) {
                     console.log(error);
                 }
                 else{
+                    //console.log("Sending"+ results.length)
                     res.send(results);
                 }
             }
@@ -264,7 +266,7 @@ app.post('/create-job', function (req, res) {
                     console.log(error);
                 }
                 else{
-                    console.log("Successfuly reported listing!");
+                    //console.log("Successfuly reported listing!");
                     res.send(result);
                 }
             }

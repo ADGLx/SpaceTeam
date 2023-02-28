@@ -104,7 +104,7 @@ function DashboardContent() {
               pr: '24px', // keep right padding when drawer closed
             }}
           >
-            <IconButton
+            <IconButton 
               edge="start"
               color="inherit"
               aria-label="open drawer"
@@ -123,9 +123,9 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-             Moderator Dashboard
+             Moderator's Dashboard
             </Typography>
-            <IconButton color="inherit">
+            <IconButton disabled color="inherit">
               <Badge badgeContent={4} color="secondary">
                 <NotificationsIcon />
               </Badge>

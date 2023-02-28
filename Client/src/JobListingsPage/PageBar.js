@@ -248,7 +248,7 @@ export default function PageBar(props) {
             <MenuIcon />
           </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    JOB LISTINGS
+                    Welcome {JSON.parse(localStorage.getItem('user-token'))['username']}!
             </Typography>
             {/* <Button color="inherit">Login</Button> */}
           </Toolbar>
