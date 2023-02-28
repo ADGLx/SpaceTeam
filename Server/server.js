@@ -83,7 +83,7 @@ app.post('/login', function (req,res){
             if(results.length>0)
             {
                 //Successful login
-                console.log("User with ID: "+ results[0]['id'] + " has logged in!"); //This is how we get the ID
+                console.log("User with ID: "+ results[0]['ID'] + " has logged in!"); //This is how we get the ID
                 //This is super unsafe but its fine, ill add proper authentication later.
                 //The current token is just sending all the user info
                 //console.log("Sending "+JSON.stringify(results[0]))

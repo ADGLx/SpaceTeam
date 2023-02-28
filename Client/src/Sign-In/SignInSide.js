@@ -99,8 +99,20 @@ export default function SignInSide() {
         //console.log("Saving token as: "+ JSON.stringify(token) )
         localStorage.setItem('user-token', JSON.stringify(token)) //This is so the user is remembered later or sum
 
-
-        navigate('/');
+        console.log(token['type']);
+          //So in here we handle the user type
+          if(token['type']=="Employer")
+          {
+            navigate('/EmployerDashboard');
+          } else if(token['type']=="Moderator")
+          {
+            navigate('/UserReports');
+          } 
+          //Just a job seeker
+          else {
+            navigate('/');
+          }
+       // navigate('/');
 
       }
 
