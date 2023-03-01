@@ -32,7 +32,7 @@ db.connect(); //Change so it runs without sql
 console.log("Connected to db!");
 
 //This is to register
-app.post('/register', function (req, res) {
+app.post('/api/register', function (req, res) {
 
     //Getting all the info
     const username = req.body.username;
@@ -67,7 +67,7 @@ app.post('/register', function (req, res) {
 
 
 //This is the login function
-app.post('/login', function (req,res){
+app.post('/api/login', function (req,res){
 
     //console.log(req.body)
     //This is what the client searches 
@@ -80,7 +80,7 @@ app.post('/login', function (req,res){
                 console.log(error);
             }
           //  console.log(results);
-            //Login here
+            //api/login here
             if(results.length>0)
             {
                 //Successful login
@@ -104,7 +104,7 @@ app.post('/login', function (req,res){
 // Basically in here we have whatever random back end api we want 
 
 //Basically get all user reports when logged in as a moderator
-app.get("/getUserReports",(req,res)=>
+app.get("/api/getUserReports",(req,res)=>
 {
     db.query(
         "SELECT * FROM JobListing WHERE Report = 1", 
@@ -130,7 +130,7 @@ app.get("/getUserReports",(req,res)=>
 })
 
 //Deleting a posting with a user report
-app.post("/deletePost", (req, res) => {
+app.post("/api/deletePost", (req, res) => {
     const id = req.body['PostID']; //only the id should be deleted
 
     db.query(
@@ -157,7 +157,7 @@ app.listen(PORT, function(err){
 
 
 // Registering a job listing as an employer
-app.post('/create-job', function (req, res) {
+app.post('/api/create-job', function (req, res) {
 
     const EmployerID = req.body.EmployerID;
     const CompanyName =req.body.CompanyName;
@@ -185,7 +185,7 @@ app.post('/create-job', function (req, res) {
 
     //Retrieve all job vacancies from job listing table
     //Send all information received to frontend
-    app.post('/displayJobs', function(req, res) {
+    app.post('/api/displayJobs', function(req, res) {
 
         //collect EmployerID info
         const EmployerID = req.body.EmployerID;
@@ -207,7 +207,7 @@ app.post('/create-job', function (req, res) {
 
 
     //Receive List of job listings from db and send information to frontend
-    app.get('/jobListings', function(req,res){  
+    app.get('/api/jobListings', function(req,res){  
         db.query(
             "SELECT * FROM JobListing",
             //"SELECT CompanyName, Position, PositionInfo, Report FROM JobListing",
@@ -224,7 +224,7 @@ app.post('/create-job', function (req, res) {
     })
 
     //Change report entry when report has been triggered
-    app.post('/report', function(req, res){
+    app.post('/api/report', function(req, res){
 
         //collect JobID info to report
         const JobID = req.body.jobID.jobID;
@@ -245,7 +245,7 @@ app.post('/create-job', function (req, res) {
     })
 
      //Change report entry when report has been triggered
-     app.post('/apply', function(req, res){
+     app.post('/api/apply', function(req, res){
 
         //collect JobID info to report
         const JobID = req.body.jobID;

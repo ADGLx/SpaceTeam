@@ -78,7 +78,7 @@ function handleApplicantList()
     }
       //Post changes to the server
       //Access local storage and retrieve ID 
-      Axios.post('/displayJobs', sentObj). 
+      Axios.post('/api/displayJobs', sentObj). 
       then(function (response) {
         var newData = []
 

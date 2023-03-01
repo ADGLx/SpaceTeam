@@ -34,7 +34,7 @@ function DeleteButton (prop) {
       };
 
 
-      Axios.post('/deletePost', jsonID).then (function (response) 
+      Axios.post('/api/deletePost', jsonID).then (function (response) 
       {
         //In here we put message like 
         console.log("Reminder deleted!");
@@ -61,7 +61,7 @@ export default function Orders() {
   function getAllUserReports()
   {
         //Get the changes from the server
-        Axios.get('/getUserReports').
+        Axios.get('/api/getUserReports').
         then(function (response) {
           //Create a quick new array
           var newData = []

@@ -67,7 +67,7 @@ export default function SignUp() {
       type: data.get('type')
     }
 
-      Axios.post('/register', sentObj)
+      Axios.post('/api/register', sentObj)
       .then((response) => {
           //Handle here the login automatically once the server replies with true
           if(response.data)

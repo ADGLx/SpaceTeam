@@ -76,7 +76,7 @@ export default function PageBar(props) {
 
   function handleJobListings()
   {
-    Axios.get('/jobListings').
+    Axios.get('/api/jobListings').
     then(function(response) {
       var newData = []
      // console.log(response.data);
@@ -90,21 +90,21 @@ export default function PageBar(props) {
     })
   }
 
-  //Report Button
+  //api/report Button
     //In the button we need the info about 
     function handleReport(JobID) 
     {
         const jsonID = {
           jobID : JobID
         };
-        Axios.post('/report', jsonID).then (function (response) 
+        Axios.post('/api/report', jsonID).then (function (response) 
         {
           //In here we put message like 
           console.log("Job Reported");
         });
     }
 
-      //Report Button
+      //api/report Button
     //In the button we need the info about 
     function handleApply(data) 
     {
@@ -132,7 +132,7 @@ export default function PageBar(props) {
         };
        // console.log(sentObj)
 
-        Axios.post('/apply', sentObj).then (function (response) 
+        Axios.post('/api/apply', sentObj).then (function (response) 
         {
           //In here we put message like 
           console.log("Job Applied");

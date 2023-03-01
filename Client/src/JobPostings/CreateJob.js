@@ -30,7 +30,7 @@ export default function CreateJob() {
 
   // console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
 
-    Axios.post('/create-job', {EmployerID, CompanyName,Position,PositionInfo,Report})
+    Axios.post('/api/create-job', {EmployerID, CompanyName,Position,PositionInfo,Report})
     .then(response => {
     if(response.status===200){
       

@@ -23,7 +23,7 @@ export default function Deposits() {
         const sentObj = {
           EmployerID: EmployerID
         }
-        Axios.post('/displayJobs', sentObj).
+        Axios.post('/api/displayJobs', sentObj).
         then(function (response) {
           //Create a quick new array
               setApplicants(response.data.length);
