@@ -23,31 +23,7 @@ function preventDefault(event) {
   event.preventDefault();
 }
 
-function DeleteButton (prop) {
-  //In the button we need the info about 
-  function handleDelete(id) 
-  {
-    
-     // console.log("deleting reminder ID:"+ id)
-      const jsonID = {
-        PostID : id
-      };
 
-
-      Axios.post('/api/deletePost', jsonID).then (function (response) 
-      {
-        //In here we put message like 
-        console.log("Reminder deleted!");
-        window.location.reload(false);
-      });
-  }
-
-  return (
-    <React.Fragment>
-      <Button onClick={(e) => handleDelete(prop.id)}><DeleteForeverIcon/></Button>
-    </React.Fragment>
-  );
-}
 
 
 export default function Orders() {
@@ -57,6 +33,35 @@ export default function Orders() {
   useEffect(() => {
     getAllUserReports();
   }, []);
+
+  function DeleteButton (prop) {
+    //In the button we need the info about 
+    function handleDelete(id) 
+    {
+      
+       // console.log("deleting reminder ID:"+ id)
+        const jsonID = {
+          PostID : id
+        };
+  
+  
+        Axios.post('/api/deletePost', jsonID).then (function (response) 
+        {
+          //In here we put message like 
+          console.log("Post Deleted!");
+          //window.location.reload(false);
+          
+         getAllUserReports();
+        });
+
+    }
+  
+    return (
+      <React.Fragment>
+        <Button onClick={(e) => handleDelete(prop.id)}><DeleteForeverIcon/></Button>
+      </React.Fragment>
+    );
+  }
 
   function getAllUserReports()
   {
@@ -71,7 +76,7 @@ export default function Orders() {
             newData.push(createData(element['JobID'],element['CompanyName'],element['Position'],"Unasigned"))
            });
 
-           setRows([...rows, ...newData])
+           setRows([...newData])
         })
   }
 
