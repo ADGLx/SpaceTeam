@@ -19,14 +19,11 @@ export default function Deposits() {
   function getAllUserReports()
   {
         //Get the changes from the server
-        Axios.get('/getUserReports').
+        Axios.get('/api/getUserReports').
         then(function (response) {
           //Create a quick new array
-
-           response.data.forEach(element => 
-            {
-              setReports(reports +1);
-           });
+          console.log(response.data)
+              setReports(response.data.length);
         })
   }
 

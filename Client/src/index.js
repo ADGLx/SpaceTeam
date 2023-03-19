@@ -28,23 +28,23 @@ const root = createRoot(rootElement);
 const Routing = () => {
   return(
     <Routes>
-      {/* Handle login here */}
-        <Route path="/" element={
-          <ProtectedRoute> 
-           {/*  <Album/> */}
-           <PageBar />
-        </ProtectedRoute>
-        } />
-        <Route path="CandidateInfo" element={<Candidate_info />} />
+
+         {/* Login and Registration page*/}
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="Sign-Up" element={<Registration />} />
-        <Route path="EmployerDashboard" element={<EmployerDashboard />} />
-        <Route path="UserReports" element={<UserReports />} />
-        <Route path="JobPostings" element={<JobPostings />} />
-        {/* <Route path="/" element={<Album/>} />
-        <Route path="JobListingsPage" element={<PageBar />} /> */}
+         {/* Main Page */}
+        <Route path="/" element={<ProtectedRoute><PageBar /></ProtectedRoute>} /> 
+       
+        {/* Employers Page */}
+        <Route path="EmployerDashboard" element={<ProtectedRoute><EmployerDashboard /></ProtectedRoute>} />
+        <Route path="JobPostings" element={<ProtectedRoute><JobPostings /></ProtectedRoute>} />
         
-        {/* <Route path="*" element={<NoMatch />} /> */}
+        {/* Moderators Page */}
+        <Route path="UserReports" element={<ProtectedRoute><UserReports /></ProtectedRoute>} />
+        
+        {/* Unused Page */}
+        {/* <Route path="CandidateInfo" element={<ProtectedRoute><Candidate_info /></ProtectedRoute>} /> */}
+
       </Routes>
   )
 }

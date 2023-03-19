@@ -32,13 +32,14 @@ db.connect(); //Change so it runs without sql
 console.log("Connected to db!");
 
 //This is to register
-app.post('/register', function (req, res) {
+app.post('/api/register', function (req, res) {
 
     //Getting all the info
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
     const type = req.body.type;
+    
 
 
    // console.log(date + " aaa"+ time);
@@ -66,7 +67,7 @@ app.post('/register', function (req, res) {
 
 
 //This is the login function
-app.post('/login', function (req,res){
+app.post('/api/login', function (req,res){
 
     //console.log(req.body)
     //This is what the client searches 
@@ -79,7 +80,7 @@ app.post('/login', function (req,res){
                 console.log(error);
             }
           //  console.log(results);
-            //Login here
+            //api/login here
             if(results.length>0)
             {
                 //Successful login
@@ -103,7 +104,7 @@ app.post('/login', function (req,res){
 // Basically in here we have whatever random back end api we want 
 
 //Basically get all user reports when logged in as a moderator
-app.get("/getUserReports",(req,res)=>
+app.get("/api/getUserReports",(req,res)=>
 {
     db.query(
         "SELECT * FROM JobListing WHERE Report = 1", 
@@ -121,7 +122,7 @@ app.get("/getUserReports",(req,res)=>
             {
                 //send message with error
                 console.log("There are no reports to show");
-                res.send("error") //It sends an error
+                res.send([]) //It sends an error
             }
     
         })
@@ -129,7 +130,7 @@ app.get("/getUserReports",(req,res)=>
 })
 
 //Deleting a posting with a user report
-app.post("/deletePost", (req, res) => {
+app.post("/api/deletePost", (req, res) => {
     const id = req.body['PostID']; //only the id should be deleted
 
     db.query(
@@ -156,29 +157,27 @@ app.listen(PORT, function(err){
 
 
 // Registering a job listing as an employer
-//Not sure if Krupesh will take over this ??
-app.post('/registerJob', function (req, res) {
+app.post('/api/create-job', function (req, res) {
 
-    //Collect information
-    const EmployerID = req.body.EmployerID; 
-    const JobID = req.body.JobID;
-
-    const CompanyName = req.body.CompanyName;
-    const Position = req.body.Position;
+    const EmployerID = req.body.EmployerID;
+    const CompanyName =req.body.CompanyName;
+    const Position =req.body.Position;
     const PositionInfo = req.body.PositionInfo;
-    const Report = 0; // Every post begins with an okay status 
-
-    //Insert information into db
+    const Report= req.body.Report;
+    
+    //console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
+   //Insert information into db
     db.query(
-        "INSERT INTO JobListing(`ID`, `jobID`, `CompanyName`, `Position`, `PositionInfo`, `Report`) VALUES (?, ?, ?, ?, ?, ?);", 
-        [JobID, EmployerID, CompanyName, Position, PositionInfo, Report], function (error, results,fields) {
+        "INSERT INTO JobListing (`EmployerID`, `CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?,?, ?, ?, ?);", 
+        [EmployerID,CompanyName, Position, PositionInfo, Report], function
+        (error, results,fields){
             if(error){
-                console.log(error);
-                res.send(false);//An error occured
+                console.error("Error creating job posting", error);
+                res.sendStatus(500);
             }
             else {
-                console.log("A job was listed");
-                res.send(true);
+                console.log("Job posting was created successfully");
+                res.sendStatus(200);            
             }
         }
     );
@@ -186,10 +185,11 @@ app.post('/registerJob', function (req, res) {
 
     //Retrieve all job vacancies from job listing table
     //Send all information received to frontend
-    app.post('/displayJobs', function(req, res) {
+    app.post('/api/displayJobs', function(req, res) {
 
         //collect EmployerID info
         const EmployerID = req.body.EmployerID;
+        //console.log("Showing Jobs for "+ EmployerID)
 
         db.query(
             "SELECT JobID, ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants WHERE EmployerID = ?",
@@ -198,6 +198,7 @@ app.post('/registerJob', function (req, res) {
                     console.log(error);
                 }
                 else{
+                    //console.log("Sending"+ results.length)
                     res.send(results);
                 }
             }
@@ -206,7 +207,7 @@ app.post('/registerJob', function (req, res) {
 
 
     //Receive List of job listings from db and send information to frontend
-    app.get('/jobListings', function(req,res){  
+    app.get('/api/jobListings', function(req,res){  
         db.query(
             "SELECT * FROM JobListing",
             //"SELECT CompanyName, Position, PositionInfo, Report FROM JobListing",
@@ -223,7 +224,7 @@ app.post('/registerJob', function (req, res) {
     })
 
     //Change report entry when report has been triggered
-    app.post('/report', function(req, res){
+    app.post('/api/report', function(req, res){
 
         //collect JobID info to report
         const JobID = req.body.jobID.jobID;
@@ -236,6 +237,36 @@ app.post('/registerJob', function (req, res) {
                 }
                 else{
                     console.log("Successfuly reported listing!");
+                    res.send(result);
+                }
+            }
+
+        )
+    })
+
+     //Change report entry when report has been triggered
+     app.post('/api/apply', function(req, res){
+
+        //collect JobID info to report
+        const JobID = req.body.jobID;
+        const UserID = req.body.userID;
+        const EmployerID = req.body.employerID;
+        const CompanyName = req.body.companyName;
+        const Username = req.body.username;
+        const Date = req.body.date;
+        const Email = req.body.email;
+        const Position = req.body.position;
+        //console.log(req.body);
+
+
+        db.query(
+            "INSERT INTO JobApplicants(`JobID`,`ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`,`Position` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
+            [JobID,UserID,EmployerID, CompanyName, Username, Date, Email, Position  ], function(error, result, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    //console.log("Successfuly reported listing!");
                     res.send(result);
                 }
             }

@@ -81,7 +81,7 @@ export default function SignInSide() {
 
 
     //For some reason this dont work so ill try the old way of just calling the sv
-    Axios.post('/login', sentObj)
+    Axios.post('/api/login', sentObj)
     .then((response)=> {
       //console.log(response.data)
       //set user state here if
@@ -125,7 +125,7 @@ export default function SignInSide() {
     //Hereis the other way of calling the sv (nvm it doesnt work because it is like some sort of trigger)
     // const [username, setUsername] = useState([{}])
     // useEffect(() =>{
-    //   fetch("/login").then (response => response.json()).then(newdata=> setUsername(newdata))
+    //   fetch("/api/login").then (response => response.json()).then(newdata=> setUsername(newdata))
     // }, []) //this is so it can only be called the first time it oppens the page
   
     //Doing it n here again to see if

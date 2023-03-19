@@ -76,7 +76,7 @@ export default function PageBar(props) {
 
   function handleJobListings()
   {
-    Axios.get('/jobListings').
+    Axios.get('/api/jobListings').
     then(function(response) {
       var newData = []
      // console.log(response.data);
@@ -90,17 +90,52 @@ export default function PageBar(props) {
     })
   }
 
-  //Report Button
+  //api/report Button
     //In the button we need the info about 
     function handleReport(JobID) 
     {
         const jsonID = {
           jobID : JobID
         };
-        Axios.post('/report', jsonID).then (function (response) 
+        Axios.post('/api/report', jsonID).then (function (response) 
         {
           //In here we put message like 
           console.log("Job Reported");
+        });
+    }
+
+      //api/report Button
+    //In the button we need the info about 
+    function handleApply(data) 
+    {
+      //Fixes ghetoness
+      var UserID= JSON.parse(localStorage.getItem('user-token'))["ID"];
+      var newJobID = data.jobID;
+      var newEmployerID= data.EmployerID;
+      var newPosition = data.Position;
+      var newCompanyName = data.Position;
+      var name= JSON.parse(localStorage.getItem('user-token'))["username"];
+      var Email= JSON.parse(localStorage.getItem('user-token'))["email"];
+ 
+      //console.log(EmployerID)
+      var todaysDate = new Date().toLocaleDateString();
+
+        const sentObj = {
+          jobID : newJobID,
+          userID: UserID,
+          employerID: newEmployerID,
+          position: newPosition,
+          companyName: newCompanyName,
+          username: name,
+          date: todaysDate,
+          email: Email
+        };
+       // console.log(sentObj)
+
+        Axios.post('/api/apply', sentObj).then (function (response) 
+        {
+          //In here we put message like 
+          console.log("Job Applied");
         });
     }
 
@@ -116,12 +151,13 @@ export default function PageBar(props) {
       var returnValue = []
       for (let index = 0; index < cards; index++) {
         //In here we basically change the stuff 
-        console.log(cardsInfo[index])
+       // console.log(cardsInfo[index])
         const jobID = cardsInfo[index]['JobID'];
         const CompanyName = cardsInfo[index]['CompanyName'];
         const Position = cardsInfo[index]['Position'];
         const PositionInfo = cardsInfo[index]['PositionInfo'];
-       // console.log(jobID)
+        const EmployerID = cardsInfo[index]['EmployerID'];
+        //console.log(Position)
 
 
         var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
@@ -146,7 +182,7 @@ export default function PageBar(props) {
         </CardActionArea>
        
         <CardActions disableSpacing>
-        <Button size="medium" color="primary" name={jobID}>
+        <Button size="medium" color="primary" name={jobID} onClick={() => handleApply({EmployerID,jobID,Position,CompanyName})}>
         Apply
         </Button>
               <IconButton aria-label="report" sx={{color: "#FC0"}} name={jobID} onClick={() => handleReport({jobID})}>
@@ -212,7 +248,7 @@ export default function PageBar(props) {
             <MenuIcon />
           </IconButton>
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-                    JOB LISTINGS
+                    Welcome {JSON.parse(localStorage.getItem('user-token'))['username']}!
             </Typography>
             {/* <Button color="inherit">Login</Button> */}
           </Toolbar>
