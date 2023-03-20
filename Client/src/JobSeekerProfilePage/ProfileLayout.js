@@ -6,7 +6,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import Checkbox from '@mui/material/Checkbox';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import Button from '@mui/material/Button';
-
+import AccountCircle from '@mui/icons-material/AccountCircle';
 
 export default function ProfileLayout() {
     function handleApply(data) 
@@ -63,11 +63,11 @@ export default function ProfileLayout() {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="lastName"
-            name="lastName"
-            label="Last name"
+            id="Email"
+            name="Email"
+            label="Email"
             fullWidth
-            autoComplete="family-name"
+            autoComplete="user-email"
             variant="standard"
           />
         </Grid>
@@ -134,13 +134,29 @@ export default function ProfileLayout() {
             variant="standard"
           />
         </Grid> */}
+          <Grid item xs = {12}>
+                <Button
+              variant="contained"
+              component="label"
+              type="submit"
+            //   fullWidth
+               sx={{ mt: 1, mb: 1,  width: '500px',  marginLeft: 'auto'}}
+              >
+               Upload Profile Photo <AccountCircle />
+                <input
+              type="file"
+                 hidden
+                 />
+               </Button>
+               </Grid>
+
         <Grid item xs = {12}>
                 <Button
               variant="contained"
               component="label"
               type="submit"
             //   fullWidth
-               sx={{ mt: 2, mb: 2,  width: '500px',  marginLeft: 'auto'}}
+               sx={{ mt: 0.15, mb: 2,  width: '500px',  marginLeft: 'auto'}}
               >
                Upload File (JobSeeker Only)  <UploadFileIcon/>
                 <input
@@ -149,6 +165,7 @@ export default function ProfileLayout() {
                  />
                </Button>
                </Grid>
+               
         <Grid item xs={12}>
           <FormControlLabel
             control={<Checkbox color="secondary" name="saveAddress" value="yes" />}

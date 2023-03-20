@@ -265,6 +265,11 @@ export default function PageBar(props) {
     setAnchorEl(null);
   };
 
+  const logout = () => {
+    localStorage.clear();
+    handleClose();
+  };
+
   return (
     
     <React.Fragment>
@@ -328,7 +333,7 @@ export default function PageBar(props) {
                 <MenuItem onClick={handleClose}><Link href="/JobSeekerProfilePage" variant="body2">
                     Profile
                   </Link></MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={logout}>
                 <Link href="/Sign-In" variant="body2">
                     Logout
                   </Link>
