@@ -25,18 +25,7 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="My Profile" />
     </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <LayersIcon />
-      </ListItemIcon>
-      <ListItemText primary="Applicants" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <NotificationsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Notifications" />
-    </ListItemButton>
+   
 
     
      
@@ -53,20 +42,9 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="All Applications " />
     </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last six months" />
-    </ListItemButton>
-    <ListItemButton>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Past year" />
-    </ListItemButton>
+    
    
       
    
