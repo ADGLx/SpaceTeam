@@ -28,6 +28,11 @@ import Axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import Avatar from '@mui/material/Avatar';
+import Stack from '@mui/material/Stack';
+
+
+
 const theme = createTheme({
     palette: {
       // This makes the default theme the dark one
@@ -131,7 +136,10 @@ const theme = createTheme({
       setAnchorEl(null);
     };
   
-
+    const logout = () => {
+      localStorage.clear();
+      handleClose();
+    };
 
     return (
       <ThemeProvider theme={theme}>
@@ -182,7 +190,7 @@ const theme = createTheme({
                   <MenuItem onClick={handleClose}><Link href="/" variant="body2">
                     Main Page
                   </Link></MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={logout}>
                 <Link href="/Sign-In" variant="body2">
                     Logout
                   </Link>
@@ -197,6 +205,15 @@ const theme = createTheme({
             <Typography component="h1" variant="h4" align="center" style={{ marginBottom: 16, textDecoration: 'underline' }}>
               My Profile
             </Typography>
+            <Stack direction="row" spacing={2}>
+      <Avatar
+        alt="Remy Sharp"
+        src="/static/images/avatar/1.jpg"
+        sx={{ width: 56, height: 56 }}
+        // align="center"
+      />
+    </Stack>
+
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}  align="center">
          Name: {JSON.parse(localStorage.getItem('user-token'))['username']}
             </Typography>

@@ -91,6 +91,11 @@ export default function CheckoutLayout() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  
+  const logout = () => {
+    localStorage.clear();
+    handleClose();
+  };
 
   return (
     <ThemeProvider theme={theme}>
@@ -141,7 +146,7 @@ export default function CheckoutLayout() {
                   <MenuItem onClick={handleClose}><Link href="/" variant="body2">
                     Main Page
                   </Link></MenuItem>
-                <MenuItem onClick={handleClose}>
+                <MenuItem onClick={logout}>
                 <Link href="/Sign-In" variant="body2">
                     Logout
                   </Link>

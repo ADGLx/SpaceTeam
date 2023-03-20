@@ -35,12 +35,9 @@ const Routing = () => {
          {/* Login and Registration page*/}
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="Sign-Up" element={<Registration />} />
-
         <Route path="EmployerProfile" element={<EmployerProfile />} />
-
-
-        <Route path="JobSeekerProfileUpdate" element={<CheckoutLayout />} />
-        <Route path="JobSeekerProfilePage" element={<ProfileView />} />
+        <Route path="JobSeekerProfileUpdate" element={<ProtectedRoute><CheckoutLayout /></ProtectedRoute>} />
+        <Route path="JobSeekerProfilePage" element={<ProtectedRoute><ProfileView /></ProtectedRoute>} />
 
          {/* Main Page */}
         <Route path="/" element={<ProtectedRoute><PageBar /></ProtectedRoute>} /> 
