@@ -13,19 +13,18 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton >
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton disabled>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText primary="My Profile" />
     </ListItemButton>
-   
   </React.Fragment>
 );
 
@@ -34,11 +33,12 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Reports
     </ListSubheader>
-    <ListItemButton>
+    <ListItemButton disabled>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="All reports" />
+
     </ListItemButton>
     
   </React.Fragment>

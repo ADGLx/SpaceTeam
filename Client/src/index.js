@@ -7,13 +7,19 @@ import Album from './Album';
 import theme from './theme';
 import EmployerDashboard from './EmployerDashboard/EmployerDashboard';
 import UserReports from './UserReports/UserReports';
+import EmployerProfile from './EmployerProfile/EmployerProfile';
+
 import SignInSide from './Sign-In/SignInSide';
+import Registration from './Registration/Registration';
 //Implementing the routing
 import {BrowserRouter} from "react-router-dom";
 import { Routes, Route, Outlet } from "react-router-dom";
-
+import JobPostings from './JobPostings/JobPostings';
 import ProtectedRoute from './util/ProtectedRoute';
-
+import PageBar from './JobListingsPage/PageBar';
+import Candidate_info from './Candidate_info';
+import CheckoutLayout from './JobSeekerProfileUpdate/CheckoutLayout';
+import ProfileView from './JobSeekerProfilePage/ProfileView';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -25,19 +31,30 @@ const root = createRoot(rootElement);
 const Routing = () => {
   return(
     <Routes>
-      {/* Handle login here */}
-        <Route path="/profile" element={
-          <ProtectedRoute> 
-           {/*  <Album/> */}
-        </ProtectedRoute>
-        } />
-    
-        <Route path="Sign-In" element={<SignInSide />} />
-        <Route path="EmployerDashboard" element={<EmployerDashboard />} />
-        <Route path="UserReports" element={<UserReports />} />
 
-        <Route path="/" element={<Album/>} />
-        {/* <Route path="*" element={<NoMatch />} /> */}
+         {/* Login and Registration page*/}
+        <Route path="Sign-In" element={<SignInSide />} />
+        <Route path="Sign-Up" element={<Registration />} />
+
+        <Route path="EmployerProfile" element={<EmployerProfile />} />
+
+
+        <Route path="JobSeekerProfileUpdate" element={<CheckoutLayout />} />
+        <Route path="JobSeekerProfilePage" element={<ProfileView />} />
+
+         {/* Main Page */}
+        <Route path="/" element={<ProtectedRoute><PageBar /></ProtectedRoute>} /> 
+       
+        {/* Employers Page */}
+        <Route path="EmployerDashboard" element={<ProtectedRoute><EmployerDashboard /></ProtectedRoute>} />
+        <Route path="JobPostings" element={<ProtectedRoute><JobPostings /></ProtectedRoute>} />
+        
+        {/* Moderators Page */}
+        <Route path="UserReports" element={<ProtectedRoute><UserReports /></ProtectedRoute>} />
+        
+        {/* Unused Page */}
+        {/* <Route path="CandidateInfo" element={<ProtectedRoute><Candidate_info /></ProtectedRoute>} /> */}
+
       </Routes>
   )
 }

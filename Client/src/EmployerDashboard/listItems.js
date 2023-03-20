@@ -10,22 +10,22 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import { Link } from "react-router-dom";
 
 export const mainListItems = (
   <React.Fragment>
-    <ListItemButton>
+    <ListItemButton component={Link} to="/EmployerDashboard">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
-    <ListItemButton>
+    <ListItemButton disabled>
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
-      <ListItemText primary="My Profile" />
+      <ListItemText  primary="My Profile" />
     </ListItemButton>
-   
 
     
      
@@ -38,7 +38,7 @@ export const secondaryListItems = (
     <ListSubheader component="div" inset>
       Applications
     </ListSubheader>
-    <ListItemButton>
+    <ListItemButton disabled>
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>

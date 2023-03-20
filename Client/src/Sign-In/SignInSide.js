@@ -12,6 +12,38 @@ import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useNavigate } from 'react-router-dom';
+import mytheme from '../theme';
+
+//The stuff to call the login API
+import { useEffect, useState, useContext } from 'react';
+import Axios from "axios";
+
+//Call the Auth,
+//import AuthContext from "../AuthProvider";
+
+//This is a sample function of how to use the API
+function ShowAPIData(){
+
+  const [backendData, setBackendData] = useState([{}])
+
+  useEffect(() =>{
+    fetch("/api").then (response => response.json()).then(data=> setBackendData(data))
+  }, []) //this is so it can only be called the first time it oppens the page
+
+
+  return(
+    <div>
+      {(typeof backendData.users==='undefined') ? (
+        <p> Loading...</p>
+      ):(
+        backendData.users.map((user,i)=> (
+          <p key ={i}>{user}</p>
+        ))
+      )}
+    </div>
+  )
+}
 
 function Copyright(props) {
   return (
@@ -26,17 +58,134 @@ function Copyright(props) {
   );
 }
 
-const theme = createTheme();
+// const theme = createTheme();
+const theme = mytheme; //Using my custom theme 
 
 export default function SignInSide() {
+
+  // const {setAuth} = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const [errorMsg, setErrorMsg] = useState(false)
+  //There is some sort of error but wtv
+
+  //This sends the submit
   const handleSubmit = (event) => {
-    event.preventDefault();
+    event.preventDefault(); //so it is not called as soon as it starts I think
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // console.log('user:', data.get('username'));
+    // console.log('pass:', data.get('password'));
+    
+    const sentObj = {username: data.get('username'),
+    password: data.get('password')};
+
+
+    //For some reason this dont work so ill try the old way of just calling the sv
+    Axios.post('/api/login', sentObj)
+    .then((response)=> {
+      //console.log(response.data)
+      //set user state here if
+      if(response.data == true)
+      {
+        setErrorMsg(true)
+        console.log("Unable to login, response;  "+ response.data)
+      }
+      else //In here the login takes place btw
+      {
+        setErrorMsg(false)
+        localStorage.clear();
+        //Save token CHANGE LATER THIS IS HELLA UNSAFE
+        var token = response.data
+        //console.log("Saving token as: "+ JSON.stringify(token) )
+        localStorage.setItem('user-token', JSON.stringify(token)) //This is so the user is remembered later or sum
+
+        console.log(token['type']);
+          //So in here we handle the user type
+          if(token['type']=="Employer")
+          {
+            navigate('/EmployerDashboard');
+          } else if(token['type']=="Moderator")
+          {
+            navigate('/UserReports');
+          } 
+          //Just a job seeker
+          else {
+            navigate('/');
+          }
+       // navigate('/');
+
+      }
+
+
+    })
+    .catch ((err)=> {
+      console.log(err);
+    })
+
+    //Hereis the other way of calling the sv (nvm it doesnt work because it is like some sort of trigger)
+    // const [username, setUsername] = useState([{}])
+    // useEffect(() =>{
+    //   fetch("/api/login").then (response => response.json()).then(newdata=> setUsername(newdata))
+    // }, []) //this is so it can only be called the first time it oppens the page
+  
+    //Doing it n here again to see if
   };
+
+  //This might handle the reply
+  function ShowTextFields () {
+    
+    if(errorMsg)
+    {
+      return<span> <TextField
+      error
+      margin="normal"
+      required
+      fullWidth
+      id="username"
+      label="Email"
+      name="username"
+      autoFocus
+       helperText= {"Wrong email/password"}
+    />
+    <TextField
+    error
+      margin="normal"
+      required
+      fullWidth
+      name="password"
+      label="Password"
+      type="password"
+      id="password"
+      autoComplete="current-password"
+    /> </span>
+    } else 
+    {
+      return<span> <TextField
+      margin="normal"
+      required
+      fullWidth
+      id="username"
+      label="Email"
+      name="username"
+      autoFocus
+      // helperText= {}
+    />
+    <TextField
+      margin="normal"
+      required
+      fullWidth
+      name="password"
+      label="Password"
+      type="password"
+      id="password"
+      autoComplete="current-password"
+    /> </span>
+  
+    }
+
+   
+
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -48,12 +197,11 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
-            backgroundRepeat: 'no-repeat',
+            backgroundImage: 'url(/img/wtv.jpeg)',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: 'cover',
-            backgroundPosition: 'center',
+            backgroundPosition: 'right',
           }}
         />
         <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
@@ -73,28 +221,9 @@ export default function SignInSide() {
               Sign in
             </Typography>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                id="email"
-                label="Email Address"
-                name="email"
-                autoComplete="email"
-                autoFocus
-              />
-              <TextField
-                margin="normal"
-                required
-                fullWidth
-                name="password"
-                label="Password"
-                type="password"
-                id="password"
-                autoComplete="current-password"
-              />
+              <ShowTextFields />
               <FormControlLabel
-                control={<Checkbox value="remember" color="primary" />}
+                control={<Checkbox value="remember" color="primary" checked={true} disabled/>}
                 label="Remember me"
               />
               <Button
@@ -107,17 +236,17 @@ export default function SignInSide() {
               </Button>
               <Grid container>
                 <Grid item xs>
-                  <Link href="#" variant="body2">
-                    Forgot password?
+                  <Link href="/Sign-Up" variant="body2">
+                    Dont have an account? Register here
                   </Link>
                 </Grid>
                 <Grid item>
-                  <Link href="#" variant="body2">
-                    {"Don't have an account? Sign Up"}
-                  </Link>
                 </Grid>
               </Grid>
+              {/* <ShowAPIData /> */}
               <Copyright sx={{ mt: 5 }} />
+
+              
             </Box>
           </Box>
         </Grid>

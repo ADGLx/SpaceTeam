@@ -6,11 +6,16 @@ import TableCell from '@mui/material/TableCell';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Title from './Title';
+import { useEffect } from 'react';
+import Axios from 'axios';
 
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }
+
+
+
 
 const rows = [
   createData(
@@ -53,6 +58,39 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
+
+  const [rows, setRows] = React.useState([]);
+
+  //This just calls it everytime it is rendered
+useEffect(() => {
+  handleApplicantList();
+ },[])
+
+ 
+function handleApplicantList()
+{
+    //Hard code to test job applications on employer dashboard
+    var userInfo = JSON.parse(localStorage.getItem('user-token'))
+    var currentUser = userInfo['ID'];
+
+    const sentObj = {
+      EmployerID: currentUser
+    }
+      //Post changes to the server
+      //Access local storage and retrieve ID 
+      Axios.post('/api/displayJobs', sentObj). 
+      then(function (response) {
+        var newData = []
+
+        response.data.forEach(element => 
+          {
+            newData.push(createData(element[''], element['Date'], element['ApplicantName'], element['Position'], element['ApplicantEmail'], element['JobID'],  "Unassigned"))
+          });
+
+          setRows([...rows, ...newData]);
+      })
+}
+
   return (
     <React.Fragment>
       <Title>Recent Applications</Title>
@@ -61,7 +99,7 @@ export default function Orders() {
           <TableRow>
             <TableCell>Date</TableCell>
             <TableCell>Name</TableCell>
-            <TableCell>Job Title</TableCell>
+            <TableCell>Job Posting</TableCell>
             <TableCell>Email</TableCell>
             <TableCell align="right">Job number</TableCell>
           </TableRow>
