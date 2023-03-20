@@ -27,6 +27,13 @@ export const mainListItems = (
       <ListItemText  primary="My Profile" />
     </ListItemButton>
 
+    <ListItemButton >
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Job Postings" />
+    </ListItemButton>
+
     
      
    
