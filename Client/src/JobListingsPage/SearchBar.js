@@ -19,7 +19,7 @@ export default function SearchBar() {
         options={options.sort((a, b) => -b.firstLetter.localeCompare(a.firstLetter))}
         groupBy={(option) => option.firstLetter}
         getOptionLabel={(option) => option.label}
-        sx={{minWidth: 200 }}
+        sx={{minWidth: 240 }}
         renderInput={(params) => <TextField {...params} label="Professions" />}
       />
       </FormControl>
