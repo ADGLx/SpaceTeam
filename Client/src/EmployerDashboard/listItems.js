@@ -26,17 +26,12 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText  primary="My Profile" />
     </ListItemButton>
-    <ListItemButton component={Link} to="/JobPostings">
+
+    <ListItemButton >
       <ListItemIcon>
-        <LayersIcon />
+        <DashboardIcon />
       </ListItemIcon>
       <ListItemText primary="Job Postings" />
-    </ListItemButton>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <NotificationsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Notifications" />
     </ListItemButton>
 
     
@@ -54,20 +49,9 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="All Applications " />
     </ListItemButton>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last six months" />
-    </ListItemButton>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Past year" />
-    </ListItemButton>
+    
    
       
    

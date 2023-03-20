@@ -124,10 +124,8 @@ function DashboardContent() {
             >
               {JSON.parse(localStorage.getItem('user-token'))['username']}'s Employer Dashboard
             </Typography>
-            <IconButton disabled color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
+            <IconButton color="inherit">
+        
             </IconButton>
           </Toolbar>
         </AppBar>

@@ -2,6 +2,9 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import { FormControl } from '@mui/material';
+import { useState ,  useEffect} from 'react';
+import Highlighter from 'react';
+
 
 export default function SearchBar() {
     const options = Professions.map((option) => {
@@ -23,7 +26,7 @@ export default function SearchBar() {
         renderInput={(params) => <TextField {...params} label="Professions" />}
       />
       </FormControl>
-      
+    
     );
   }
 

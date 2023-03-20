@@ -25,18 +25,14 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="My Profile" />
     </ListItemButton>
-    <ListItemButton disabled>
+
+    <ListItemButton >
       <ListItemIcon>
-        <BarChartIcon />
+        <DashboardIcon />
       </ListItemIcon>
-      <ListItemText primary="All Reports" />
+      <ListItemText primary="Job Postings" />
     </ListItemButton>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <NotificationsIcon />
-      </ListItemIcon>
-      <ListItemText primary="Notifications" />
-    </ListItemButton>
+
   </React.Fragment>
 );
 
@@ -49,19 +45,9 @@ export const secondaryListItems = (
       <ListItemIcon>
         <AssignmentIcon />
       </ListItemIcon>
-      <ListItemText primary="Current month" />
+      <ListItemText primary="All reports" />
+
     </ListItemButton>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Last six months" />
-    </ListItemButton>
-    <ListItemButton disabled>
-      <ListItemIcon>
-        <AssignmentIcon />
-      </ListItemIcon>
-      <ListItemText primary="Past year" />
-    </ListItemButton>
+    
   </React.Fragment>
 );
