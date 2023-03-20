@@ -12,9 +12,26 @@ import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import AddressForm from './AddressForm';
-import PaymentForm from './PaymentForm';
+import EmployerA from './EmployerA';
+import EmployerP from './EmployerP';
 
+
+const theme = createTheme({
+  palette: {
+    // This makes the default theme the dark one
+    mode:'dark', 
+    type: 'dark',
+    primary: {
+      main: '#d5d540',
+    },
+    secondary: {
+      main: '#b5acad',
+    },
+    error: {
+      main: '#f44336',
+    },
+  },
+});
 
 function Copyright() {
   return (
@@ -34,16 +51,15 @@ const steps = ['Update Profile'];
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <AddressForm />;
+      return <EmployerA />;
     case 1:
-      return <PaymentForm />;
+      return <EmployerP />;
     
   }
 }
 
-const theme = createTheme();
 
-export default function Checkout() {
+export default function EmployerProfile() {
   const [activeStep, setActiveStep] = React.useState(0);
 
   const handleNext = () => {

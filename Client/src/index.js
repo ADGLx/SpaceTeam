@@ -7,7 +7,7 @@ import Album from './Album';
 import theme from './theme';
 import EmployerDashboard from './EmployerDashboard/EmployerDashboard';
 import UserReports from './UserReports/UserReports';
-import Checkout from './Checkout/Checkout';
+import EmployerProfile from './EmployerProfile/EmployerProfile';
 
 import SignInSide from './Sign-In/SignInSide';
 import Registration from './Registration/Registration';
@@ -34,7 +34,7 @@ const Routing = () => {
          {/* Login and Registration page*/}
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="Sign-Up" element={<Registration />} />
-        <Route path="Checkout" element={<Checkout />} />
+        <Route path="EmployerProfile" element={<EmployerProfile />} />
 
          {/* Main Page */}
         <Route path="/" element={<ProtectedRoute><PageBar /></ProtectedRoute>} /> 

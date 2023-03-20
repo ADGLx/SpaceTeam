@@ -8,7 +8,7 @@ import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 
 
-export default function AddressForm() {
+export default function EmployerA() {
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -43,17 +43,31 @@ export default function AddressForm() {
             required
             id="address1"
             name="address1"
-            label="Address"
+            label="Company"
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
           />
         </Grid>
+
+
+        <Grid item xs={12}>
+          <TextField
+            required
+            id="address1"
+            name="address1"
+            label="Email"
+            fullWidth
+            autoComplete="shipping address-line1"
+            variant="standard"
+          />
+        </Grid>
+
         <Grid item xs={12}>
           <TextField
             id="address2"
             name="address2"
-            label="Company"
+            label="Address"
             fullWidth
             autoComplete="shipping address-line2"
             variant="standard"
@@ -101,13 +115,7 @@ export default function AddressForm() {
             variant="standard"
           />
         </Grid>
-        <Grid item xs={12}>
-          <FormControlLabel
-            control={<Checkbox color="secondary" name="saveAddress" value="yes" />}
-            label="Use this as my deafult job application package"
-          />
-        </Grid>
-
+       
        
 
 
