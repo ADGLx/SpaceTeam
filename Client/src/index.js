@@ -7,6 +7,8 @@ import Album from './Album';
 import theme from './theme';
 import EmployerDashboard from './EmployerDashboard/EmployerDashboard';
 import UserReports from './UserReports/UserReports';
+import EmployerProfile from './EmployerProfile/EmployerProfile';
+
 import SignInSide from './Sign-In/SignInSide';
 import Registration from './Registration/Registration';
 //Implementing the routing
@@ -33,8 +35,13 @@ const Routing = () => {
          {/* Login and Registration page*/}
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="Sign-Up" element={<Registration />} />
+
+        <Route path="EmployerProfile" element={<EmployerProfile />} />
+
+
         <Route path="JobSeekerProfileUpdate" element={<CheckoutLayout />} />
         <Route path="JobSeekerProfilePage" element={<ProfileView />} />
+
          {/* Main Page */}
         <Route path="/" element={<ProtectedRoute><PageBar /></ProtectedRoute>} /> 
        
