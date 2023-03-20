@@ -164,7 +164,7 @@ function DashboardContent() {
           <Toolbar />
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
-              {/* Chart */}
+              {/* Chart
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
@@ -176,7 +176,7 @@ function DashboardContent() {
                 >
                   <Chart />
                 </Paper>
-              </Grid>
+              </Grid> */}
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
