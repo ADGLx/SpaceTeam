@@ -28,7 +28,16 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Collapse from '@mui/material/Collapse';
 import { styled } from '@mui/material/styles';
-
+import { spacing } from '@mui/system';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import Link from '@mui/material/Link';
+import Avatar from '@mui/material/Avatar';
+import AdbIcon from '@mui/icons-material/Adb';
+import Tooltip from '@mui/material/Tooltip';
+import ProfileView from '../JobSeekerProfilePage/ProfileView';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -142,16 +151,21 @@ export default function PageBar(props) {
   function ShowCards()
   {
    // console.log(cardsInfo)
-    const [expanded, setExpanded] = React.useState(false);
+    const [expanded, setExpanded] = useState(Array(cards).fill(false));
 
-    const handleExpandClick = () => {
-      setExpanded(!expanded);
+    const handleExpandClick = (index) => {
+      setExpanded((prevState) => {
+        const nextState = [...prevState];
+        nextState[index] = !nextState[index];
+        return nextState;
+      });
     };
 
       var returnValue = []
       for (let index = 0; index < cards; index++) {
         //In here we basically change the stuff 
        // console.log(cardsInfo[index])
+       
         const jobID = cardsInfo[index]['JobID'];
         const CompanyName = cardsInfo[index]['CompanyName'];
         const Position = cardsInfo[index]['Position'];
@@ -159,9 +173,18 @@ export default function PageBar(props) {
         const EmployerID = cardsInfo[index]['EmployerID'];
         //console.log(Position)
 
-
-        var eachCard = ( <Grid item xs = {12} sm = {6} lg={4} >
-          <Card sx={{ minWidth: 200 }}>
+        
+        var eachCard = ( 
+//           <Grid
+//   container
+//   spacing={0}
+//   direction="row"
+//   alignItems="center"
+//   justifyContent="center"
+//   style={{ minHeight: '0vh' }}
+// >
+        <Grid item xs = {12} sm = {6} lg={4} >
+          <Card sx={{ minWidth: 200, margin: '1rem'}}>
         <CardActionArea>
         <CardMedia
         component="img"
@@ -189,21 +212,19 @@ export default function PageBar(props) {
                  <ReportIcon /> 
               </IconButton>
               <ExpandMore
-                expand={expanded}
-                onClick={handleExpandClick}
-                aria-expanded={expanded}
-                aria-label="show more"
+              expand={expanded[index]}
+              onClick={() => handleExpandClick(index)}
+              aria-expanded={expanded[index]}
+              aria-label="show more"
               >
                 <ExpandMoreIcon />
               </ExpandMore>
         </CardActions>
-        <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
         <CardContent>
                 <Typography paragraph>Details:</Typography>
                 <Typography paragraph>
-                <Button size="small" color="primary">
-        PLACEHOLDER_INFO
-        </Button>
+    
         <Button size="small" color="primary">
         PLACEHOLDER_INFO
         </Button>
@@ -220,16 +241,30 @@ export default function PageBar(props) {
               </CardContent>
             </Collapse>
         </Card>
-         </Grid>
+          {/* // </Grid> */}
+          </Grid>
         )
 
-
-        
         returnValue.push(eachCard)
       }
 
       return returnValue;
   }
+  const [auth, setAuth] = React.useState(true);
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleChange = (event) => {
+    setAuth(event.target.checked);
+  };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     
     <React.Fragment>
@@ -238,7 +273,7 @@ export default function PageBar(props) {
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
-          <IconButton
+          {/* <IconButton
             size="large"
             edge="start"
             color="inherit"
@@ -246,30 +281,95 @@ export default function PageBar(props) {
             sx={{ mr: 2 }}
           >
             <MenuIcon />
-          </IconButton>
+          </IconButton> */}
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Welcome {JSON.parse(localStorage.getItem('user-token'))['username']}!
             </Typography>
-            {/* <Button color="inherit">Login</Button> */}
+            {/* <Button color="inherit">LogOut</Button> */}
+            {/* <MenuItem onClick={handleProfileMenuOpen}> */}
+        {/* <IconButton
+          size="large"
+          aria-label="account of current user"
+          aria-controls="primary-search-account-menu"
+          aria-haspopup="true"
+          color="inherit"
+        > */}
+          {/* <AccountCircleIcon />
+        </IconButton> */}
+        {/* <p>Profile</p>
+      </MenuItem> */}
+       {auth && (
+            <div>
+              <IconButton
+                size="large"
+                aria-label="account of current user"
+                aria-controls="menu-appbar"
+                aria-haspopup="true"
+                onClick={handleMenu}
+                color="inherit"
+              >
+                <AccountCircle />
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleClose}><Link href="/JobSeekerProfilePage" variant="body2">
+                    Profile
+                  </Link></MenuItem>
+                <MenuItem onClick={handleClose}>
+                <Link href="/Sign-In" variant="body2">
+                    Logout
+                  </Link>
+                </MenuItem>
+              </Menu>
+            </div>
+          )}
+          
           </Toolbar>
         </AppBar>
       </HideOnScroll>
       <Toolbar />
       <Container>
       <Typography variant="h8" component="div" color= 'White'>
-      <Grid container spacing={1}  >
+      {/* <Grid container spacing={1}  >
             <Grid item xs = {12} sm = {12} lg={12}>
       <Box sx={{
           fontSize: '1.88rem',
           fontWeight: '700',
           position: 'absolute',
-          top: 105,
+          top: 75,
           left: '32%',
           zIndex: 'mobile stepper',}}>   
           WELCOME TO THE JOB POSTINGS PAGE
         </Box>
         </Grid>
-        </Grid>
+        </Grid> */}
+        <Grid
+  container
+  spacing={0}
+  direction="column"
+  alignItems="center"
+  justifyContent="center"
+  style={{ minHeight: '15vh' }}
+>
+
+  <Grid item xs={6} style={{ fontSize: '34px' }}>
+ WELCOME TO THE JOB POSTINGS PAGE!
+  </Grid>   
+   
+</Grid>
             </Typography>
             </Container>
         {/* <Box sx={{
@@ -284,26 +384,42 @@ export default function PageBar(props) {
           {<SearchBar variant="h8" component="div"/> }
         </Box>
         <Container> */}
-        <Box sx={{
+        {/* <Box sx={{
           p: 2,
           borderRadius: 2 ,
           fontSize: '0.875rem',
           fontWeight: '700',
           position: 'absolute',
-          top: 175,
+          top: 125,
           left: '35%',
           zIndex: 'tooltip',}}>
         <div>
-       <Grid container spacing={1}  >
-            <Grid item xs = {6} sm = {6} lg={6}>
+       <Grid container spacing={3}  >
+            <Grid item xs = {12} sm = {6} lg={6}>
             <SearchBar/>
             </Grid>
-            <Grid item xs = {6} sm = {6} lg={6}> 
+            <Grid item xs = {12} sm = {6} lg={6}> 
             <SmallBar/>
             </Grid>
             </Grid>
             </div>
-            </Box>
+            </Box> */}
+            <Grid
+  container
+  spacing={1.5}
+  direction="row"
+  alignItems="center"
+  justifyContent="center"
+  style={{ minHeight: '0vh' }}
+>
+
+  <Grid item xs = {12} sm = {12} lg={2}>
+   <SearchBar/>
+  </Grid>   
+  <Grid item xs = {12} sm = {12} lg={2}> 
+            <SmallBar/>
+            </Grid>
+</Grid>
         {/* <Box sx={{
           p: 2,
           borderRadius: 2 ,
@@ -352,19 +468,29 @@ export default function PageBar(props) {
       </Box> 
       </Container> */}
 
-<div>
-    <Box sx = {{
+{/* <div> */}
+    {/* <Box sx = {{
          position: 'absolute',
          top: 275,
          left: '5%'
-    }}>
+    }}> */}
      
-        <Grid container spacing={3}>
-          <ShowCards />
-        </Grid>
-        </Box>
+     <Grid
+  container
+  spacing={1.5}
+  direction="row"
+  // alignItems="center"
+  // justifyContent="center"
+  style={{ minHeight: '12vh' }}
+>
+        {/* <Grid xs = {12} sm = {6} lg={3}> */}
+          <ShowCards/>
+        {/* </Grid> */}
+</Grid>
+
+        {/* </Box> */}
    
-    </div>
+    {/* </div> */}
     </React.Fragment>
     
   );
