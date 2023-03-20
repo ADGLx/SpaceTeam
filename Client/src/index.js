@@ -16,7 +16,8 @@ import JobPostings from './JobPostings/JobPostings';
 import ProtectedRoute from './util/ProtectedRoute';
 import PageBar from './JobListingsPage/PageBar';
 import Candidate_info from './Candidate_info';
-
+import CheckoutLayout from './JobSeekerProfileUpdate/CheckoutLayout';
+import ProfileView from './JobSeekerProfilePage/ProfileView';
 
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
@@ -32,6 +33,8 @@ const Routing = () => {
          {/* Login and Registration page*/}
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="Sign-Up" element={<Registration />} />
+        <Route path="JobSeekerProfileUpdate" element={<CheckoutLayout />} />
+        <Route path="JobSeekerProfilePage" element={<ProfileView />} />
          {/* Main Page */}
         <Route path="/" element={<ProtectedRoute><PageBar /></ProtectedRoute>} /> 
        

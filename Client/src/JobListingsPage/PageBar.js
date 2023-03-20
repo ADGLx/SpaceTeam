@@ -37,6 +37,7 @@ import Link from '@mui/material/Link';
 import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
 import Tooltip from '@mui/material/Tooltip';
+import ProfileView from '../JobSeekerProfilePage/ProfileView';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -324,7 +325,9 @@ export default function PageBar(props) {
                 open={Boolean(anchorEl)}
                 onClose={handleClose}
               >
-                <MenuItem onClick={handleClose}>Profile</MenuItem>
+                <MenuItem onClick={handleClose}><Link href="/JobSeekerProfilePage" variant="body2">
+                    Profile
+                  </Link></MenuItem>
                 <MenuItem onClick={handleClose}>
                 <Link href="/Sign-In" variant="body2">
                     Logout
