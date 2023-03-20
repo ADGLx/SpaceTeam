@@ -40,6 +40,13 @@ app.post('/api/register', function (req, res) {
     const password = req.body.password;
     const type = req.body.type;
     
+    //Have here a check to make sure it is not empty, if it is empty just send an erroe back
+    if(username=="" | email =="" | password =="")
+    {
+        console.log("Attempted to create wrong account!");
+        res.send(false)
+        return
+    }
 
 
    // console.log(date + " aaa"+ time);
@@ -81,7 +88,7 @@ app.post('/api/login', function (req,res){
             }
           //  console.log(results);
             //api/login here
-            if(results.length>0)
+            if(results.length>0 && username != "" && password != "")
             {
                 //Successful login
                 console.log("User with ID: "+ results[0]['ID'] + " has logged in!"); //This is how we get the ID
