@@ -22,6 +22,7 @@ import mytheme from '../theme';
 import StickyHeadTable from './StickyHeadTable';
 import CreateJob from './CreateJob';
 
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -122,7 +123,7 @@ function DashboardContent() {
               Job Postings
             </Typography>
             <Grid item xs={12}>
-                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                <Paper sx={{ p: 1, display: 'flex', flexDirection: 'column' }}>
                   <CreateJob />
                 </Paper>
               </Grid>
