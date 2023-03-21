@@ -14,9 +14,7 @@ const cors = require('cors'); //This is needed I think
 app.use(cors()); //This might have been needed?
 
 const mysql = require('mysql')
-
 const fs = require('fs')
-const { callbackify } = require('util')
 
 app.use(express.json());//This is used to parse what comes 
 
@@ -58,7 +56,7 @@ app.post('/api/register', upload.single('CV'), function (req, res) {
     }
    const fileBuffer = req.file.buffer;
    const binData = sharp(fileBuffer).toBuffer().toString('binary');
-   //console.log(req.body);
+//    console.log(binData);
 
    // console.log(date + " aaa"+ time);
     // I should probably wrap this for errors or sum later
