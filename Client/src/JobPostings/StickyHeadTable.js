@@ -14,7 +14,7 @@ const columns = [
 
 ];
 
-function createData(Posting, Description) {
+function createData(CompanyName, Description) {
   
   return { Posting, Description };
 }

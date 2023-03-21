@@ -21,6 +21,8 @@ import Axios from "axios";
 import { useNavigate } from 'react-router-dom';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 
+const FormData = require('form-data');
+
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
@@ -35,6 +37,11 @@ function Copyright(props) {
 }
 
 const theme = myTheme;
+
+function handleFile(e){
+  console.log(e.target.files, "$$$$");
+  console.log(e.target.files[0], "$$$$");
+}
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -54,20 +61,34 @@ export default function SignUp() {
     setAge(event.target.value);
   };
 
+
   const handleRegisterUser = (event) => 
   {
     event.preventDefault();
 
     const data = new FormData(event.currentTarget);
 
+    const fileUploaded = data.get('cv');
+    console.log(fileUploaded.name);
+    //new Response(data).text().then(console.log)
+
     const sentObj = {
       username: data.get('Name'),
       email: data.get('email'),
       password: data.get('password'),
-      type: data.get('type')
+      type: data.get('type'),
+      CV: data.get('cv')
     }
 
-      Axios.post('/api/register', sentObj)
+   
+
+    const config = {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    };
+
+      Axios.post('/api/register', sentObj, config)
       .then((response) => {
           //Handle here the login automatically once the server replies with true
           if(response.data)
@@ -89,32 +110,39 @@ export default function SignUp() {
         <Box
           sx={{
             marginTop: 8,
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
           }}
         >
-          <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
+          <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign up
           </Typography>
-          <Box component="form" noValidate onSubmit={handleRegisterUser} sx={{ mt: 3 }}>
-          <Grid container spacing={2}>
-          <Grid item xs={12} >
-                <InputLabel id="demo-simple-select-label">Account Type</InputLabel>
+          <Box
+            component="form"
+            noValidate
+            onSubmit={handleRegisterUser}
+            sx={{ mt: 3 }}
+          >
+            <Grid container spacing={2}>
+              <Grid item xs={12}>
+                <InputLabel id="demo-simple-select-label">
+                  Account Type
+                </InputLabel>
                 <FormControl fullWidth>
                   <Select
-                  labelId="demo-simple-select-label"
-                  id="type"
-                  name ="type"
-                  value={age}
-                  label="Account Type"
-                  onChange={handleChange}
+                    labelId="demo-simple-select-label"
+                    id="type"
+                    name="type"
+                    value={age}
+                    label="Account Type"
+                    onChange={handleChange}
                   >
-                  <MenuItem value={"Job Seeker"}>Job Seeker</MenuItem>
-                  <MenuItem value={"Employer"}>Employer</MenuItem>
+                    <MenuItem value={"Job Seeker"}>Job Seeker</MenuItem>
+                    <MenuItem value={"Employer"}>Employer</MenuItem>
                   </Select>
                 </FormControl>
               </Grid>
@@ -151,19 +179,19 @@ export default function SignUp() {
                 />
               </Grid>
             </Grid>
+
             <Button
               variant="contained"
               component="label"
               type="submit"
               fullWidth
-               sx={{ mt: 3, mb: 2 }}
-              >
-               Upload File (JobSeeker Only)  <UploadFileIcon/>
-                <input
-              type="file"
-                 hidden
-                 />
-               </Button>
+              sx={{ mt: 3, mb: 2 }}
+            >
+              <br></br>
+              <label>Upload CV</label>
+              <input type="file" name="cv" style={{ display: "none" }} />
+            </Button>
+
             <Button
               type="submit"
               fullWidth
