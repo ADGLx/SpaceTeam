@@ -7,30 +7,54 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
+import { useEffect } from 'react';
+import Axios from 'axios';
 
 const columns = [
-  { id: 'Posting', label: 'Posting', minWidth: 170 },
-  { id: 'Description', label: 'Description', minWidth: 100 },
-
+  { id: 'Position', label: 'Position', minWidth: 170 },
+  { id: 'Description', label: 'Description', minWidth: 100},
+  { id: 'NumberOfApplicants', label: 'Number of Applicants', minWidth: 170 }
 ];
 
-function createData(Posting, Description) {
+function createData(Position, Description, NumberOfApplicants) {
   
-  return { Posting, Description };
+  return { Position, Description, NumberOfApplicants };
 }
 
-const rows = [
-  createData('Job ##1', 'Descrip'),
-  createData('Job ##1262', 'Descrip'),
-  createData('Job ##152', 'Descrip'),
-  createData('Job ##13+', 'Descrip'),
-  createData('Job ##1+3', 'Descrip'),
-  createData('Job ##136', 'Descrip'),
 
-];
+
 export default function StickyHeadTable() {
   const [page, setPage] = React.useState(0);
   const [rowsPerPage, setRowsPerPage] = React.useState(10);
+  const [rows, setRows] = React.useState([]);
+
+  useEffect(() => {
+    handleJobPostings();
+  },[])
+  
+  function handleJobPostings() {
+    var userInfo = JSON.parse(localStorage.getItem("user-token"));
+    var username = userInfo["username"];
+    //console.log(username);
+
+    const sentObj = {
+      CompanyName: username,
+    };
+
+    //Sent company name for query to backend:
+    Axios.post("/api/JobPostings", sentObj).then(function (response) {
+
+      var newData = []
+
+      response.data.forEach(element => 
+        {
+          newData.push(createData(element['Position'], element['PositionInfo'], element['NumOfApplicants']))
+        });
+
+       setRows([...rows, ...newData]);
+    })
+  }
+
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);

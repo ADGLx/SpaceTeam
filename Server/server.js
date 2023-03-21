@@ -251,6 +251,7 @@ app.post('/api/create-job', function (req, res) {
         )
     })
 
+    //UPDATED FROM JOBLISTING REPOSITORY!!!!!!!!!!!!!!!!!!!!!!
      //Change report entry when report has been triggered
      app.post('/api/apply', function(req, res){
 
@@ -267,16 +268,48 @@ app.post('/api/create-job', function (req, res) {
 
 
         db.query(
-            "INSERT INTO JobApplicants(`JobID`,`ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`,`Position` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            [JobID,UserID,EmployerID, CompanyName, Username, Date, Email, Position  ], function(error, result, fields) {
+            "INSERT INTO JobApplicants(`JobID`,`ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`,`Position` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+            [JobID,UserID,EmployerID, CompanyName, Username, Date, Email, Position, Position], function(error, result, fields) {
                 if(error){
                     console.log(error);
                 }
                 else{
-                    //console.log("Successfuly reported listing!");
                     res.send(result);
                 }
             }
 
+        )
+
+        db.query(
+            "UPDATE JobListing SET NumOfApplicants = NumOfApplicants + 1 WHERE Position = ?;", 
+            [Position], function(error, result){
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    //console.log('Successfully incremented number of applicants');
+                }
+            }
+        )
+    })
+
+    //Request job postings page info from db
+    app.post('/api/JobPostings', function(req,res){
+
+        //Collect user info to query db
+        const CompanyName = req.body.CompanyName;
+        // console.log(CompanyName);
+
+        db.query(
+            "SELECT Position, PositionInfo, NumOfApplicants FROM JobListing WHERE CompanyName = ?",
+            [CompanyName], function(err, response){
+                if(err) {
+                    console.log(err);
+                }
+                else{
+                    res.send(response);
+                    // console.log(response);
+                }
+            }
         )
     })
