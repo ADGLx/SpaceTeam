@@ -260,44 +260,65 @@ app.post('/api/create-job', function (req, res) {
         )
     })
 
-
+    //UPDATED FROM JOBLISTING REPOSITORY!!!!!!!!!!!!!!!!!!!!!!
      //Change report entry when report has been triggered
-     app.post("/api/apply", function (req, res) {
-       //collect JobID info to report
-       const Jobid = req.body.jobID;
-       const UserID = req.body.userID;
-       const EmployerID = req.body.employerID;
-       const CompanyName = req.body.companyName;
-       const Username = req.body.username;
-       const Date = req.body.date;
-       const Email = req.body.email;
-       const Position = req.body.position;
+     app.post('/api/apply', function(req, res){
 
-       const applyQuery =
-         "INSERT INTO JobApplicants (`JobID`, `ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`, `Position`) SELECT ?, ?, ?, ?, ?, ?, ?, ? FROM dual WHERE NOT EXISTS (SELECT * FROM JobApplicants WHERE `ApplicantID` = ? AND `CompanyName` = ? AND `Position` = ?);";
+        //collect JobID info to report
+        const JobID = req.body.jobID;
+        const UserID = req.body.userID;
+        const EmployerID = req.body.employerID;
+        const CompanyName = req.body.companyName;
+        const Username = req.body.username;
+        const Date = req.body.date;
+        const Email = req.body.email;
+        const Position = req.body.position;
+        //console.log(req.body);
 
-       db.query(
-         applyQuery,
-         [
-           Jobid,
-           UserID,
-           EmployerID,
-           CompanyName,
-           Username,
-           Date,
-           Email,
-           Position,
-           UserID,
-           CompanyName,
-           Position,
-         ],
-         function (error, result, fields) {
-           if (error) {
-             console.log(error);
-           } else {
-             //console.log("Successfuly applied!");
-             res.send(result);
-           }
-         }
-       );
-     });
+
+        db.query(
+            "INSERT INTO JobApplicants(`JobID`,`ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`,`Position` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
+            [JobID,UserID,EmployerID, CompanyName, Username, Date, Email, Position, Position], function(error, result, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    res.send(result);
+                }
+            }
+
+        )
+
+        db.query(
+            "UPDATE JobListing SET NumOfApplicants = NumOfApplicants + 1 WHERE Position = ?;", 
+            [Position], function(error, result){
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    //console.log('Successfully incremented number of applicants');
+                }
+            }
+        )
+    })
+
+    //Request job postings page info from db
+    app.post('/api/JobPostings', function(req,res){
+
+        //Collect user info to query db
+        const CompanyName = req.body.CompanyName;
+        // console.log(CompanyName);
+
+        db.query(
+            "SELECT Position, PositionInfo, NumOfApplicants FROM JobListing WHERE CompanyName = ?",
+            [CompanyName], function(err, response){
+                if(err) {
+                    console.log(err);
+                }
+                else{
+                    res.send(response);
+                    // console.log(response);
+                }
+            }
+        )
+    })
