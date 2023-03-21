@@ -65,17 +65,17 @@ const theme = createTheme({
   
 //   const steps = ['Update Profile'];
   
-  function getStepContent(step) {
-    switch (step) {
-      case 0:
-        return <ProfileLayout />;
-      case 1:
-        return <MessageLayout />;
-      case 2:
-        <ProfileView/>;
+  // function getStepContent(step) {
+  //   switch (step) {
+  //     case 0:
+  //       return <ProfileLayout />;
+  //     case 1:
+  //       return <MessageLayout />;
+  //     case 2:
+  //       <ProfileView/>;
       
-    }
-  }
+  //   }
+  // }
   
   
   
@@ -85,6 +85,7 @@ const theme = createTheme({
     const handleNext = () => {
       setActiveStep(activeStep + 1);
     };
+
   
     const handleBack = () => {
       setActiveStep(activeStep - 1);

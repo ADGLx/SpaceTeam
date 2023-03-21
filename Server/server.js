@@ -153,6 +153,45 @@ app.post("/api/deletePost", (req, res) => {
         })
 })
 
+//Edit the account
+app.post('/api/editAccount', function (req, res) {
+
+    //Getting all the info
+    const userID = req.body.ID;
+    const username = req.body.username;
+    const email = req.body.email;
+
+    //Have here a check to make sure it is not empty, if it is empty just send an erroe back
+    if(username=="" | email =="")
+    {
+        console.log("Attempted to create wrong account!");
+        res.send(false)
+        return
+    }
+
+
+   // console.log(date + " aaa"+ time);
+    // I should probably wrap this for errors or sum later
+    db.query(
+        "UPDATE users SET username = ?, email = ?  WHERE ID = ?;", 
+        [username, email, userID], function (error, results,fields) {
+            if(error){
+                console.log(error);
+                res.send(false);//An error occured
+              
+            }
+          //  console.log(results);
+
+          //Oh wait there is no result? Or is it
+          console.log("User was updated: "+ userID +" "+ email);
+        res.send(true);
+          //It is normal that the result is empty because it was inserted
+
+        }
+    )
+
+
+})
 
 
 // Listening to the port
