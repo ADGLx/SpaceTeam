@@ -97,6 +97,19 @@ export default function CheckoutLayout() {
     handleClose();
   };
 
+  const redirect = () => {
+    // console.log(localStorage.getItem("user-token"));
+    if (JSON.parse(localStorage.getItem('user-token'))["type"] == "Employer") {
+      window.location.replace("/EmployerDashboard");
+    }
+
+    else {
+      window.location.replace("/");
+    }
+
+    handleClose();
+  };
+
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
@@ -143,7 +156,7 @@ export default function CheckoutLayout() {
                 <MenuItem onClick={handleClose}><Link href="/JobSeekerProfilePage" variant="body2">
                     Profile
                   </Link></MenuItem>
-                  <MenuItem onClick={handleClose}><Link href="/" variant="body2">
+                  <MenuItem onClick={redirect}><Link variant="body2">
                     Main Page
                   </Link></MenuItem>
                 <MenuItem onClick={logout}>
@@ -158,16 +171,16 @@ export default function CheckoutLayout() {
       </AppBar>
       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          <Typography component="h1" variant="h4" align="center">
-            My Profile
+          <Typography component="h1" variant="h4" align="center" style={{ marginBottom: 30, textDecoration: 'underline' }}>
+           Update Profile
           </Typography>
-          <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
+          {/* <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
               <Step key={label}>
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
-          </Stepper>
+          </Stepper> */}
           {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h5" gutterBottom>

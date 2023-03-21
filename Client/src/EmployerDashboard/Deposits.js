@@ -33,17 +33,17 @@ export default function Deposits() {
   return (
     <React.Fragment>
       <Title>Recent Applicantions</Title>
-      <Typography component="p" variant="h4">
+      <Typography component="p" variant="h4" >
        {applicants}
       </Typography>
-      <Typography color="text.secondary" sx={{ flex: 1 }}>
+      {/* <Typography color="text.secondary" sx={{ flex: 1 }}>
         as of 24 February, 2023
-      </Typography>
-      <div>
+      </Typography> */}
+      {/* <div>
         <Link color="primary" href="#" onClick={preventDefault}>
           View all applicants
         </Link>
-      </div>
+      </div> */}
     </React.Fragment>
   );
 }

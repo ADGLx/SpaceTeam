@@ -141,6 +141,19 @@ const theme = createTheme({
       handleClose();
     };
 
+    const redirect = () => {
+      // console.log(localStorage.getItem("user-token"));
+      if (JSON.parse(localStorage.getItem('user-token'))["type"] == "Employer") {
+        window.location.replace("/EmployerDashboard");
+      }
+
+      else {
+        window.location.replace("/");
+      }
+
+      handleClose();
+    };
+
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -187,9 +200,11 @@ const theme = createTheme({
                 <MenuItem onClick={handleClose}><Link href="/JobSeekerProfileUpdate" variant="body2">
                     Update Profile
                   </Link></MenuItem>
-                  <MenuItem onClick={handleClose}><Link href="/" variant="body2">
+                  <MenuItem onClick={redirect}>
+                    <Link variant="body2">
                     Main Page
-                  </Link></MenuItem>
+                  </Link>
+              </MenuItem>
                 <MenuItem onClick={logout}>
                 <Link href="/Sign-In" variant="body2">
                     Logout
@@ -205,7 +220,7 @@ const theme = createTheme({
             <Typography component="h1" variant="h4" align="center" style={{ marginBottom: 16, textDecoration: 'underline' }}>
               My Profile
             </Typography>
-            <Stack direction="row" spacing={2}>
+            <Stack direction="row" spacing={2}  justifyContent="center">
       <Avatar
         alt="Remy Sharp"
         src="/static/images/avatar/1.jpg"

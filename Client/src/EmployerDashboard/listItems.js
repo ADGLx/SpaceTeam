@@ -11,8 +11,10 @@ import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from "react-router-dom";
+import LogoutIcon from '@mui/icons-material/Logout';
 
 export const mainListItems = (
+  
   <React.Fragment>
     <ListItemButton component={Link} to="/EmployerDashboard">
       <ListItemIcon>
@@ -20,24 +22,36 @@ export const mainListItems = (
       </ListItemIcon>
       <ListItemText primary="Dashboard" />
     </ListItemButton>
-    <ListItemButton disabled>
+    <ListItemButton component={Link} to="/JobSeekerProfilePage">
       <ListItemIcon>
         <PeopleIcon />
       </ListItemIcon>
       <ListItemText  primary="My Profile" />
     </ListItemButton>
 
-    <ListItemButton >
+    {/* <ListItemButton >
       <ListItemIcon>
         <DashboardIcon />
+        
       </ListItemIcon>
       <ListItemText primary="Job Postings" />
-    </ListItemButton>
+    </ListItemButton> */}
+    <ListItemButton component={Link} to="/JobPostings">
+   <ListItemIcon>
+  <LayersIcon />
+  </ListItemIcon>
+  <ListItemText primary="Job Postings" />
+  </ListItemButton>
+  
 
-    
-     
-   
-  </React.Fragment>
+{/* <ListItemButton component={Link} to="/Sign-In">
+<ListItemIcon>
+<LogoutIcon/>
+</ListItemIcon>
+<ListItemText primary="Logout" />
+</ListItemButton> */}
+</React.Fragment>
+
 );
 
 export const secondaryListItems = (

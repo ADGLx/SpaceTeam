@@ -51,9 +51,9 @@ export default function ProfileLayout() {
         <Grid item xs={12} sm={6}>
           <TextField
             required
-            id="firstName"
-            name="firstName"
-            label="First name"
+            id="Name"
+            name="Name"
+            label="Name/Company Name"
             fullWidth
             autoComplete="given-name"
             variant="standard"
