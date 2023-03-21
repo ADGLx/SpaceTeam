@@ -84,7 +84,7 @@ function handleApplicantList()
 
         response.data.forEach(element => 
           {
-            newData.push(createData(element[''], element['Date'], element['ApplicantName'], element['Position'], element['ApplicantEmail'], element['JobID'],  "Unassigned"))
+            newData.push(createData(element[''], element['Date'], element['ApplicantName'], element['Position'], element['ApplicantEmail']))
           });
 
           setRows([...rows, ...newData]);
@@ -101,7 +101,7 @@ function handleApplicantList()
             <TableCell>Name</TableCell>
             <TableCell>Job Posting</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell align="right">Job number</TableCell>
+            <TableCell align="center">CV</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -111,7 +111,7 @@ function handleApplicantList()
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell align="right">{`${row.amount}`}</TableCell>
+              <TableCell>{'COMING SOON'}</TableCell>
             </TableRow>
           ))}
         </TableBody>

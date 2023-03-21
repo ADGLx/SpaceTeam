@@ -1,6 +1,12 @@
 const express = require('express')
 const app = express()
 // const router = express.Router() //I did not need this, for some reason 
+const multer = require('multer')
+const sharp = require('sharp')
+const storage = multer.memoryStorage()
+const upload = multer({ storage: storage })
+const util = require('util');
+
 var PORT = 5000;
 
 //This is needed to avoid some error on the client console
@@ -8,6 +14,7 @@ const cors = require('cors'); //This is needed I think
 app.use(cors()); //This might have been needed?
 
 const mysql = require('mysql')
+const fs = require('fs')
 
 app.use(express.json());//This is used to parse what comes 
 
@@ -32,14 +39,14 @@ db.connect(); //Change so it runs without sql
 console.log("Connected to db!");
 
 //This is to register
-app.post('/api/register', function (req, res) {
+app.post('/api/register', upload.single('CV'), function (req, res) {
 
     //Getting all the info
     const username = req.body.username;
     const email = req.body.email;
     const password = req.body.password;
     const type = req.body.type;
-    
+   
     //Have here a check to make sure it is not empty, if it is empty just send an erroe back
     if(username=="" | email =="" | password =="")
     {
@@ -47,13 +54,15 @@ app.post('/api/register', function (req, res) {
         res.send(false)
         return
     }
-
+   const fileBuffer = req.file.buffer;
+   const binData = sharp(fileBuffer).toBuffer().toString('binary');
+//    console.log(binData);
 
    // console.log(date + " aaa"+ time);
     // I should probably wrap this for errors or sum later
     db.query(
-        "INSERT INTO users(`username`, `email`, `password`, `type`) VALUES (?, ?, ?, ?);", 
-        [username, email, password, type], function (error, results,fields) {
+        "INSERT INTO users(`username`, `email`, `password`, `type`, `CV`) VALUES (?, ?, ?, ?, ?);", 
+        [username, email, password, type, binData], function (error, results,fields) {
             if(error){
                 console.log(error);
                 res.send(false);//An error occured
@@ -63,13 +72,13 @@ app.post('/api/register', function (req, res) {
 
           //Oh wait there is no result? Or is it
           console.log("A user was registered: "+ email);
+          //console.log("A CV was uploaded: "+ CV.filename);
+        //   console.log("CV: " + CV);
         res.send(true);
           //It is normal that the result is empty because it was inserted
 
         }
     )
-
-
 })
 
 
@@ -251,32 +260,44 @@ app.post('/api/create-job', function (req, res) {
         )
     })
 
+
      //Change report entry when report has been triggered
-     app.post('/api/apply', function(req, res){
+     app.post("/api/apply", function (req, res) {
+       //collect JobID info to report
+       const Jobid = req.body.jobID;
+       const UserID = req.body.userID;
+       const EmployerID = req.body.employerID;
+       const CompanyName = req.body.companyName;
+       const Username = req.body.username;
+       const Date = req.body.date;
+       const Email = req.body.email;
+       const Position = req.body.position;
 
-        //collect JobID info to report
-        const JobID = req.body.jobID;
-        const UserID = req.body.userID;
-        const EmployerID = req.body.employerID;
-        const CompanyName = req.body.companyName;
-        const Username = req.body.username;
-        const Date = req.body.date;
-        const Email = req.body.email;
-        const Position = req.body.position;
-        //console.log(req.body);
+       const applyQuery =
+         "INSERT INTO JobApplicants (`JobID`, `ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`, `Position`) SELECT ?, ?, ?, ?, ?, ?, ?, ? FROM dual WHERE NOT EXISTS (SELECT * FROM JobApplicants WHERE `ApplicantID` = ? AND `CompanyName` = ? AND `Position` = ?);";
 
-
-        db.query(
-            "INSERT INTO JobApplicants(`JobID`,`ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`,`Position` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
-            [JobID,UserID,EmployerID, CompanyName, Username, Date, Email, Position  ], function(error, result, fields) {
-                if(error){
-                    console.log(error);
-                }
-                else{
-                    //console.log("Successfuly reported listing!");
-                    res.send(result);
-                }
-            }
-
-        )
-    })
+       db.query(
+         applyQuery,
+         [
+           Jobid,
+           UserID,
+           EmployerID,
+           CompanyName,
+           Username,
+           Date,
+           Email,
+           Position,
+           UserID,
+           CompanyName,
+           Position,
+         ],
+         function (error, result, fields) {
+           if (error) {
+             console.log(error);
+           } else {
+             //console.log("Successfuly applied!");
+             res.send(result);
+           }
+         }
+       );
+     });
