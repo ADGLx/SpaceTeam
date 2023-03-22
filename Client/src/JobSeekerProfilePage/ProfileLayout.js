@@ -15,7 +15,7 @@ export default function ProfileLayout({isActiveStep}) {
   function handleEdit(event) 
     {
       event.preventDefault();
-      var UserID= JSON.parse(localStorage.getItem('user-token'))["id"];
+      var UserID= JSON.parse(localStorage.getItem('user-token'))["ID"];
       const data = new FormData(event.currentTarget);
  
       //console.log(UserID);
@@ -36,16 +36,13 @@ export default function ProfileLayout({isActiveStep}) {
       };
       
          Axios.post('/api/editAccount', sentObj, config)
-         //setActiveStep(activeStep + 1);
-      //then in here update the page to whatever other page was needed
-      //just send the user back tot he profile
-      //Gotta update the cookie first
-      var newToken = JSON.parse(localStorage.getItem('user-token'));
-      newToken["username"] = data.get('Name');
-      newToken["email"] = data.get('Email');
 
-      localStorage.setItem('user-token',  JSON.stringify(newToken));
-      window.location.replace("/JobSeekerProfilePage");
+         Axios.post('/api/editAccount', sentObj).then((response)=>{
+          var newToken = JSON.parse(localStorage.getItem('user-token'));
+          newToken["username"] = data.get('Name');
+          newToken["email"] = data.get('Email');
+    
+          window.location.replace("/JobSeekerProfilePage");
 
     }
   return (
