@@ -35,15 +35,18 @@ export default function ProfileLayout({isActiveStep}) {
         }
       };
       
-         Axios.post('/api/editAccount', sentObj, config)
 
          Axios.post('/api/editAccount', sentObj).then((response)=>{
           var newToken = JSON.parse(localStorage.getItem('user-token'));
           newToken["username"] = data.get('Name');
           newToken["email"] = data.get('Email');
     
+          localStorage.setItem('user-token',  JSON.stringify(newToken));
           window.location.replace("/JobSeekerProfilePage");
+         }) 
 
+      
+      
     }
   return (
     <React.Fragment>
