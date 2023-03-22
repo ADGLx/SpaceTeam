@@ -17,17 +17,25 @@ export default function ProfileLayout({isActiveStep}) {
       event.preventDefault();
       var UserID= JSON.parse(localStorage.getItem('user-token'))["id"];
       const data = new FormData(event.currentTarget);
-      console.log(isActiveStep)
  
       //console.log(UserID);
       const sentObj = {
         username: data.get('Name'),
         email: data.get('Email'),
-        ID: UserID
+        ID: UserID,
+        CV: data.get('cv'),
+        PF: data.get('pf')
       }
+      console.log( data.get('pf'))
 
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
       
-         Axios.post('/api/editAccount', sentObj)
+         Axios.post('/api/editAccount', sentObj, config)
          //setActiveStep(activeStep + 1);
       //then in here update the page to whatever other page was needed
       //just send the user back tot he profile
@@ -85,6 +93,7 @@ export default function ProfileLayout({isActiveStep}) {
                Upload Profile Photo <AccountCircle />
                 <input
               type="file"
+              name="pf"
                  hidden
                  />
                </Button>
@@ -100,7 +109,8 @@ export default function ProfileLayout({isActiveStep}) {
                Upload File (JobSeeker Only)  <UploadFileIcon/>
                 <input
               type="file"
-                 hidden
+              name="cv"
+              hidden
                  />
                </Button>
                <Grid container justifyContent="flex-end">

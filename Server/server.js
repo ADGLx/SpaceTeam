@@ -162,8 +162,9 @@ app.post("/api/deletePost", (req, res) => {
         })
 })
 
+const cpUpload = upload.fields([{ name: 'cv', maxCount: 1 }, { name: 'pf', maxCount: 1 }]);
 //Edit the account
-app.post('/api/editAccount', function (req, res) {
+app.post('/api/editAccount',cpUpload, function (req, res) {
 
     //Getting all the info
     const userID = req.body.ID;
@@ -177,13 +178,19 @@ app.post('/api/editAccount', function (req, res) {
         res.send(false)
         return
     }
+    const fileBuffer1 = req.files['cv'].buffer;
+    const binData1 = sharp(fileBuffer1).toBuffer().toString('binary');
 
+    const fileBuffer2 = req.files['pf'].buffer;
+    const binData2 = sharp(fileBuffer2).toBuffer().toString('binary');
+
+    console.log(binData1);
 
    // console.log(date + " aaa"+ time);
     // I should probably wrap this for errors or sum later
     db.query(
-        "UPDATE users SET username = ?, email = ?  WHERE ID = ?;", 
-        [username, email, userID], function (error, results,fields) {
+        "UPDATE users SET username = ?, email = ?, CV = ?, PF= ?  WHERE ID = ?;", 
+        [username, email, binData1,binData2,userID], function (error, results,fields) {
             if(error){
                 console.log(error);
                 res.send(false);//An error occured
