@@ -56,7 +56,7 @@ export default function StickyHeadTable() {
           console.log(element['JobID'])
         });
 
-       setRows([...rows, ...newData]);
+       setRows(newData);
     })
   }
 
@@ -87,7 +87,7 @@ export default function StickyHeadTable() {
           console.log("Post Deleted!");
           //window.location.reload(false);
           
-         getAllUserReports();
+          handleJobPostings();
         });
 
     }
@@ -135,12 +135,12 @@ function displayCell(param)
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
-                            : value
+                            : 
+                            
+                            column.id == 'JobID' ? 
+                            <DeleteButton id= {value}/> : value
                             }
 
-                         {column.id == 'JobID' ? 
-                            <DeleteButton id= {value}/> : ""
-                          } 
                         </TableCell>
                       );
                     })}
