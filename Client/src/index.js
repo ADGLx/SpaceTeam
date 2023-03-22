@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client';
 import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 
-import Album from './Album';
+import TeamInfo from './Team_info/TeamInfo';
 import theme from './theme';
 import EmployerDashboard from './EmployerDashboard/EmployerDashboard';
 import UserReports from './UserReports/UserReports';
@@ -38,7 +38,7 @@ const Routing = () => {
         <Route path="EmployerProfile" element={<EmployerProfile />} />
         <Route path="JobSeekerProfileUpdate" element={<ProtectedRoute><CheckoutLayout /></ProtectedRoute>} />
         <Route path="JobSeekerProfilePage" element={<ProtectedRoute><ProfileView /></ProtectedRoute>} />
-
+        <Route path="Info" element={<TeamInfo />} />
          {/* Main Page */}
         <Route path="/" element={<ProtectedRoute><PageBar /></ProtectedRoute>} /> 
        
