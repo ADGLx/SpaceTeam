@@ -56,7 +56,7 @@ export const mainListItems = (
 
 export const secondaryListItems = (
   <React.Fragment>
-    <ListSubheader component="div" inset>
+    {/* <ListSubheader component="div" inset>
       Applications
     </ListSubheader>
     <ListItemButton disabled>
@@ -64,7 +64,7 @@ export const secondaryListItems = (
         <AssignmentIcon />
       </ListItemIcon>
       <ListItemText primary="All Applications " />
-    </ListItemButton>
+    </ListItemButton> */}
     
    
       

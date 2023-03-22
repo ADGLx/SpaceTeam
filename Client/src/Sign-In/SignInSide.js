@@ -197,10 +197,10 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(/img/wtv.jpeg)',
+            backgroundImage: 'url(https://cdn.discordapp.com/attachments/1067497158439354408/1087911144510988348/received_755283892625460.jpg)',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: 'cover',
+            backgroundSize: '100%',
             backgroundPosition: 'right',
           }}
         />

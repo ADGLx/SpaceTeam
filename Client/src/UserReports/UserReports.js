@@ -25,6 +25,7 @@ import myTheme from '../theme';
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
 import { TableRow } from '@mui/material';
+import MenuItem from '@mui/material/MenuItem';
 
 function Copyright(props) {
   return (
@@ -87,6 +88,15 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 const mdTheme = myTheme;
 
+const handleClose = () => {
+  setAnchorEl(null);
+};
+
+const logout = () => {
+  localStorage.clear();
+  handleClose();
+};
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
 
@@ -125,9 +135,14 @@ function DashboardContent() {
             >
              Moderator's Dashboard
             </Typography>
-            <IconButton color="inherit">
+            {/* <IconButton color="inherit">
           
-            </IconButton>
+            </IconButton> */}
+            <MenuItem onClick={logout}>
+                <Link href="/Sign-In" variant="body2">
+                    Logout
+                  </Link>
+                </MenuItem>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -166,7 +181,7 @@ function DashboardContent() {
           <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
             <Grid container spacing={3}>
               {/* Chart */}
-              <Grid item xs={12} md={8} lg={9}>
+              {/* <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
                     p: 2,
@@ -177,7 +192,7 @@ function DashboardContent() {
                 >
                   <Chart />
                 </Paper>
-              </Grid>
+              </Grid> */}
               {/* Recent Deposits */}
               <Grid item xs={12} md={4} lg={3}>
                 <Paper
