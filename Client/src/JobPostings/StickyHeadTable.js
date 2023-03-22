@@ -9,16 +9,19 @@ import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useEffect } from 'react';
 import Axios from 'axios';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import { Button } from '@mui/material';
 
 const columns = [
   { id: 'Position', label: 'Position', minWidth: 170 },
   { id: 'Description', label: 'Description', minWidth: 100},
-  { id: 'NumberOfApplicants', label: 'Number of Applicants', minWidth: 170 }
+  { id: 'NumberOfApplicants', label: 'Number of Applicants', minWidth: 170 },
+  {id: 'JobID', label: 'Actions', minWidth: 50}
 ];
 
-function createData(Position, Description, NumberOfApplicants) {
+function createData(Position, Description, NumberOfApplicants, JobID) {
   
-  return { Position, Description, NumberOfApplicants };
+  return { Position, Description, NumberOfApplicants, JobID };
 }
 
 
@@ -48,10 +51,12 @@ export default function StickyHeadTable() {
 
       response.data.forEach(element => 
         {
-          newData.push(createData(element['Position'], element['PositionInfo'], element['NumOfApplicants']))
+          newData.push(createData(element['Position'], element['PositionInfo'], element['NumOfApplicants'], element['JobID']))
+
+          console.log(element['JobID'])
         });
 
-       setRows([...rows, ...newData]);
+       setRows(newData);
     })
   }
 
@@ -64,6 +69,42 @@ export default function StickyHeadTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
+
+  function DeleteButton (prop) {
+    //In the button we need the info about 
+    function handleDelete(id) 
+    {
+      
+       // console.log("deleting reminder ID:"+ id)
+        const jsonID = {
+          PostID : id
+        };
+  
+  
+        Axios.post('/api/deletePost', jsonID).then (function (response) 
+        {
+          //In here we put message like 
+          console.log("Post Deleted!");
+          //window.location.reload(false);
+          
+          handleJobPostings();
+        });
+
+    }
+  
+function displayCell(param)
+{
+  // column.format && typeof value === 'number'
+  //                           ? column.format(value)
+  //                           : value
+}
+
+    return (
+      <React.Fragment>
+        <Button onClick={(e) => handleDelete(prop.id)}><DeleteForeverIcon/></Button>
+      </React.Fragment>
+    );
+  }
 
   return (
     <Paper sx={{ width: '100%' , height: 800, overflow: 'hidden' }}>
@@ -94,7 +135,12 @@ export default function StickyHeadTable() {
                         <TableCell key={column.id} align={column.align}>
                           {column.format && typeof value === 'number'
                             ? column.format(value)
-                            : value}
+                            : 
+                            
+                            column.id == 'JobID' ? 
+                            <DeleteButton id= {value}/> : value
+                            }
+
                         </TableCell>
                       );
                     })}
