@@ -21,8 +21,10 @@ import { mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
-
+import Button from '@mui/material/Button';
 import mytheme from '../theme';
+import MenuItem from '@mui/material/MenuItem';
+import Menu from '@mui/material/Menu';
 
 
 function Copyright(props) {
@@ -93,6 +95,16 @@ function DashboardContent() {
     setOpen(!open);
   };
 
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const logout = () => {
+    localStorage.clear();
+    handleClose();
+  };
+
   return (
     <ThemeProvider theme={mdTheme}>
       <Box sx={{ display: 'flex' }}>
@@ -124,9 +136,14 @@ function DashboardContent() {
             >
               {JSON.parse(localStorage.getItem('user-token'))['username']}'s Employer Dashboard
             </Typography>
-            <IconButton color="inherit">
+            {/* <IconButton color="inherit">
         
-            </IconButton>
+            </IconButton> */}
+              <MenuItem onClick={logout}>
+                <Link href="/Sign-In" variant="body2">
+                    Logout
+                  </Link>
+                </MenuItem>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
