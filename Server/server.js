@@ -349,7 +349,7 @@ app.post('/api/create-job', function (req, res) {
         // console.log(CompanyName);
 
         db.query(
-            "SELECT Position, PositionInfo, NumOfApplicants FROM JobListing WHERE CompanyName = ?",
+            "SELECT Position, PositionInfo, NumOfApplicants, JobID FROM JobListing WHERE CompanyName = ?",
             [CompanyName], function(err, response){
                 if(err) {
                     console.log(err);
