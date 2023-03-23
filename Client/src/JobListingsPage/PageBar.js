@@ -38,6 +38,8 @@ import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
 import Tooltip from '@mui/material/Tooltip';
 import ProfileView from '../JobSeekerProfilePage/ProfileView';
+import Rating from '@mui/material/Rating';
+import DenseTable from '../UserReports/EmployerRating';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -200,6 +202,7 @@ export default function PageBar(props) {
         <Typography variant="body2" color="text.secondary">
 
          {CompanyName}
+         <Rating position='centre' name="size-small" defaultValue={4} size="small" readOnly  />
         </Typography>
         </CardContent>
         </CardActionArea>

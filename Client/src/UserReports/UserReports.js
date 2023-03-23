@@ -26,6 +26,7 @@ import { useState,useEffect } from 'react';
 import Axios from 'axios';
 import { TableRow } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
+import DenseTable from './EmployerRating' ;
 
 function Copyright(props) {
   return (
@@ -210,6 +211,12 @@ function DashboardContent() {
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Orders />
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <DenseTable />
                 </Paper>
               </Grid>
             </Grid>
