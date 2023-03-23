@@ -5,7 +5,6 @@ const multer = require('multer')
 const sharp = require('sharp')
 const storage = multer.memoryStorage()
 const upload = multer({ storage: storage })
-const util = require('util');
 
 var PORT = 5000;
 
@@ -15,6 +14,10 @@ app.use(cors()); //This might have been needed?
 
 const mysql = require('mysql')
 const fs = require('fs')
+const { CONNREFUSED } = require('dns')
+const { Console } = require('console')
+const { errorMonitor } = require('events')
+const { send } = require('process')
 
 app.use(express.json());//This is used to parse what comes 
 
@@ -54,15 +57,16 @@ app.post('/api/register', upload.single('CV'), function (req, res) {
         res.send(false)
         return
     }
+
    const fileBuffer = req.file.buffer;
-   const binData = sharp(fileBuffer).toBuffer().toString('binary');
-//    console.log(binData);
+   //console.log(req.file);
+  // const binData = sharp(fileBuffer).toBuffer().toString('binary');
 
    // console.log(date + " aaa"+ time);
     // I should probably wrap this for errors or sum later
     db.query(
         "INSERT INTO users(`username`, `email`, `password`, `type`, `CV`) VALUES (?, ?, ?, ?, ?);", 
-        [username, email, password, type, binData], function (error, results,fields) {
+        [username, email, password, type, fileBuffer], function (error, results,fields) {
             if(error){
                 console.log(error);
                 res.send(false);//An error occured
@@ -253,7 +257,7 @@ app.post('/api/create-job', function (req, res) {
         //console.log("Showing Jobs for "+ EmployerID)
 
         db.query(
-            "SELECT JobID, ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants WHERE EmployerID = ?",
+            "SELECT ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants WHERE EmployerID = ?",
             [EmployerID], function (error, results, fields) {
                 if(error){
                     console.log(error);
@@ -266,6 +270,24 @@ app.post('/api/create-job', function (req, res) {
             )
     })
 
+    //Going to try one cv call at a time:
+    app.post("/api/getCV", function(req, res) {
+        const name = req.body.name;
+        db.query(
+            "SELECT CV FROM users WHERE username = ?",
+            [name], function(error, results, fields) {
+                if(error){
+                    console.log(error);
+                    res.status(500).send("Internal server error");
+                    return;
+                }
+                // console.log(results[0].CV);
+                //res.send(results);
+                res.send(results[0].CV.toString('base64'));
+
+            }
+        )
+    })
 
     //Receive List of job listings from db and send information to frontend
     app.get('/api/jobListings', function(req,res){  
@@ -305,7 +327,6 @@ app.post('/api/create-job', function (req, res) {
         )
     })
 
-    //UPDATED FROM JOBLISTING REPOSITORY!!!!!!!!!!!!!!!!!!!!!!
      //Change report entry when report has been triggered
      app.post('/api/apply', function(req, res){
 
@@ -322,8 +343,8 @@ app.post('/api/create-job', function (req, res) {
 
 
         db.query(
-            "INSERT INTO JobApplicants(`JobID`,`ApplicantID`, `EmployerID`, `CompanyName`, `ApplicantName`, `Date`, `ApplicantEmail`,`Position` ) VALUES (?, ?, ?, ?, ?, ?, ?, ?);",
-            [JobID,UserID,EmployerID, CompanyName, Username, Date, Email, Position, Position], function(error, result, fields) {
+            "INSERT INTO JobApplicants (JobID, ApplicantID, EmployerID, CompanyName, ApplicantName, Date, ApplicantEmail, Position) SELECT ?, ?, ?, ?, ?, ?, ?, ? WHERE NOT EXISTS (SELECT * FROM JobApplicants WHERE CompanyName = ? AND ApplicantName = ? AND Position = ?);",
+            [JobID,UserID,EmployerID, CompanyName, Username, Date, Email, Position, CompanyName, Username, Position], function(error, result, fields) {
                 if(error){
                     console.log(error);
                 }
