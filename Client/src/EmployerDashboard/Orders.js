@@ -9,6 +9,9 @@ import Title from './Title';
 import { useEffect } from 'react';
 import Axios from 'axios';
 
+
+
+
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
@@ -66,34 +69,64 @@ useEffect(() => {
   handleApplicantList();
  },[])
 
- 
-function handleApplicantList()
-{
-    //Hard code to test job applications on employer dashboard
-    var userInfo = JSON.parse(localStorage.getItem('user-token'))
-    var currentUser = userInfo['ID'];
+async function handleApplicantList() {
+  // Hard code to test job applications on employer dashboard
+  var userInfo = JSON.parse(localStorage.getItem("user-token"));
+  var currentUser = userInfo["ID"];
 
-    const sentObj = {
-      EmployerID: currentUser
+  const sentObj = {
+    EmployerID: currentUser,
+  };
+
+  try {
+    const response = await Axios.post("/api/displayJobs", sentObj);
+    // Iterate through each job application
+    for (const element of response.data) {
+
+      // Get the CV blob for the applicant in JSON
+      const cvBase64URL = await handleGetCV(element['ApplicantName']);
+      console.log(cvBase64URL)
+
+      // Create a new data object for the applicant with the downloadable link
+      const newData = createData(
+        element[""],
+        element["Date"],
+        element["ApplicantName"],
+        element["Position"],
+        element["ApplicantEmail"],
+        <a style ={{ color:"rgb(255, 191, 0)"}}href={`data:image/png;base64,${cvBase64URL}`} download={`${element["ApplicantName"]}.png`}>{element["ApplicantName"]}'s CV</a>
+      );
+
+      setRows((rows) => [...rows, newData]);
     }
-      //Post changes to the server
-      //Access local storage and retrieve ID 
-      Axios.post('/api/displayJobs', sentObj). 
-      then(function (response) {
-        var newData = []
+  } catch (error) {
+    console.error(error);
+  }
+}
 
-        response.data.forEach(element => 
-          {
-            newData.push(createData(element[''], element['Date'], element['ApplicantName'], element['Position'], element['ApplicantEmail']))
-          });
+async function handleGetCV(username) {
+  const sentObj = {
+    name: username,
+  };
+  try {
+    const response = await Axios.post("/api/getCV", sentObj);
+    const CVbase64 = response.data;
 
-          setRows([...rows, ...newData]);
-      })
+    return CVbase64;
+
+  } catch (error) {
+    console.error(error);
+    // handle error
+  }
+}
+
+function handleDownloadComplete() {
+  setDownloadUrl(null);
 }
 
   return (
     <React.Fragment>
-      <Title>Recent Applications</Title>
+      <Title>Applications</Title>
       <Table size="small">
         <TableHead>
           <TableRow>
@@ -111,7 +144,15 @@ function handleApplicantList()
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.shipTo}</TableCell>
               <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell>{'COMING SOON'}</TableCell>
+              <TableCell>
+                {/* {downloadUrl && (
+                  <Link color= "primary" href={downloadUrl} download="CV.png" onClick={handleDownloadComplete}>Download CV</Link>
+                )}
+                  {!downloadUrl && (
+                    <button onClick={handleDownloadClick}>Download CV</button>
+                  )} */} 
+                  {row.amount}
+                  </TableCell>
             </TableRow>
           ))}
         </TableBody>

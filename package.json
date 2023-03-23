@@ -17,5 +17,7 @@
     "transform": {
       "^.+\\.jsx?$": "babel-jest"
     }
+    "mysql": "^2.18.1",
+    "sharp": "^0.31.3"
   }
 }
