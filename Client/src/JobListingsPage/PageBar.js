@@ -83,21 +83,52 @@ export default function PageBar(props) {
     handleJobListings();
   },[cards])
 
-  function handleJobListings()
+   function handleJobListings()
   {
     Axios.get('/api/jobListings').
-    then(function(response) {
+    then(async function(response) {
       var newData = []
      // console.log(response.data);
       setCards(response.data.length);
-      response.data.forEach(element => {
-        newData.push(element);
-      });
+
+      for(const element of response.data)
+      { 
+         element.img= await handleGetPF(element.EmployerID);
+         newData.push(element);
+        // console.log(element)
+
+      }
+
+
+
+      // response.data.forEach(element => {
+      //  element.img= handleGetPF(element.EmployerID);
+      //   newData.push(element);
+      //   console.log(element)
+      //   //ArrayWithPF.push(handleGetPF(element.id))
+      // });
         setCardsInfo(newData);
   
   
     })
   }
+
+
+
+  async function handleGetPF(id) {
+    const sentObj = {
+      id: id,
+    };
+
+      //console.log("Attempting to get user:" + id + " profile pic")
+      const response = await Axios.post("/api/getPF", sentObj);
+      const PFbase64 = response.data;
+  
+        //console.log(PFbase64)
+      return PFbase64;
+
+  }
+
 
   //api/report Button
     //In the button we need the info about 
@@ -172,7 +203,7 @@ export default function PageBar(props) {
         const PositionInfo = cardsInfo[index]['PositionInfo'];
         const EmployerID = cardsInfo[index]['EmployerID'];
         //console.log(Position)
-
+        const ImgData = cardsInfo[index]['img'];
         
         var eachCard = ( 
 //           <Grid
@@ -189,8 +220,8 @@ export default function PageBar(props) {
         <CardMedia
         component="img"
         height="200"
-        image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
-        alt="Chemist Handling Funnels"
+        image={`data:image/png;base64,${ImgData}`}
+        alt="Emplyer Has Not Selected a Profile Picture"
         zIndex = 'tooltip'
         />
         <CardContent>
