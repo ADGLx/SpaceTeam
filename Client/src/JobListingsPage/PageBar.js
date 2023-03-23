@@ -97,17 +97,17 @@ export default function PageBar(props) {
       response.data.forEach(element => {
        //element.img= handleGetPF(element.EmployerID);
         newData.push(element);
-        console.log(element)
+        //console.log(element)
         //ArrayWithPF.push(handleGetPF(element.id))
       });
 
-      // for(const element of newData)
-      // { 
-      //    element.img= await handleGetPF(element.EmployerID);
-      //    //newData.push(element);
-      //    console.log(element)
+      for(const element of newData)
+      { 
+        // element.img= await handleGetPF(element.EmployerID);
+         //newData.push(element);
+         console.log(element)
 
-      // }
+      }
 
 
         setCardsInfo(newData);
@@ -223,8 +223,9 @@ export default function PageBar(props) {
         <CardMedia
         component="img"
         height="200"
-        image={`data:image/png;base64,${ImgData}`}
-        alt="Emplyer Has Not Selected a Profile Picture"
+        // image={`data:image/png;base64,${ImgData}`}
+        image='https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg'
+        alt='Employer Has Not Selected A Profile Picture'
         zIndex = 'tooltip'
         />
         <CardContent>

@@ -182,12 +182,12 @@ app.post('/api/editAccount',cpUpload, function (req, res) {
         return
     }
 
-    var fileBuffer1 ="";
+    var fileBuffer1 =null;
     if(req.files['cv']!= null)
     fileBuffer1 = req.files['cv'][0].buffer;
     //const binData1 = sharp(fileBuffer1).toBuffer().toString('binary');
 
-    var fileBuffer2 ="";
+    var fileBuffer2 =null;
     if(req.files['pf']!= null)
     fileBuffer2 = req.files['pf'][0].buffer;
     //const binData2 = sharp(fileBuffer2).toBuffer().toString('binary');
@@ -288,6 +288,7 @@ app.post('/api/create-job', function (req, res) {
                 }
                 // console.log(results[0].CV);
                 //res.send(results);
+                if(results[0].CV !=null)
                 res.send(results[0].CV.toString('base64'));
 
             }
@@ -297,6 +298,7 @@ app.post('/api/create-job', function (req, res) {
     //Getting the profile pic
     app.post("/api/getPF", function(req, res) {
         const id = req.body.id;
+        //console.log("User Attempted to view PF: "+ id)
         db.query(
             "SELECT PF FROM users WHERE id = ?",
             [id], function(error, results, fields) {
@@ -305,8 +307,9 @@ app.post('/api/create-job', function (req, res) {
                     res.status(500).send("Internal server error");
                     return;
                 }
-               // console.log(results[0].PF);
+              // console.log(results[0].PF.toString('base64'));
                 //res.send(results);
+                if(results[0].PF !=null)
                 res.send(results[0].PF.toString('base64'));
 
             }
