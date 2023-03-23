@@ -83,7 +83,7 @@ export default function PageBar(props) {
     handleJobListings();
   },[cards])
 
-   function handleJobListings()
+  function handleJobListings()
   {
     Axios.get('/api/jobListings').
     then(async function(response) {
@@ -91,22 +91,25 @@ export default function PageBar(props) {
      // console.log(response.data);
       setCards(response.data.length);
 
-      for(const element of response.data)
-      { 
-         element.img= await handleGetPF(element.EmployerID);
-         newData.push(element);
-        // console.log(element)
-
-      }
 
 
 
-      // response.data.forEach(element => {
-      //  element.img= handleGetPF(element.EmployerID);
-      //   newData.push(element);
-      //   console.log(element)
-      //   //ArrayWithPF.push(handleGetPF(element.id))
-      // });
+      response.data.forEach(element => {
+       //element.img= handleGetPF(element.EmployerID);
+        newData.push(element);
+        console.log(element)
+        //ArrayWithPF.push(handleGetPF(element.id))
+      });
+
+      // for(const element of newData)
+      // { 
+      //    element.img= await handleGetPF(element.EmployerID);
+      //    //newData.push(element);
+      //    console.log(element)
+
+      // }
+
+
         setCardsInfo(newData);
   
   
