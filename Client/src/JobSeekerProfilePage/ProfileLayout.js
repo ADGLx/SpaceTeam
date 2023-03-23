@@ -23,10 +23,10 @@ export default function ProfileLayout({isActiveStep}) {
         username: data.get('Name'),
         email: data.get('Email'),
         ID: UserID,
-        CV: data.get('cv'),
-        PF: data.get('pf')
+         cv: data.get('cv'),
+         pf: data.get('pf')
       }
-      console.log( data.get('pf'))
+      // console.log( data.get('pf'))
 
 
       const config = {
@@ -34,9 +34,8 @@ export default function ProfileLayout({isActiveStep}) {
           "Content-Type": "multipart/form-data"
         }
       };
-      
-
-         Axios.post('/api/editAccount', sentObj).then((response)=>{
+         Axios.post('/api/editAccount', sentObj, config)
+         .then((response)=>{
           var newToken = JSON.parse(localStorage.getItem('user-token'));
           newToken["username"] = data.get('Name');
           newToken["email"] = data.get('Email');
@@ -119,7 +118,7 @@ export default function ProfileLayout({isActiveStep}) {
                   variant="contained"
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  Sign Up
+                  Update
                 </Button>
             </Grid>
 
