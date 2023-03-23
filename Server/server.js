@@ -298,7 +298,7 @@ app.post('/api/create-job', function (req, res) {
     //Getting the profile pic
     app.post("/api/getPF", function(req, res) {
         const id = req.body.id;
-        //console.log("User Attempted to view PF: "+ id)
+        console.log("User Attempted to view PF: "+ id)
         db.query(
             "SELECT PF FROM users WHERE id = ?",
             [id], function(error, results, fields) {
@@ -311,7 +311,8 @@ app.post('/api/create-job', function (req, res) {
                 //res.send(results);
                 if(results[0].PF !=null)
                 res.send(results[0].PF.toString('base64'));
-
+                else 
+                res.send(null)
             }
         )
     })
