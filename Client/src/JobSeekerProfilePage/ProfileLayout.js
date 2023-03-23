@@ -15,30 +15,37 @@ export default function ProfileLayout({isActiveStep}) {
   function handleEdit(event) 
     {
       event.preventDefault();
-      var UserID= JSON.parse(localStorage.getItem('user-token'))["id"];
+      var UserID= JSON.parse(localStorage.getItem('user-token'))["ID"];
       const data = new FormData(event.currentTarget);
-      console.log(isActiveStep)
  
       //console.log(UserID);
       const sentObj = {
         username: data.get('Name'),
         email: data.get('Email'),
-        ID: UserID
+        ID: UserID,
+         cv: data.get('cv'),
+         pf: data.get('pf')
       }
+      // console.log( data.get('pf'))
+
+
+      const config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+         Axios.post('/api/editAccount', sentObj, config)
+         .then((response)=>{
+          var newToken = JSON.parse(localStorage.getItem('user-token'));
+          newToken["username"] = data.get('Name');
+          newToken["email"] = data.get('Email');
+    
+          localStorage.setItem('user-token',  JSON.stringify(newToken));
+          window.location.replace("/JobSeekerProfilePage");
+         }) 
 
       
-         Axios.post('/api/editAccount', sentObj)
-         //setActiveStep(activeStep + 1);
-      //then in here update the page to whatever other page was needed
-      //just send the user back tot he profile
-      //Gotta update the cookie first
-      var newToken = JSON.parse(localStorage.getItem('user-token'));
-      newToken["username"] = data.get('Name');
-      newToken["email"] = data.get('Email');
-
-      localStorage.setItem('user-token',  JSON.stringify(newToken));
-      window.location.replace("/JobSeekerProfilePage");
-
+      
     }
   return (
     <React.Fragment>
@@ -85,6 +92,7 @@ export default function ProfileLayout({isActiveStep}) {
                Upload Profile Photo <AccountCircle />
                 <input
               type="file"
+              name="pf"
                  hidden
                  />
                </Button>
@@ -100,7 +108,8 @@ export default function ProfileLayout({isActiveStep}) {
                Upload File (JobSeeker Only)  <UploadFileIcon/>
                 <input
               type="file"
-                 hidden
+              name="cv"
+              hidden
                  />
                </Button>
                <Grid container justifyContent="flex-end">
@@ -109,7 +118,7 @@ export default function ProfileLayout({isActiveStep}) {
                   variant="contained"
                   sx={{ mt: 3, ml: 1 }}
                 >
-                  Sign Up
+                  Update
                 </Button>
             </Grid>
 
