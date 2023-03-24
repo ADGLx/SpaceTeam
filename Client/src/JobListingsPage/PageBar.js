@@ -244,8 +244,12 @@ async function getAllImages()
         const Position = cardsInfo[index]['Position'];
         const PositionInfo = cardsInfo[index]['PositionInfo'];
         const EmployerID = cardsInfo[index]['EmployerID'];
-        if (searchTerm && !Position.toLowerCase().includes(searchTerm.toLowerCase()) && !CompanyName.toLowerCase().includes(searchTerm.toLowerCase())){
+        if (searchTerm && searchTerm.trim() !== '' && !Position.toLowerCase().includes(searchTerm.toLowerCase()) && !CompanyName.toLowerCase().includes(searchTerm.toLowerCase())){
           continue;
+        }else if (!searchTerm || searchTerm.trim()=== ''){
+
+        }else{
+          
         }
         //console.log(Position)
         const ImgData = PFData[EmployerID];

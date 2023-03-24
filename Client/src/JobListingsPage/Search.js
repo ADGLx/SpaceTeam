@@ -8,6 +8,9 @@ const Search =({ onSearch }) => {
     const handleSearch = () => {
         if(searchTerm){
             onSearch(searchTerm);
+        }else {
+            onSearch('');
+            setSearchTerm('');
         }
     };
 
