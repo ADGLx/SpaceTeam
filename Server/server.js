@@ -388,3 +388,20 @@ app.post('/api/create-job', function (req, res) {
             }
         )
     })
+    app.get('/api/search', function(req,res){  
+        const searchTerm = req.query.searchTerm || '';
+
+        db.query(
+            "SELECT * FROM JobListing WHERE Position LIKE ? OR CompanyName LIKE ?",
+            [`%${searchTerm}%`, `%${searchTerm}%`],
+            function(error, result, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    res.send(result);
+                }
+            }
+        )
+
+    })

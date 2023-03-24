@@ -11,7 +11,6 @@ import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
-import SearchBar from './SearchBar';
 import SmallBar from './SmallBar';
 import JobListings from './JobListings';
 import { Grid, makeStyles } from '@mui/material';
@@ -38,6 +37,7 @@ import Avatar from '@mui/material/Avatar';
 import AdbIcon from '@mui/icons-material/Adb';
 import Tooltip from '@mui/material/Tooltip';
 import ProfileView from '../JobSeekerProfilePage/ProfileView';
+import Search from './Search';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -97,6 +97,10 @@ export default function PageBar(props) {
   
   
     })
+  }
+  const [searchTerm, setSearchTerm]= useState('');
+  const handleSearch =(term)=>{
+    setSearchTerm(term);
   }
 
   //api/report Button
@@ -171,6 +175,9 @@ export default function PageBar(props) {
         const Position = cardsInfo[index]['Position'];
         const PositionInfo = cardsInfo[index]['PositionInfo'];
         const EmployerID = cardsInfo[index]['EmployerID'];
+        if (searchTerm && !Position.toLowerCase().includes(searchTerm.toLowerCase()) && !CompanyName.toLowerCase().includes(searchTerm.toLowerCase())){
+          continue;
+        }
         //console.log(Position)
 
         
@@ -419,7 +426,7 @@ export default function PageBar(props) {
 >
 
   <Grid item xs = {12} sm = {12} lg={2}>
-   <SearchBar/>
+   <Search onSearch={handleSearch}/>
   </Grid>   
   <Grid item xs = {12} sm = {12} lg={2}> 
             <SmallBar/>
