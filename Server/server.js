@@ -288,8 +288,14 @@ app.post('/api/create-job', function (req, res) {
                 }
                 // console.log(results[0].CV);
                 //res.send(results);
-                if(results[0].CV !=null)
-                res.send(results[0].CV.toString('base64'));
+                if(results.length>0)
+                {
+                    res.send(results[0].CV.toString('base64'));
+                } else 
+                {
+                    console.log("CV was null?")
+                }
+                
 
             }
         )
@@ -309,7 +315,7 @@ app.post('/api/create-job', function (req, res) {
                 }
               // console.log(results[0].PF.toString('base64'));
                 //res.send(results);
-                if(results[0].PF !=null)
+                if(results.length>0)
                 res.send(results[0].PF.toString('base64'));
                 else 
                 res.send(null)
