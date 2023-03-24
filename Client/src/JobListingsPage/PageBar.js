@@ -496,12 +496,12 @@ async function getAllImages()
   style={{ minHeight: '0vh' }}
 >
 
-  <Grid item xs = {12} sm = {12} lg={2}>
+  <Grid item xs = {12} sm = {12} lg={12}>
    <Search onSearch={handleSearch}/>
   </Grid>   
-  <Grid item xs = {12} sm = {12} lg={2}> 
+  {/* <Grid item xs = {12} sm = {12} lg={2}> 
             <SmallBar/>
-            </Grid>
+            </Grid> */}
 </Grid>
         {/* <Box sx={{
           p: 2,
