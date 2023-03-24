@@ -8,7 +8,7 @@
     "supertest": "^6.3.3"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
     "sharp": "^0.31.3",
     "use-debounce": "^9.0.3"
   }

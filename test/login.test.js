@@ -2,6 +2,9 @@ const request = require("supertest");
 const app = require('../Server/Server.js')
 
 describe("POST /api/login", () => {
+  afterAll(() => {
+    app.close();
+  })
 
   test("Should return 200 OK status and user information on successful login", async () => {
     const response = await request(app).post("/api/login").send({
