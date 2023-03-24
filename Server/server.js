@@ -1,6 +1,5 @@
 const express = require('express')
 const app = express()
-// const router = express.Router() //I did not need this, for some reason 
 const multer = require('multer')
 const sharp = require('sharp')
 const storage = multer.memoryStorage()
@@ -41,6 +40,16 @@ var db = mysql.createConnection({
 db.connect(); //Change so it runs without sql
 console.log("Connected to db!");
 
+// Listening to the port
+app.listen(PORT, function(err){
+    if (err) console.log(err);
+    console.log("Server listening on PORT", PORT);
+ });
+//To run server just use "npm run dev"
+
+//Retrieves method to validate user
+const validateUser = require('./validateUser')
+
 //This is to register
 app.post('/api/register', upload.single('CV'), function (req, res) {
 
@@ -49,21 +58,9 @@ app.post('/api/register', upload.single('CV'), function (req, res) {
     const email = req.body.email;
     const password = req.body.password;
     const type = req.body.type;
-   
-    //Have here a check to make sure it is not empty, if it is empty just send an erroe back
-    if(username=="" | email =="" | password =="")
-    {
-        console.log("Attempted to create wrong account!");
-        res.send(false)
-        return
-    }
+    const fileBuffer = req.file.buffer;
 
-   const fileBuffer = req.file.buffer;
-   //console.log(req.file);
-  // const binData = sharp(fileBuffer).toBuffer().toString('binary');
-
-   // console.log(date + " aaa"+ time);
-    // I should probably wrap this for errors or sum later
+   if(validateUser(username, email, password)){
     db.query(
         "INSERT INTO users(`username`, `email`, `password`, `type`, `CV`) VALUES (?, ?, ?, ?, ?);", 
         [username, email, password, type, fileBuffer], function (error, results,fields) {
@@ -72,24 +69,25 @@ app.post('/api/register', upload.single('CV'), function (req, res) {
                 res.send(false);//An error occured
               
             }
-          //  console.log(results);
 
           //Oh wait there is no result? Or is it
-          console.log("A user was registered: "+ email);
-          //console.log("A CV was uploaded: "+ CV.filename);
-        //   console.log("CV: " + CV);
-        res.send(true);
+            console.log("A user was registered: "+ email);
+            res.send(true);
           //It is normal that the result is empty because it was inserted
-
         }
     )
+    
+   }
+   else{
+    console.log("Invalid user entry.");
+    res.send(false);
+   }
 })
 
 
 //This is the login function
 app.post('/api/login', function (req,res){
 
-    //console.log(req.body)
     //This is what the client searches 
     const username= req.body.username;
     const password = req.body.password;
@@ -108,12 +106,12 @@ app.post('/api/login', function (req,res){
                 //This is super unsafe but its fine, ill add proper authentication later.
                 //The current token is just sending all the user info
                 //console.log("Sending "+JSON.stringify(results[0]))
-                res.send(JSON.stringify(results[0]))
+                res.status(200).send(JSON.stringify(results[0]));
             } else 
             {
                 //send message with error
-                console.log("Bad");
-                res.send(true) //It sends an error
+                console.log("Invalid Login");
+                res.status(401).send(true) //It sends an error
             }
 
         }
@@ -121,7 +119,9 @@ app.post('/api/login', function (req,res){
 
 })
 
-// Basically in here we have whatever random back end api we want 
+//Exporting the login function for testing
+module.exports = app.post('/api/login');
+
 
 //Basically get all user reports when logged in as a moderator
 app.get("/api/getUserReports",(req,res)=>
@@ -182,12 +182,12 @@ app.post('/api/editAccount',cpUpload, function (req, res) {
         return
     }
 
-    var fileBuffer1 =null;
+    var fileBuffer1 ="";
     if(req.files['cv']!= null)
     fileBuffer1 = req.files['cv'][0].buffer;
     //const binData1 = sharp(fileBuffer1).toBuffer().toString('binary');
 
-    var fileBuffer2 =null;
+    var fileBuffer2 ="";
     if(req.files['pf']!= null)
     fileBuffer2 = req.files['pf'][0].buffer;
     //const binData2 = sharp(fileBuffer2).toBuffer().toString('binary');
@@ -218,40 +218,42 @@ app.post('/api/editAccount',cpUpload, function (req, res) {
 })
 
 
-// Listening to the port
-app.listen(PORT, function(err){
-    if (err) console.log(err);
-    console.log("Server listening on PORT", PORT);
- });
-//To run server just use "npm run dev"
-
-
 // Registering a job listing as an employer
-app.post('/api/create-job', function (req, res) {
+const validateJob = require('./validateJob')
 
-    const EmployerID = req.body.EmployerID;
-    const CompanyName =req.body.CompanyName;
-    const Position =req.body.Position;
-    const PositionInfo = req.body.PositionInfo;
-    const Report= req.body.Report;
-    
-    //console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
-   //Insert information into db
+app.post("/api/create-job", function (req, res) {
+  const EmployerID = req.body.EmployerID;
+  const CompanyName = req.body.CompanyName;
+  const Position = req.body.Position;
+  const PositionInfo = req.body.PositionInfo;
+  const Report = req.body.Report;
+
+  //console.log(EmployerID+"|"+CompanyName+"|"+ Position+"|"+PositionInfo+"|"+Report)
+
+  //Check if position or positioninfo fields are empty and then insert
+
+  if(validateJob(Position, PositionInfo)){
     db.query(
-        "INSERT INTO JobListing (`EmployerID`, `CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?,?, ?, ?, ?);", 
-        [EmployerID,CompanyName, Position, PositionInfo, Report], function
-        (error, results,fields){
-            if(error){
-                console.error("Error creating job posting", error);
-                res.sendStatus(500);
-            }
-            else {
-                console.log("Job posting was created successfully");
-                res.sendStatus(200);            
-            }
+        "INSERT INTO JobListing (`EmployerID`, `CompanyName`, `Position`,`PositionInfo`,`Report` ) VALUES (?,?, ?, ?, ?);",
+        [EmployerID, CompanyName, Position, PositionInfo, Report],
+        function (error, results, fields) {
+          if (error) {
+            //console.error("Error creating job posting", error);
+            res.sendStatus(500);
+          } else {
+            console.log("Job posting was created successfully");
+            res.sendStatus(200);
+          }
         }
-    );
-})
+      );
+  }
+  else {
+    console.log("Invalid input!")
+    res.sendStatus(403)
+  }
+});
+
+module.exports = app.post('/api/create-job')
 
     //Retrieve all job vacancies from job listing table
     //Send all information received to frontend
@@ -288,9 +290,7 @@ app.post('/api/create-job', function (req, res) {
                 }
                 // console.log(results[0].CV);
                 //res.send(results);
-                if(results[0].CV !=null)
                 res.send(results[0].CV.toString('base64'));
-
             }
         )
     })
@@ -298,7 +298,6 @@ app.post('/api/create-job', function (req, res) {
     //Getting the profile pic
     app.post("/api/getPF", function(req, res) {
         const id = req.body.id;
-        //console.log("User Attempted to view PF: "+ id)
         db.query(
             "SELECT PF FROM users WHERE id = ?",
             [id], function(error, results, fields) {
@@ -307,9 +306,8 @@ app.post('/api/create-job', function (req, res) {
                     res.status(500).send("Internal server error");
                     return;
                 }
-              // console.log(results[0].PF.toString('base64'));
+               // console.log(results[0].PF);
                 //res.send(results);
-                if(results[0].PF !=null)
                 res.send(results[0].PF.toString('base64'));
 
             }
