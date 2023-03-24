@@ -38,6 +38,8 @@ import AdbIcon from '@mui/icons-material/Adb';
 import Tooltip from '@mui/material/Tooltip';
 import ProfileView from '../JobSeekerProfilePage/ProfileView';
 import Search from './Search';
+import Rating from '@mui/material/Rating';
+import DenseTable from '../UserReports/EmployerRating';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -78,6 +80,7 @@ HideOnScroll.propTypes = {
 export default function PageBar(props) {
   const [cards, setCards] = React.useState(0);
   const [cardsInfo, setCardsInfo] = React.useState([]);
+  const [PFData, setPFData] = React.useState([]);
   //Calls everytime page is rendered
   useEffect(() => {
     handleJobListings();
@@ -86,13 +89,30 @@ export default function PageBar(props) {
   function handleJobListings()
   {
     Axios.get('/api/jobListings').
-    then(function(response) {
+    then(async function(response) {
       var newData = []
      // console.log(response.data);
       setCards(response.data.length);
+
+
+
+
       response.data.forEach(element => {
+       //element.img= handleGetPF(element.EmployerID);
         newData.push(element);
+        //console.log(element)
+        //ArrayWithPF.push(handleGetPF(element.id))
       });
+      // for(const element of newData)
+      // { 
+      //   // element.img= await handleGetPF(element.EmployerID);
+      //    //newData.push(element);
+      //    console.log(element)
+
+      // }
+
+      getAllImages();
+
         setCardsInfo(newData);
   
   
@@ -102,6 +122,54 @@ export default function PageBar(props) {
   const handleSearch =(term)=>{
     setSearchTerm(term);
   }
+
+
+async function getAllImages()
+{
+  const AllImages ={};
+  let AllIDs = [];
+  for (const element of cardsInfo) 
+  {
+    AllIDs.push(element.EmployerID);
+  }
+
+  //This removes all duplicates
+  AllIDs = [...new Set(AllIDs)];
+
+  //console.log(AllIDs)
+
+  //Now we call and store all the images that are needed 
+  for (let index = 0; index < AllIDs.length; index++) 
+  {
+    const id = AllIDs[index];
+
+      const image = await handleGetPF(id);
+    //console.log(id)
+   
+  //   const obj = {
+  //     [id]: image,
+  // }
+      //console.log(id)
+    AllImages[id]= image;
+  }
+//Im done here
+ setPFData(AllImages)
+}
+
+  async function handleGetPF(id) {
+    const sentObj = {
+      id: id,
+    };
+
+      //console.log("Attempting to get user:" + id + " profile pic")
+      const response = await Axios.post("/api/getPF", sentObj);
+      const PFbase64 = response.data;
+  
+        //console.log(PFbase64)
+      return PFbase64;
+
+  }
+
 
   //api/report Button
     //In the button we need the info about 
@@ -152,11 +220,13 @@ export default function PageBar(props) {
         });
     }
 
+    //TODO: Fix this, it is updating 3 times for some weird reason
   function ShowCards()
   {
-   // console.log(cardsInfo)
+    console.log(PFData)
     const [expanded, setExpanded] = useState(Array(cards).fill(false));
 
+     
     const handleExpandClick = (index) => {
       setExpanded((prevState) => {
         const nextState = [...prevState];
@@ -164,7 +234,6 @@ export default function PageBar(props) {
         return nextState;
       });
     };
-
       var returnValue = []
       for (let index = 0; index < cards; index++) {
         //In here we basically change the stuff 
@@ -179,7 +248,7 @@ export default function PageBar(props) {
           continue;
         }
         //console.log(Position)
-
+        const ImgData = PFData[EmployerID];
         
         var eachCard = ( 
 //           <Grid
@@ -196,8 +265,9 @@ export default function PageBar(props) {
         <CardMedia
         component="img"
         height="200"
-        image="https://www.globetoday.net/media/k2/items/cache/b9761710e2d567efefc41798919e031b_XL.jpg"
-        alt="Chemist Handling Funnels"
+         image={`data:image/png;base64,${ImgData}`}
+        // image='https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg'
+        alt='Employer Has Not Selected A Profile Picture'
         zIndex = 'tooltip'
         />
         <CardContent>
@@ -207,6 +277,7 @@ export default function PageBar(props) {
         <Typography variant="body2" color="text.secondary">
 
          {CompanyName}
+         <Rating position='centre' name="size-small" defaultValue={4} size="small" readOnly  />
         </Typography>
         </CardContent>
         </CardActionArea>

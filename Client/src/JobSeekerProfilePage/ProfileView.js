@@ -54,8 +54,8 @@ const theme = createTheme({
     return (
       <Typography variant="body2" color="text.secondary" align="center">
         {'Copyright © '}
-        <Link color="inherit" href="https://mui.com/">
-          Your Website
+        <Link color="inherit" href="http://localhost:3000/Info">
+          SPACE
         </Link>{' '}
         {new Date().getFullYear()}
         {'.'}
@@ -81,7 +81,7 @@ const theme = createTheme({
   
   export default function ProfileView() {
     const [activeStep, setActiveStep] = React.useState(0);
-  
+    var User= JSON.parse(localStorage.getItem('user-token'))["username"];
     const handleNext = () => {
       setActiveStep(activeStep + 1);
     };
@@ -124,6 +124,8 @@ const theme = createTheme({
 
     const [auth, setAuth] = React.useState(true);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [PFData, setPFData] = React.useState("");
+
   
     const handleChange = (event) => {
       setAuth(event.target.checked);
@@ -154,6 +156,32 @@ const theme = createTheme({
 
       handleClose();
     };
+
+    //Having load the profile pic on load
+     useEffect(() => {
+      asyncGetPF();
+      },[])
+
+    async function asyncGetPF()
+    {
+      var temp = await handleGetPF(JSON.parse(localStorage.getItem("user-token"))['ID'])
+      setPFData(temp) 
+      //console.log(temp)
+    }
+
+    async function handleGetPF(id) {
+      const sentObj = {
+        id: id,
+      };
+
+        console.log("Attempting to get user:" + id + " profile pic")
+        const response = await Axios.post("/api/getPF", sentObj);
+        const PFbase64 = response.data;
+    
+          //console.log(PFbase64)
+        return PFbase64;
+
+    }
 
     return (
       <ThemeProvider theme={theme}>
@@ -223,8 +251,8 @@ const theme = createTheme({
             </Typography>
             <Stack direction="row" spacing={2}  justifyContent="center">
       <Avatar
-        alt="Remy Sharp"
-        src="/static/images/avatar/1.jpg"
+        alt={User}
+        src={`data:image/png;base64,${PFData}`}
         sx={{ width: 56, height: 56 }}
         // align="center"
       />
