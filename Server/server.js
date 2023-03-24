@@ -290,7 +290,15 @@ module.exports = app.post('/api/create-job')
                 }
                 // console.log(results[0].CV);
                 //res.send(results);
-                res.send(results[0].CV.toString('base64'));
+
+                if(results.length>0)
+                {
+                    res.send(results[0].CV.toString('base64'));
+                } else 
+                {
+                    console.log("CV was null?")
+                }
+                
             }
         )
     })
@@ -298,6 +306,7 @@ module.exports = app.post('/api/create-job')
     //Getting the profile pic
     app.post("/api/getPF", function(req, res) {
         const id = req.body.id;
+        console.log("User Attempted to view PF: "+ id)
         db.query(
             "SELECT PF FROM users WHERE id = ?",
             [id], function(error, results, fields) {
@@ -308,8 +317,11 @@ module.exports = app.post('/api/create-job')
                 }
                // console.log(results[0].PF);
                 //res.send(results);
-                res.send(results[0].PF.toString('base64'));
 
+                if(results.length > 0 && results[0].PF !=null)
+                res.send(results[0].PF.toString('base64'));
+                else 
+                res.send(null)
             }
         )
     })
@@ -411,4 +423,21 @@ module.exports = app.post('/api/create-job')
                 }
             }
         )
+    })
+    app.get('/api/search', function(req,res){  
+        const searchTerm = req.query.searchTerm || '';
+
+        db.query(
+            "SELECT * FROM JobListing WHERE Position LIKE ? OR CompanyName LIKE ?",
+            [`%${searchTerm}%`, `%${searchTerm}%`],
+            function(error, result, fields) {
+                if(error){
+                    console.log(error);
+                }
+                else{
+                    res.send(result);
+                }
+            }
+        )
+
     })

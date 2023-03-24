@@ -26,12 +26,13 @@ import { useState,useEffect } from 'react';
 import Axios from 'axios';
 import { TableRow } from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
+import DenseTable from './EmployerRating' ;
 
 function Copyright(props) {
   return (
     <Typography variant="body2" color="text.secondary" align="center" {...props}>
       {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
+      <Link color="inherit" href="http://localhost:3000/Info">
         SPACE
       </Link>{' '}
       {new Date().getFullYear()}
@@ -210,6 +211,12 @@ function DashboardContent() {
               <Grid item xs={12}>
                 <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
                   <Orders />
+                </Paper>
+              </Grid>
+
+              <Grid item xs={12}>
+                <Paper sx={{ p: 2, display: 'flex', flexDirection: 'column' }}>
+                  <DenseTable />
                 </Paper>
               </Grid>
             </Grid>
