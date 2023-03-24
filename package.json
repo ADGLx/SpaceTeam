@@ -1,6 +1,14 @@
 {
   "dependencies": {
     "mysql": "^2.18.1",
+    "sharp": "^0.31.3"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0",
+    "supertest": "^6.3.3"
+  },
+  "scripts": {
+    "test": "jest",
     "sharp": "^0.31.3",
     "use-debounce": "^9.0.3"
   }
