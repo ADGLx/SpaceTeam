@@ -15,11 +15,12 @@ const Search =({ onSearch }) => {
     };
 
 return (
-    <div>
+    <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '7vh'}}>
         <TextField
             label= "Search"
             value ={searchTerm}
             onChange= {(e)=> setSearchTerm(e.target.value)}
+            style={{ width: '300px' }}
             />
             <Button onClick ={handleSearch}>Search</Button>
     </div>
