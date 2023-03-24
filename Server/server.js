@@ -315,7 +315,7 @@ app.post('/api/create-job', function (req, res) {
                 }
               // console.log(results[0].PF.toString('base64'));
                 //res.send(results);
-                if(results.length>0)
+                if(results.length > 0 && results[0].PF !=null)
                 res.send(results[0].PF.toString('base64'));
                 else 
                 res.send(null)
