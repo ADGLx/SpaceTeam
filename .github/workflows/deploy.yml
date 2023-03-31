@@ -29,7 +29,7 @@ jobs:
   
   #Server is already running once we update the file (Remember to after do npm intall in the server)
     - run: cd /home/runner/actions-runner/_work/SpaceTeam/SpaceTeam/Server #Goes to the folder
-    - run: npm install #Update the server modules
+    - run: npm i #Update the server modules
   #  - run: npm run build #Build the app Removing this so we do the build manually
     - run: echo 1102 | sudo -S rm -rf /var/www/SpaceTeamPage/build/ #Deleting Prebious build
     - run: echo 1102 | sudo -S cp -RT /home/runner/actions-runner/_work/SpaceTeam/SpaceTeam/Client/build /var/www/SpaceTeamPage/build/
