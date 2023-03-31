@@ -1,0 +1,36 @@
+# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
+
+name: Deployment
+
+on:
+  #push:
+   # branches: [ "main" ] remove so I just execute it manually
+ workflow_dispatch:
+ 
+jobs:
+  build:
+
+    runs-on: self-hosted 
+      #I changed this so the server executes the change
+
+    strategy:
+      matrix:
+        node-version: [18.x]
+        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+  
+  #Server is already running once we update the file (Remember to after do npm intall in the server)
+    - run: echo "this is working"
+  #  - run: cd /home/runner/actions-runner/newPage/personalWebSiteV2/personalWebSiteV2/Client #Goes to the folder
+ #   - run: npm install
+  #  - run: npm run build #Build the app Removing this so we do the build manually
+   # - run: echo 1102 | sudo -S rm -rf /var/www/adgl.site/html/ #Extremely ghetto but works
+    #- run: echo 1102 | sudo -S cp -RT /home/runner/actions-runner/newPage/personalWebSiteV2/personalWebSiteV2/Client/build /var/www/adgl.site/html
