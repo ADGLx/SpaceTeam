@@ -14,6 +14,9 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router-dom';
 import mytheme from '../theme';
+import Darkmode from 'darkmode-js';
+
+
 
 //The stuff to call the login API
 import { useEffect, useState, useContext } from 'react';
@@ -186,7 +189,24 @@ export default function SignInSide() {
    
 
   }
-
+  const options = {
+    bottom: '20px', // default: '32px'
+    right: '20px', // default: '32px'
+    left: 'unset', // default: 'unset'
+    time: '0.5s', // default: '0.3s'
+    mixColor: '#fff', // default: '#fff'
+    backgroundColor: '#fff',  // default: '#fff'
+    buttonColorDark: '#000000',  // default: '#100f2c'
+    buttonColorLight: '#fff', // default: '#fff'
+    primary:'#000000',
+    saveInCookies: false, // default: true,
+    label: '🌓', // default: ''
+    autoMatchOsTheme: true // default: true
+  }
+  
+  const darkmode = new Darkmode(options);
+  darkmode.showWidget();
+  
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -197,7 +217,8 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://cdn.discordapp.com/attachments/1067497158439354408/1087911144510988348/received_755283892625460.jpg)',
+            
+            backgroundImage: 'url(https://wallpaperaccess.com/full/219455.jpg)',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
             backgroundSize: '100%',
@@ -247,10 +268,14 @@ export default function SignInSide() {
               <Copyright sx={{ mt: 5 }} />
 
               
+            
             </Box>
           </Box>
+          
         </Grid>
       </Grid>
+
     </ThemeProvider>
   );
+  
 }

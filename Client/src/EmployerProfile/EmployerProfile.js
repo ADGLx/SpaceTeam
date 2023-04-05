@@ -22,10 +22,10 @@ const theme = createTheme({
     mode:'dark', 
     type: 'dark',
     primary: {
-      main: '#d5d540',
+      main: '#808080',
     },
     secondary: {
-      main: '#b5acad',
+      main: '#808080',
     },
     error: {
       main: '#f44336',

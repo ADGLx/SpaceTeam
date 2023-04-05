@@ -16,11 +16,14 @@ const Search =({ onSearch }) => {
 
 return (
     <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '7vh'}}>
-        <TextField
+        <TextField 
+        
+            color='third' 
             label= "Search"
+            sx={{ input: { color: '#808080' } }}
             value ={searchTerm}
             onChange= {(e)=> setSearchTerm(e.target.value)}
-            style={{ width: '300px' }}
+            style={{ color:'third', width: '300px'}}
             />
             <Button onClick ={handleSearch}>Search</Button>
     </div>
