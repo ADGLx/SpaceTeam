@@ -275,10 +275,10 @@ async function getAllImages()
         zIndex = 'tooltip'
         />
         <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" color="primary">
          {Position}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color="#808080">
 
          {CompanyName}
          <Rating position='centre' name="size-small" defaultValue={4} size="small" readOnly  />
@@ -287,11 +287,11 @@ async function getAllImages()
         </CardActionArea>
        
         <CardActions disableSpacing>
-        <Button size="medium" color="primary" name={jobID} onClick={() => handleApply({EmployerID,jobID,Position,CompanyName})}>
+        <Button size="medium" color="third" name={jobID} onClick={() => handleApply({EmployerID,jobID,Position,CompanyName})}>
         Apply
         </Button>
-              <IconButton aria-label="report" sx={{color: "#FC0"}} name={jobID} onClick={() => handleReport({jobID})}>
-                 <ReportIcon /> 
+              <IconButton aria-label="report" sx={{color: "primary"}} name={jobID} onClick={() => handleReport({jobID})}>
+                 <ReportIcon color= "secondary"/> 
               </IconButton>
               <ExpandMore
               expand={expanded[index]}
@@ -299,7 +299,7 @@ async function getAllImages()
               aria-expanded={expanded[index]}
               aria-label="show more"
               >
-                <ExpandMoreIcon />
+                <ExpandMoreIcon color= "primary" />
               </ExpandMore>
         </CardActions>
         <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
@@ -429,7 +429,7 @@ async function getAllImages()
       </HideOnScroll>
       <Toolbar />
       <Container>
-      <Typography variant="h8" component="div" color= 'White'>
+      <Typography variant="h8" component="div" color= 'dark'>
       {/* <Grid container spacing={1}  >
             <Grid item xs = {12} sm = {12} lg={12}>
       <Box sx={{
@@ -501,7 +501,7 @@ async function getAllImages()
 >
 
   <Grid item xs = {12} sm = {12} lg={12}>
-   <Search onSearch={handleSearch}/>
+   <Search color='third' onSearch={handleSearch}/>
   </Grid>   
   {/* <Grid item xs = {12} sm = {12} lg={2}> 
             <SmallBar/>
