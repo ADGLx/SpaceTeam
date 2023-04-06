@@ -276,10 +276,10 @@ async function getAllImages()
         zIndex = 'tooltip'
         />
         <CardContent>
-        <Typography gutterBottom variant="h5" component="div" color="primary">
          {Position}
         </Typography>
         <Typography variant="body2" color="#808080">
+        <Typography variant="body2" color="text.secondary">
 
          {CompanyName}
          <Rating position='centre' name="size-small" defaultValue={4} size="small" readOnly  />

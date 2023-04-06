@@ -6,10 +6,9 @@ const theme = createTheme({
     // This makes the default theme the dark one
     mode:'light',
     primary: {
-      main: '#1565c0',
+      main: '#d5d540',
     },
     secondary: {
-      main: '#f44336',
     },
     error: {
       main: '#f44336',
