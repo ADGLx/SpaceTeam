@@ -6,6 +6,8 @@ import { ThemeProvider } from '@mui/material/styles';
 import TeamInfo from './Team_info/TeamInfo';
 import theme from './theme';
 import EmployerDashboard from './EmployerDashboard/EmployerDashboard';
+import AdminDashboard from './AdminDashboard/AdminDashboard';
+
 import UserReports from './UserReports/UserReports';
 import EmployerProfile from './EmployerProfile/EmployerProfile';
 
@@ -35,6 +37,7 @@ const Routing = () => {
          {/* Login and Registration page*/}
         <Route path="Sign-In" element={<SignInSide />} />
         <Route path="Sign-Up" element={<Registration />} />
+
         <Route path="EmployerProfile" element={<EmployerProfile />} />
         <Route path="JobSeekerProfileUpdate" element={<ProtectedRoute><CheckoutLayout /></ProtectedRoute>} />
         <Route path="JobSeekerProfilePage" element={<ProtectedRoute><ProfileView /></ProtectedRoute>} />
@@ -44,6 +47,8 @@ const Routing = () => {
        
         {/* Employers Page */}
         <Route path="EmployerDashboard" element={<ProtectedRoute><EmployerDashboard /></ProtectedRoute>} />
+        <Route path="AdminDashboard" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
+
         <Route path="JobPostings" element={<ProtectedRoute><JobPostings /></ProtectedRoute>} />
         
         {/* Moderators Page */}
