@@ -184,7 +184,7 @@ app.post("/api/displayJobs", function (req, res) {
 app.post("/api/getCV", function (req, res) {
   const name = req.body.name;
   db.query(
-    "SELECT CV FROM users WHERE username = ?",
+    "SELECT CV FROM users WHERE ID = ?",
     [name],
     function (error, results, fields) {
       if (error) {
@@ -313,12 +313,13 @@ app.post("/api/apply", function (req, res) {
 //Request job postings page info from db
 app.post("/api/JobPostings", function (req, res) {
   //Collect user info to query db
-  const CompanyName = req.body.CompanyName;
+  //const CompanyName = req.body.CompanyName;
+  const userID = req.body.UserID;
   // console.log(CompanyName);
 
   db.query(
-    "SELECT Position, PositionInfo, NumOfApplicants, JobID FROM JobListing WHERE CompanyName = ?",
-    [CompanyName],
+    "SELECT Position, PositionInfo, NumOfApplicants, JobID FROM JobListing WHERE EmployerID = ?",
+    [userID],
     function (err, response) {
       if (err) {
         console.log(err);

@@ -38,10 +38,12 @@ export default function StickyHeadTable() {
   function handleJobPostings() {
     var userInfo = JSON.parse(localStorage.getItem("user-token"));
     var username = userInfo["username"];
+    var ID = userInfo["ID"];
     //console.log(username);
 
     const sentObj = {
-      CompanyName: username,
+      //CompanyName: username,
+      UserID : ID
     };
 
     //Sent company name for query to backend:
