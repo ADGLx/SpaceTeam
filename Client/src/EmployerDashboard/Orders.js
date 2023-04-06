@@ -84,7 +84,7 @@ async function handleApplicantList() {
     for (const element of response.data) {
 
       // Get the CV blob for the applicant in JSON
-      const cvBase64URL = await handleGetCV(element['ApplicantName']);
+      const cvBase64URL = await handleGetCV(currentUser);
       console.log(cvBase64URL)
 
       // Create a new data object for the applicant with the downloadable link
