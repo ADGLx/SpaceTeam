@@ -21,9 +21,7 @@ import { mainListItems, secondaryListItems } from '../EmployerDashboard/listItem
 import mytheme from '../theme';
 import StickyHeadTable from './StickyHeadTable';
 import CreateJob from './CreateJob';
-import Darkmode from 'darkmode-js';
 
-new Darkmode().showWidget();
 
 function Copyright(props) {
   return (
@@ -118,7 +116,7 @@ function DashboardContent() {
             <Typography
               component="h1"
               variant="h6"
-              color="primary"
+              color="inherit"
               noWrap
               sx={{ flexGrow: 1 }}
             >
