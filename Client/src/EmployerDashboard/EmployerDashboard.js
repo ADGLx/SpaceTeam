@@ -140,7 +140,7 @@ function DashboardContent() {
         
             </IconButton> */}
               <MenuItem onClick={logout}>
-                <Link href="/Sign-In" variant="body2">
+                <Link color="#fff" href="/Sign-In" variant="body2">
                     Logout
                   </Link>
                 </MenuItem>

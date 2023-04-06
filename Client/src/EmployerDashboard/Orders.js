@@ -139,11 +139,12 @@ function handleDownloadComplete() {
         </TableHead>
         <TableBody>
           {rows.map((row) => (
+           
             <TableRow key={row.id}>
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
+              <TableCell><Link   href = 'mailto:' >{row.paymentMethod}</Link></TableCell>
               <TableCell>
                 {/* {downloadUrl && (
                   <Link color= "primary" href={downloadUrl} download="CV.png" onClick={handleDownloadComplete}>Download CV</Link>
