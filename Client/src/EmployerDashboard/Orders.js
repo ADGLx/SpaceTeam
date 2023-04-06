@@ -144,8 +144,8 @@ function handleDownloadComplete() {
               <TableCell>{row.date}</TableCell>
               <TableCell>{row.name}</TableCell>
               <TableCell>{row.shipTo}</TableCell>
-              <TableCell><Link   href = 'mailto:' >{row.paymentMethod}</Link></TableCell>
-              <TableCell>
+              <TableCell><Link   href = 'mailto:'>{row.paymentMethod}</Link></TableCell>
+              <TableCell><Link href='#' color="primary">
                 {/* {downloadUrl && (
                   <Link color= "primary" href={downloadUrl} download="CV.png" onClick={handleDownloadComplete}>Download CV</Link>
                 )}
@@ -153,6 +153,7 @@ function handleDownloadComplete() {
                     <button onClick={handleDownloadClick}>Download CV</button>
                   )} */} 
                   {row.amount}
+                  </Link>
                   </TableCell>
             </TableRow>
           ))}

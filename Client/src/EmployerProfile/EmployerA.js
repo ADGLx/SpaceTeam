@@ -18,6 +18,7 @@ export default function EmployerA() {
       <Grid container spacing={3}>
         <Grid item xs={12} sm={6}>
           <TextField
+          
             required
             id="firstName"
             name="firstName"
@@ -25,12 +26,15 @@ export default function EmployerA() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
+            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
           <TextField
+          
             required
             id="lastName"
+            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
             name="lastName"
             label="Last name"
             fullWidth
@@ -44,6 +48,7 @@ export default function EmployerA() {
             id="address1"
             name="address1"
             label="Company"
+            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"

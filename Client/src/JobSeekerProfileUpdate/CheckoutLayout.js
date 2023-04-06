@@ -20,22 +20,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 // A custom theme for this app
-const theme = createTheme({
-  palette: {
-    // This makes the default theme the dark one
-    mode:'dark', 
-    type: 'dark',
-    primary: {
-      main: '#d5d540',
-    },
-    secondary: {
-      main: '#b5acad',
-    },
-    error: {
-      main: '#f44336',
-    },
-  },
-});
+import theme from '../theme';
 
 function Copyright() {
   return (
@@ -115,7 +100,7 @@ export default function CheckoutLayout() {
       <CssBaseline />
       <AppBar
         position="absolute"
-        color="default"
+        color="primary"
         elevation={0}
         sx={{
           position: 'relative',
