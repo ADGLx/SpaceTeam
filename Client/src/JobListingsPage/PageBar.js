@@ -276,9 +276,9 @@ async function getAllImages()
         zIndex = 'tooltip'
         />
         <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
          {Position}
         </Typography>
-        <Typography variant="body2" color="#808080">
         <Typography variant="body2" color="text.secondary">
 
          {CompanyName}
@@ -301,7 +301,7 @@ async function getAllImages()
               aria-expanded={expanded[index]}
               aria-label="show more"
               >
-                <ExpandMoreIcon color= "primary" />
+                <ExpandMoreIcon />
               </ExpandMore>
         </CardActions>
         <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
