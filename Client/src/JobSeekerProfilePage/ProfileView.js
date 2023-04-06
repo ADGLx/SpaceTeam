@@ -30,26 +30,10 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
+import theme from '../theme';
 
 
 
-const theme = createTheme({
-    palette: {
-      // This makes the default theme the dark one
-      mode:'dark', 
-      type: 'dark',
-      primary: {
-        main: '#d5d540',
-      },
-      secondary: {
-        main: '#b5acad',
-      },
-      error: {
-        main: '#f44336',
-      },
-    },
-  });
-  
   function Copyright() {
     return (
       <Typography variant="body2" color="text.secondary" align="center">
@@ -187,15 +171,17 @@ const theme = createTheme({
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <AppBar
+        
           position="absolute"
-          color="default"
+          
           elevation={0}
           sx={{
+            backgroundColor: 'primary',
             position: 'relative',
             borderBottom: (t) => `1px solid ${t.palette.divider}`,
           }}
         >
-          <Toolbar>
+          <Toolbar >
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
              Profile 
             </Typography>
@@ -207,7 +193,7 @@ const theme = createTheme({
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="inherit"
+                color="#fff"
               >
                 <AccountCircle />
               </IconButton>
@@ -245,7 +231,7 @@ const theme = createTheme({
           </Toolbar>
         </AppBar>
         <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-          <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+          <Paper variant="outlined" sx={{backgroundImage: 'url(https://thumbs.dreamstime.com/b/abstract-painted-light-blue-background-wooden-texture-141166031.jpg)', my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
             <Typography component="h1" variant="h4" align="center" style={{ marginBottom: 16, textDecoration: 'underline' }}>
               My Profile
             </Typography>

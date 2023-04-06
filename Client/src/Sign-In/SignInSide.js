@@ -195,7 +195,7 @@ export default function SignInSide() {
     left: 'unset', // default: 'unset'
     time: '0.5s', // default: '0.3s'
     mixColor: '#fff', // default: '#fff'
-    backgroundColor: '#fff',  // default: '#fff'
+    backgroundColor: '#000000',  // default: '#fff'
     buttonColorDark: '#000000',  // default: '#100f2c'
     buttonColorLight: '#fff', // default: '#fff'
     primary:'#000000',
@@ -210,7 +210,7 @@ export default function SignInSide() {
   return (
     <ThemeProvider theme={theme}>
       
-      <Grid container component="main" sx={{ height: '100vh' }}>
+      <Grid  container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid 
 
@@ -227,7 +227,7 @@ export default function SignInSide() {
             backgroundPosition: 'right',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid  item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
           <Box
             sx={{
               my: 8,
@@ -235,6 +235,7 @@ export default function SignInSide() {
               display: 'flex',
               flexDirection: 'column',
               alignItems: 'center',
+              
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>

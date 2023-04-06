@@ -18,14 +18,14 @@ return (
     <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '7vh'}}>
         <TextField 
         
-            color='third' 
+            
             label= "Search"
-            sx={{ input: { color: '#808080' } }}
+            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
             value ={searchTerm}
             onChange= {(e)=> setSearchTerm(e.target.value)}
-            style={{ color:'third', width: '300px'}}
+            style={{ color:'#fff', width: '300px'}}
             />
-            <Button onClick ={handleSearch}>Search</Button>
+            <Button variant="contained"  onClick ={handleSearch}>Search</Button>
     </div>
 );
 };

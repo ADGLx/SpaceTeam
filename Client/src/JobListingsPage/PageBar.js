@@ -40,6 +40,7 @@ import ProfileView from '../JobSeekerProfilePage/ProfileView';
 import Search from './Search';
 import Rating from '@mui/material/Rating';
 import DenseTable from '../UserReports/EmployerRating';
+import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
 
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
@@ -263,7 +264,7 @@ async function getAllImages()
 //   justifyContent="center"
 //   style={{ minHeight: '0vh' }}
 // >
-        <Grid item xs = {12} sm = {6} lg={4} >
+        <Grid  item xs = {12} sm = {6} lg={4} >
           <Card sx={{ minWidth: 200, margin: '1rem'}}>
         <CardActionArea>
         <CardMedia
@@ -287,13 +288,14 @@ async function getAllImages()
         </CardActionArea>
        
         <CardActions disableSpacing>
-        <Button size="medium" color="third" name={jobID} onClick={() => handleApply({EmployerID,jobID,Position,CompanyName})}>
+        <Button variant="contained" size="medium" color="primary" name={jobID} onClick={() => handleApply({EmployerID,jobID,Position,CompanyName})}>
         Apply
         </Button>
               <IconButton aria-label="report" sx={{color: "primary"}} name={jobID} onClick={() => handleReport({jobID})}>
                  <ReportIcon color= "secondary"/> 
               </IconButton>
               <ExpandMore
+              
               expand={expanded[index]}
               onClick={() => handleExpandClick(index)}
               aria-expanded={expanded[index]}
@@ -303,7 +305,7 @@ async function getAllImages()
               </ExpandMore>
         </CardActions>
         <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-        <CardContent>
+        <CardContent sx={{backgroundColor: "#E5E4E2"}}>
                 <Typography paragraph>Details:</Typography>
                 <Typography paragraph>
     
@@ -357,6 +359,7 @@ async function getAllImages()
     <React.Fragment>
         
       <CssBaseline />
+      
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
@@ -427,9 +430,10 @@ async function getAllImages()
           </Toolbar>
         </AppBar>
       </HideOnScroll>
+      
       <Toolbar />
-      <Container>
-      <Typography variant="h8" component="div" color= 'dark'>
+      <Container >
+      <Typography variant="h8" component="div" color= 'light'>
       {/* <Grid container spacing={1}  >
             <Grid item xs = {12} sm = {12} lg={12}>
       <Box sx={{
@@ -443,20 +447,7 @@ async function getAllImages()
         </Box>
         </Grid>
         </Grid> */}
-        <Grid
-  container
-  spacing={0}
-  direction="column"
-  alignItems="center"
-  justifyContent="center"
-  style={{ minHeight: '15vh' }}
->
-
-  <Grid item xs={6} style={{ fontSize: '34px' }}>
- WELCOME TO THE JOB POSTINGS PAGE!
-  </Grid>   
-   
-</Grid>
+        
             </Typography>
             </Container>
         {/* <Box sx={{
@@ -492,16 +483,20 @@ async function getAllImages()
             </div>
             </Box> */}
             <Grid
-  container
-  spacing={1.5}
-  direction="row"
+            sx={{ 
+              backgroundImage:'url(https://cdn5.vectorstock.com/i/1000x1000/84/04/continuous-line-drawing-running-happy-people-vector-21618404.jpg)'
+          }}
+            container
+  spacing={10}
+  direction="column"
   alignItems="center"
   justifyContent="center"
-  style={{ minHeight: '0vh' }}
+  style={{ minHeight: '35vh' }}
 >
 
-  <Grid item xs = {12} sm = {12} lg={12}>
-   <Search color='third' onSearch={handleSearch}/>
+  <Grid item xs={6} style={{ fontSize: '44px' }}  >
+   Job Postings <AirlineStopsIcon fontSize="large"/>
+   <Search color='#000000' onSearch={handleSearch}/>
   </Grid>   
   {/* <Grid item xs = {12} sm = {12} lg={2}> 
             <SmallBar/>
@@ -563,6 +558,8 @@ async function getAllImages()
     }}> */}
      
      <Grid
+     
+     backgroundColor="#D3D3D3"
   container
   spacing={1.5}
   direction="row"
