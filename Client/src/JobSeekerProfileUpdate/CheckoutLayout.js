@@ -11,7 +11,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import ProfileLayout from '../JobSeekerProfilePage/ProfileLayout';
 import MessageLayout from '../JobSeekerProfilePage/MessageLayout';
 import ProfileViews from '../JobSeekerProfilePage/ProfileView';
@@ -21,6 +21,9 @@ import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 // A custom theme for this app
 import theme from '../theme';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 function Copyright() {
   return (
@@ -94,6 +97,25 @@ export default function CheckoutLayout() {
 
     handleClose();
   };
+  const [mode, setMode] = React.useState('light');
+    const colorMode = React.useMemo(
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        },
+      }),
+      [],
+    );
+  
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode,
+          },
+        }),
+      [mode],
+    );
 
   return (
     <ThemeProvider theme={theme}>
@@ -111,8 +133,12 @@ export default function CheckoutLayout() {
           <Typography variant="h6" color="inherit" noWrap sx={{ flexGrow: 1 }}>
            Update Profile
           </Typography>
+          <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
           {auth && (
             <div>
+             
               <IconButton
                 size="large"
                 aria-label="account of current user"

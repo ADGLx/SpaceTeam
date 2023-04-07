@@ -41,11 +41,16 @@ import Search from './Search';
 import Rating from '@mui/material/Rating';
 import DenseTable from '../UserReports/EmployerRating';
 import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
-})(({ theme, expand }) => ({
+})
+(({ theme, expand }) => ({
   transform: !expand ? 'rotate(0deg)' : 'rotate(180deg)',
   marginLeft: 'auto',
   transition: theme.transitions.create('transform', {
@@ -305,7 +310,7 @@ async function getAllImages()
               </ExpandMore>
         </CardActions>
         <Collapse in={expanded[index]} timeout="auto" unmountOnExit>
-        <CardContent sx={{backgroundColor: "#E5E4E2"}}>
+        <CardContent >
                 <Typography paragraph>Details:</Typography>
                 <Typography paragraph>
     
@@ -353,11 +358,31 @@ async function getAllImages()
     localStorage.clear();
     handleClose();
   };
-
-  return (
+  const [mode, setMode] = React.useState('light');
+    const colorMode = React.useMemo(
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        },
+      }),
+      [],
+    );
+  
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode,
+          },
+        }),
+      [mode],
+    );
     
+  return (
+    <ThemeProvider theme={theme}>
     <React.Fragment>
         
+      
       <CssBaseline />
       
       <HideOnScroll {...props}>
@@ -375,6 +400,10 @@ async function getAllImages()
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Welcome {JSON.parse(localStorage.getItem('user-token'))['username']}!
             </Typography>
+            
+            <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
             {/* <Button color="inherit">LogOut</Button> */}
             {/* <MenuItem onClick={handleProfileMenuOpen}> */}
         {/* <IconButton
@@ -483,9 +512,7 @@ async function getAllImages()
             </div>
             </Box> */}
             <Grid
-            sx={{ 
-              backgroundImage:'url(https://cdn5.vectorstock.com/i/1000x1000/84/04/continuous-line-drawing-running-happy-people-vector-21618404.jpg)'
-          }}
+            
             container
   spacing={10}
   direction="column"
@@ -559,7 +586,7 @@ async function getAllImages()
      
      <Grid
      
-     backgroundColor="#D3D3D3"
+    
   container
   spacing={1.5}
   direction="row"
@@ -575,7 +602,9 @@ async function getAllImages()
         {/* </Box> */}
    
     {/* </div> */}
-    </React.Fragment>
     
+    
+    </React.Fragment>
+    </ThemeProvider>
   );
 }

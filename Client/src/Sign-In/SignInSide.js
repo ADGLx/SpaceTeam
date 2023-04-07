@@ -11,10 +11,12 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import mytheme from '../theme';
-
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 //The stuff to call the login API
 import { useEffect, useState, useContext } from 'react';
 import Axios from "axios";
@@ -203,6 +205,25 @@ export default function SignInSide() {
   
   // const darkmode = new Darkmode(options);
   // darkmode.showWidget();
+  const [mode, setMode] = React.useState('light');
+    const colorMode = React.useMemo(
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        },
+      }),
+      [],
+    );
+  
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode,
+          },
+        }),
+      [mode],
+    );
   
   return (
     <ThemeProvider theme={theme}>
@@ -224,6 +245,9 @@ export default function SignInSide() {
           }}
         />
         <Grid  item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
           <Box
             sx={{
               my: 8,
@@ -264,6 +288,8 @@ export default function SignInSide() {
                 </Grid>
               </Grid>
               {/* <ShowAPIData /> */}
+              
+            
               <Copyright sx={{ mt: 5 }} />
 
               

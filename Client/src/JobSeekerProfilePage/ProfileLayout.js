@@ -66,7 +66,7 @@ export default function ProfileLayout({isActiveStep}) {
             fullWidth
             autoComplete="given-name"
             variant="standard"
-            sx={{ backgroundColor: '#D3D3D3', input: { color: '#000000' } }}
+            sx={{ input: { color: 'dark' } }}
            
           />
         </Grid>
@@ -79,7 +79,7 @@ export default function ProfileLayout({isActiveStep}) {
             fullWidth
             autoComplete="user-email"
             variant="standard"
-            sx={{ backgroundColor: '#D3D3D3', input: { color: '#000000' } }}
+            sx={{  input: { color: 'dark' } }}
           />
         </Grid>
     

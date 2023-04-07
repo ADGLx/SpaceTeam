@@ -26,7 +26,7 @@ export default function EmployerA() {
             fullWidth
             autoComplete="given-name"
             variant="standard"
-            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
+            sx={{  input: { color: 'dark' } }}
           />
         </Grid>
         <Grid item xs={12} sm={6}>
@@ -34,7 +34,7 @@ export default function EmployerA() {
           
             required
             id="lastName"
-            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
+            sx={{  input: { color: 'dark' } }}
             name="lastName"
             label="Last name"
             fullWidth
@@ -48,7 +48,7 @@ export default function EmployerA() {
             id="address1"
             name="address1"
             label="Company"
-            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
+            sx={{  input: { color: 'dark' } }}
             fullWidth
             autoComplete="shipping address-line1"
             variant="standard"
