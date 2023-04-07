@@ -93,67 +93,14 @@ app.get("/api/getUserReports", (req, res) => {
 });
 
 //Deleting a posting with a user report
-app.post("/api/deletePost", (req, res) => {
-  const id = req.body["PostID"]; //only the id should be deleted
+const deletePost = require('./deletePost.js');
+app.post("/api/deletePost", deletePost);
 
-  db.query(
-    "DELETE FROM JobListing WHERE JobID = ?",
-    [id],
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-        res.send(false);
-      }
-
-      res.send(true);
-    }
-  );
-});
-
-const cpUpload = upload.fields([{ name: "cv" }, { name: "pf" }]);
 //Edit the account
-app.post("/api/editAccount", cpUpload, function (req, res) {
-  //Getting all the info
-  const userID = req.body.ID;
-  const username = req.body.username;
-  const email = req.body.email;
+const editAccount = require('./editAccount');
+const cpUpload = upload.fields([{ name: "cv" }, { name: "pf" }]);
+app.post("/api/editAccount", cpUpload, editAccount);
 
-  //Have here a check to make sure it is not empty, if it is empty just send an erroe back
-  if ((username == "") | (email == "")) {
-    console.log("Attempted to create wrong account!");
-    res.send(false);
-    return;
-  }
-
-  var fileBuffer1 = "";
-  if (req.files["cv"] != null) fileBuffer1 = req.files["cv"][0].buffer;
-  //const binData1 = sharp(fileBuffer1).toBuffer().toString('binary');
-
-  var fileBuffer2 = "";
-  if (req.files["pf"] != null) fileBuffer2 = req.files["pf"][0].buffer;
-  //const binData2 = sharp(fileBuffer2).toBuffer().toString('binary');
-
-  //console.log(fileBuffer1);
-
-  // console.log(date + " aaa"+ time);
-  // I should probably wrap this for errors or sum later
-  db.query(
-    "UPDATE users SET username = ?, email = ?, CV = ?, PF= ?  WHERE ID = ?;",
-    [username, email, fileBuffer1, fileBuffer2, userID],
-    function (error, results, fields) {
-      if (error) {
-        console.log(error);
-        res.send(false); //An error occured
-      }
-      //  console.log(results);
-
-      //Oh wait there is no result? Or is it
-      console.log("User was updated: " + userID + " " + email);
-      res.send(true);
-      //It is normal that the result is empty because it was inserted
-    }
-  );
-});
 
 //Import create-job function
 const createJob = require("./create-job.js");
@@ -241,26 +188,11 @@ app.get("/api/jobListings", function (req, res) {
   );
 });
 
-//Change report entry when report has been triggered
-app.post("/api/report", function (req, res) {
-  //collect JobID info to report
-  const JobID = req.body.jobID.jobID;
+//Report a job listing as a moderator:
+const reportJob = require("./report.js");
+app.post("/api/report", reportJob);
 
-  db.query(
-    "UPDATE JobListing SET Report = 1 WHERE JobID = ?",
-    [JobID],
-    function (error, result, fields) {
-      if (error) {
-        console.log(error);
-      } else {
-        console.log("Successfuly reported listing!");
-        res.send(result);
-      }
-    }
-  );
-});
 
-//Change report entry when report has been triggered
 app.post("/api/apply", function (req, res) {
   //collect JobID info to report
   const JobID = req.body.jobID;
