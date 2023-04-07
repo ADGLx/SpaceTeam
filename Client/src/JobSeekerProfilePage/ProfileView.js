@@ -11,7 +11,7 @@ import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
 import ProfileLayout from './ProfileLayout';
 import MessageLayout from './MessageLayout';
 import ProfileViews from './ProfileView';
@@ -31,7 +31,9 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import theme from '../theme';
-
+import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
   function Copyright() {
@@ -167,6 +169,26 @@ import theme from '../theme';
 
     }
 
+    const [mode, setMode] = React.useState('light');
+    const colorMode = React.useMemo(
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        },
+      }),
+      [],
+    );
+  
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode,
+          },
+        }),
+      [mode],
+    );
+
     return (
       <ThemeProvider theme={theme}>
         <CssBaseline />
@@ -185,6 +207,9 @@ import theme from '../theme';
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
              Profile 
             </Typography>
+            <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
             {auth && (
             <div>
               <IconButton
@@ -231,7 +256,7 @@ import theme from '../theme';
           </Toolbar>
         </AppBar>
         <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-          <Paper variant="outlined" sx={{backgroundImage: 'url(https://thumbs.dreamstime.com/b/abstract-painted-light-blue-background-wooden-texture-141166031.jpg)', my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+          <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
             <Typography component="h1" variant="h4" align="center" style={{ marginBottom: 16, textDecoration: 'underline' }}>
               My Profile
             </Typography>

@@ -20,12 +20,13 @@ return (
         
             
             label= "Search"
-            sx={{ backgroundColor: '#fff', input: { color: '#000000' } }}
+            sx={{ input: { color: 'dark' } }}
             value ={searchTerm}
             onChange= {(e)=> setSearchTerm(e.target.value)}
             style={{ color:'#fff', width: '300px'}}
             />
-            <Button variant="contained"  onClick ={handleSearch}>Search</Button>
+            
+            <Button variant="contained"  onClick ={handleSearch}>Search </Button>
     </div>
 );
 };

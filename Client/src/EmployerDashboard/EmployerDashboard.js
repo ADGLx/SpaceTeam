@@ -22,10 +22,12 @@ import Chart from './Chart';
 import Deposits from './Deposits';
 import Orders from './Orders';
 import Button from '@mui/material/Button';
-import mytheme from '../theme';
+import theme from '../theme';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-
+import { useTheme} from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 function Copyright(props) {
   return (
@@ -88,13 +90,31 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 //const mdTheme = createTheme();
 
-const mdTheme = mytheme;
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
-
+  const [mode, setMode] = React.useState('light');
+    const colorMode = React.useMemo(
+      () => ({
+        toggleColorMode: () => {
+          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+        },
+      }),
+      [],
+    );
+  
+    const theme = React.useMemo(
+      () =>
+        createTheme({
+          palette: {
+            mode,
+          },
+        }),
+      [mode],
+    );
 
   const handleClose = () => {
     setAnchorEl(null);
@@ -106,7 +126,7 @@ function DashboardContent() {
   };
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
@@ -115,6 +135,7 @@ function DashboardContent() {
               pr: '24px', // keep right padding when drawer closed
             }}
           >
+            
             <IconButton
               edge="start"
               color="inherit"
@@ -139,6 +160,9 @@ function DashboardContent() {
             {/* <IconButton color="inherit">
         
             </IconButton> */}
+            <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
               <MenuItem onClick={logout}>
                 <Link color="#fff" href="/Sign-In" variant="body2">
                     Logout
@@ -147,9 +171,7 @@ function DashboardContent() {
           </Toolbar>
         </AppBar>
         <Drawer PaperProps={{
-    sx: {
-      backgroundColor: "#E5E4E2"
-    }
+    
   }} variant="permanent" open={open}>
           <Toolbar
             sx={{
