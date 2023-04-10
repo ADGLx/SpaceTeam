@@ -20,41 +20,7 @@ function createData(id, date, name, shipTo, paymentMethod, amount) {
 
 
 
-const rows = [
-  createData(
-    0,
-    '16 Feb, 2023',
-    'Elvis Smith',
-    'Systems Engineer',
-    'Elvis112@gmail.com',
-    1567,
-  ),
-  createData(
-    1,
-    '18 Feb, 2023',
-    'Paul Merrel',
-    'Avionics Engineer',
-    'Paul8790@gmail.com',
-    1544,
-  ),
-  createData(2, '18 Feb, 2023', 'Tom Burt', 'Stress Engineer', 'Tom_b@gmail.com', 1461),
-  createData(
-    3,
-    '20 Feb, 2023',
-    'Michael Harrison',
-    'Technician',
-    'Jackson45@hotmail.com',
-    1456,
-  ),
-  createData(
-    4,
-    '23 Feb, 2023',
-    'Bruce Jay',
-    'Materials Engineer',
-    'Bruce_85@yahoo.com',
-    1546,
-  ),
-];
+
 
 function preventDefault(event) {
   event.preventDefault();
