@@ -20,25 +20,9 @@ import { AdminListItems,mainListItems, secondaryListItems } from '../EmployerDas
 import mytheme from '../theme';
 import StickyHeadTable from './JobPostingsTable';
 import CreateJob from './CreateJob';
-import { useTheme} from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-
-
-
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="http://localhost:3000/Info">
-        SPACE
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
 
 const drawerWidth = 240;
 

@@ -17,7 +17,7 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { AdminListItems,mainListItems, secondaryListItems } from './listItems';
+import { AdminListItems,mainListItems, secondaryListItems } from './VerticalSideBar';
 import Chart from './Chart';
 import Deposits from './ChartInformation';
 import Orders from './Orders';

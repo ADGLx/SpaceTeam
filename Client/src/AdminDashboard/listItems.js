@@ -19,9 +19,6 @@ export const mainListItems = (
        {/*
   for admin to navigate to the dashboard*/}
     </ListItemButton>
-
-
-
     <ListItemButton component={Link} to="/JobPostings">
    <ListItemIcon>
   <LayersIcon />
@@ -48,10 +45,5 @@ export const mainListItems = (
 export const secondaryListItems = (
   <React.Fragment>
 
-    
-   
-      
-   
-    
   </React.Fragment>
 );
