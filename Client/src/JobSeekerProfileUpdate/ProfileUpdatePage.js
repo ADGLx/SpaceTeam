@@ -5,23 +5,16 @@ import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
 import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-
 import ProfileLayout from '../JobSeekerProfilePage/ProfileLayout';
-import MessageLayout from '../JobSeekerProfilePage/MessageLayout';
 import ProfileViews from '../JobSeekerProfilePage/ProfileView';
 import IconButton from '@mui/material/IconButton';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
-// A custom theme for this app
-import theme from '../theme';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
@@ -45,32 +38,19 @@ function getStepContent(step) {
     case 0:
       return <ProfileLayout />;
     case 1:
-      return <MessageLayout />;
-    case 2:
       <ProfileViews/>;
     
   }
 }
 
-
-
 export default function CheckoutLayout() {
   const [activeStep, setActiveStep] = React.useState(0);
-
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
-  };
-
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
 
   const [auth, setAuth] = React.useState(true);
   const [anchorEl, setAnchorEl] = React.useState(null);
-
-  const handleChange = (event) => {
-    setAuth(event.target.checked);
-  };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -185,13 +165,6 @@ export default function CheckoutLayout() {
           <Typography component="h1" variant="h4" align="center" style={{ marginBottom: 30, textDecoration: 'underline' }}>
            Update Profile
           </Typography>
-          {/* <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
-            {steps.map((label) => (
-              <Step key={label}>
-                <StepLabel>{label}</StepLabel>
-              </Step>
-            ))}
-          </Stepper> */}
           {activeStep === steps.length ? (
             <React.Fragment>
               <Typography variant="h5" gutterBottom>
@@ -211,13 +184,6 @@ export default function CheckoutLayout() {
                   </Button>
                 )}
 
-                {/* <Button
-                  variant="contained"
-                  onClick={handleNext}
-                  sx={{ mt: 3, ml: 1 }}
-                >
-                  {activeStep === steps.length - 1 ? 'Save' : 'Save'}
-                </Button> */}
               </Box>
             </React.Fragment>
           )}

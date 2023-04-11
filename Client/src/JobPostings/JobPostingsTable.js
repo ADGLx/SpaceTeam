@@ -37,7 +37,7 @@ export default function StickyHeadTable() {
   
   function handleJobPostings() {
     var userInfo = JSON.parse(localStorage.getItem("user-token"));
-    var username = userInfo["username"];
+    // var username = userInfo["username"];
     var ID = userInfo["ID"];
     //console.log(username);
 

@@ -9,18 +9,10 @@ import Title from './Title';
 import { useEffect } from 'react';
 import Axios from 'axios';
 
-
-
-
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
 }
-
-
-
-
-
 
 function preventDefault(event) {
   event.preventDefault();
