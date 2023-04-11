@@ -27,38 +27,66 @@ useEffect(() => {
   handleApplicantList();
  },[])
 
-async function handleApplicantList() {
-  // Hard code to test job applications on employer dashboard
-  var userInfo = JSON.parse(localStorage.getItem("user-token"));
-  var currentUser = userInfo["ID"];
+ async function handleApplicantList() {
+  // Get user info from local storage
+  const userInfo = JSON.parse(localStorage.getItem("user-token"));
+  const currentUser = userInfo["ID"];
+  const userRoleType = userInfo["type"];
 
-  const sentObj = {
-    EmployerID: currentUser,
-  };
-
-  try {
-    const response = await Axios.post("/api/displayJobs", sentObj);
-    // Iterate through each job application
-    for (const element of response.data) {
-
-      // Get the CV blob for the applicant in JSON
-      const cvBase64URL = await handleGetCV(currentUser);
-      console.log(cvBase64URL)
-
-      // Create a new data object for the applicant with the downloadable link
-      const newData = createData(
-        element[""],
-        element["Date"],
-        element["ApplicantName"],
-        element["Position"],
-        element["ApplicantEmail"],
-        <a style ={{ color:"rgb(255, 191, 0)"}}href={`data:image/png;base64,${cvBase64URL}`} download={`${element["ApplicantName"]}.png`}>{element["ApplicantName"]}'s CV</a>
-      );
-
-      setRows((rows) => [...rows, newData]);
+  if (userRoleType === "admin") {
+    // Fetch all applications if user is an admin
+    try {
+      const response = await Axios.get("/api/getAllApplications");
+      const newData = response.data.map((element) => {
+        return {
+          id: element["ApplicationID"],
+          date: element["Date"],
+          name: element["ApplicantName"],
+          shipTo: element["Position"],
+          paymentMethod: element["ApplicantEmail"],
+          amount: (
+            <a
+              style={{ color: "rgb(255, 191, 0)" }}
+              href={`data:image/png;base64,${element["CVBlob"]}`}
+              download={`${element["ApplicantName"]}.png`}
+            >
+              {element["ApplicantName"]}'s CV
+            </a>
+          ),
+        };
+      });
+      setRows(newData);
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
+  } else {
+    // Fetch only the current user's applications
+    try {
+      const response = await Axios.post("/api/displayJobs", {
+        EmployerID: currentUser,
+      });
+      const newData = response.data.map((element) => {
+        return {
+          id: element["ApplicationID"],
+          date: element["Date"],
+          name: element["ApplicantName"],
+          shipTo: element["Position"],
+          paymentMethod: element["ApplicantEmail"],
+          amount: (
+            <a
+              style={{ color: "rgb(255, 191, 0)" }}
+              href={`data:image/png;base64,${element["CVBlob"]}`}
+              download={`${element["ApplicantName"]}.png`}
+            >
+              {element["ApplicantName"]}'s CV
+            </a>
+          ),
+        };
+      });
+      setRows(newData);
+    } catch (error) {
+      console.error(error);
+    }
   }
 }
 
@@ -92,7 +120,7 @@ function handleDownloadComplete() {
             <TableCell>Name</TableCell>
             <TableCell>Job Posting</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell align="center">CV</TableCell>
+            <TableCell >CV</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

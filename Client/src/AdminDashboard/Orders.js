@@ -8,13 +8,11 @@ import TableRow from '@mui/material/TableRow';
 import Title from './Title';
 import { useEffect } from 'react';
 import Axios from 'axios';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import IconButton from '@mui/material/IconButton';
 
-
-
-
-// Generate Order Data
-function createData(id, date, name, shipTo, paymentMethod, amount) {
-  return { id, date, name, shipTo, paymentMethod, amount };
+function createData(ID, username, password, type) {
+  return { ID, username, password, type };
 }
 
 
@@ -25,105 +23,89 @@ function preventDefault(event) {
 }
 
 export default function Orders() {
-
   const [rows, setRows] = React.useState([]);
+  const [showAllUsers, setShowAllUsers] = React.useState(false);
 
-  //This just calls it everytime it is rendered
-useEffect(() => {
-  handleApplicantList();
- },[])
+  useEffect(() => {
+    handleUserList();
+  }, []);
 
-async function handleApplicantList() {
-  // Hard code to test job applications on employer dashboard
-  var userInfo = JSON.parse(localStorage.getItem("user-token"));
-  var currentUser = userInfo["ID"];
-
-  const sentObj = {
-    EmployerID: currentUser,
-  };
-
-  try {
-    const response = await Axios.post("/api/displayJobs", sentObj);
-    // Iterate through each job application
-    for (const element of response.data) {
-
-      // Get the CV blob for the applicant in JSON
-      const cvBase64URL = await handleGetCV(element['ApplicantName']);
-      console.log(cvBase64URL)
-
-      // Create a new data object for the applicant with the downloadable link
-      const newData = createData(
-        element[""],
-        element["Date"],
-        element["ApplicantName"],
-        element["Position"],
-        element["ApplicantEmail"],
-        <a style ={{ color:"rgb(255, 191, 0)"}}href={`data:image/png;base64,${cvBase64URL}`} download={`${element["ApplicantName"]}.png`}>{element["ApplicantName"]}'s CV</a>
-      );
-
-      setRows((rows) => [...rows, newData]);
+  async function handleUserList() {
+    try {
+      const response = await Axios.get("/api/getAllUsers");
+      const userData = response.data;
+      
+      const dataRows = userData
+      .filter((user) => user.type !== 'admin')
+      .map((user) => {
+        return createData(
+          user.ID,
+          user.username,
+          user.password,
+          user.type
+        )
+      });
+      setRows(dataRows);
+    } catch (error) {
+      console.error(error);
     }
-  } catch (error) {
-    console.error(error);
   }
-}
-
-async function handleGetCV(username) {
-  const sentObj = {
-    name: username,
-  };
-  try {
-    const response = await Axios.post("/api/getCV", sentObj);
-    const CVbase64 = response.data;
-
-    return CVbase64;
-
-  } catch (error) {
-    console.error(error);
-    // handle error
+  async function handleDeleteUser(ID) {
+    console.log('Deleting user with id:', ID);
+    try {
+      await Axios.post("/api/deleteUser", { ID: ID });
+      setRows(rows.filter((row) => row.ID !== ID));
+    } catch (error) {
+      console.error(error);
+    }
   }
-}
-
-function handleDownloadComplete() {
-  setDownloadUrl(null);
-}
+  
+  const rowsByType = rows.reduce((acc, row) => {
+    if (!acc[row.type]) {
+      acc[row.type] = [];
+    }
+    acc[row.type].push(row);
+    return acc;
+  }, {});
 
   return (
     <React.Fragment>
-      <Title>Job Postings</Title>
-      <Table size="small">
-        <TableHead>
-          <TableRow>
-            <TableCell>Company</TableCell>
-            <TableCell>Position</TableCell>
-            <TableCell>Description</TableCell>
-            <TableCell>Actions</TableCell>
-            <TableCell align="center">CV</TableCell>
-          </TableRow>
-        </TableHead>
-        <TableBody>
-          {rows.map((row) => (
-            <TableRow key={row.id}>
-              <TableCell>{row.date}</TableCell>
-              <TableCell>{row.name}</TableCell>
-              <TableCell>{row.shipTo}</TableCell>
-              <TableCell>{row.paymentMethod}</TableCell>
-              <TableCell>
-                {/* {downloadUrl && (
-                  <Link color= "primary" href={downloadUrl} download="CV.png" onClick={handleDownloadComplete}>Download CV</Link>
-                )}
-                  {!downloadUrl && (
-                    <button onClick={handleDownloadClick}>Download CV</button>
-                  )} */} 
-                  {row.amount}
+      <Title>User List</Title>
+      {Object.keys(rowsByType).map((type) => (
+        <div key={type}>
+          <h2>{type}</h2>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Username</TableCell>
+                <TableCell>Password</TableCell>
+                <TableCell>Actions</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+            {rowsByType[type]
+                .slice(0, showAllUsers ? rowsByType[type].length : 5) // limit the number of rows to display
+                .map((row) => (
+                <TableRow key={row.ID}>
+                  <TableCell>{row.username}</TableCell>
+                  <TableCell>{row.password}</TableCell>
+                  <TableCell>
+                    <IconButton onClick={() => handleDeleteUser(row.ID)}><DeleteForeverIcon /></IconButton>
                   </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <Link color="primary" href="#" onClick={preventDefault} sx={{ mt: 3 }}>
-        See more job postings
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </div>
+      ))}
+      <Link color="primary" href="#" onClick={(event) => {
+          event.preventDefault();
+          setShowAllUsers(!showAllUsers); // toggle the state
+        }}
+        sx={{ mt: 3 }}
+      >
+        {showAllUsers ? "See less" : "See All Users"} {/* update the link text */}
       </Link>
     </React.Fragment>
   );
-          }
+}

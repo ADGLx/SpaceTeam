@@ -12,6 +12,7 @@ import Axios from 'axios';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import { Button } from '@mui/material';
 
+
 const columns = [
   { id: 'Position', label: 'Position', minWidth: 170 },
   { id: 'Description', label: 'Description', minWidth: 100},
@@ -37,29 +38,50 @@ export default function StickyHeadTable() {
   
   function handleJobPostings() {
     var userInfo = JSON.parse(localStorage.getItem("user-token"));
-    // var username = userInfo["username"];
+    var username = userInfo["username"];
     var ID = userInfo["ID"];
-    //console.log(username);
-
-    const sentObj = {
-      //CompanyName: username,
-      UserID : ID
-    };
-
-    //Sent company name for query to backend:
-    Axios.post("/api/JobPostings", sentObj).then(function (response) {
-
-      var newData = []
-
-      response.data.forEach(element => 
-        {
-          newData.push(createData(element['Position'], element['PositionInfo'], element['NumOfApplicants'], element['JobID']))
-
-          console.log(element['JobID'])
+    
+    if (username === "admin") {
+      Axios.get("/api/AllJobPostings").then(function (response) {
+        var newData = [];
+  
+        response.data.forEach(function (element) {
+          newData.push(
+            createData(
+              element["Position"],
+              element["PositionInfo"],
+              element["NumOfApplicants"],
+              element["JobID"]
+            )
+          );
         });
-
-       setRows(newData);
-    })
+  
+        setRows(newData);
+      });
+    } else {
+      // use the existing endpoint for other users
+      const sentObj = {
+        CompanyName: username,
+        UserID: ID,
+      };
+  
+      Axios.post("/api/JobPostings", sentObj).then(function (response) {
+        var newData = [];
+  
+        response.data.forEach(function (element) {
+          newData.push(
+            createData(
+              element["Position"],
+              element["PositionInfo"],
+              element["NumOfApplicants"],
+              element["JobID"]
+            )
+          );
+        });
+  
+        setRows(newData);
+      });
+    }
   }
 
 

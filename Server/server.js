@@ -190,6 +190,7 @@ app.get("/api/jobListings", function (req, res) {
 
 //Report a job listing as a moderator:
 const reportJob = require("./report.js");
+const { stringify } = require("querystring");
 app.post("/api/report", reportJob);
 
 
@@ -273,6 +274,63 @@ app.get("/api/search", function (req, res) {
         console.log(error);
       } else {
         res.send(result);
+      }
+    }
+  );
+});
+app.get("/api/getAllUsers", (req, res)=>{
+  db.query("SELECT * FROM users", [], function(error, results, fields){
+    if(error){
+      console.log(error);
+    } else {
+      res.send(JSON.stringify(results));
+    }
+  });
+});
+app.post("/api/deleteUser", (req, res)=>{
+  const id =req.body.id;
+
+  db.query("DELETE FROM users WHERE id = ?", [id], function(error, results, fields)
+  {
+    if(error){
+      console.log(error);
+    } else{
+      res.send(true);
+    }
+  });
+});
+
+app.get("/get/getFlaggedJobs", (req, res)=>{
+  db.query(
+    "SELECT * FROM JobListing WHERE Report = 1", [], function(error, results, fields){
+      if(error){
+        console.log(error);
+      } else {
+        res.send(JSON.stringify(results));
+      }
+    }
+  );
+});
+app.get("/api/AllJobPostings", function (req, res) {
+  db.query(
+    "SELECT Position, PositionInfo, NumOfApplicants, JobID FROM JobListing",
+    function (err, response) {
+      if (err) {
+        console.log(err);
+      } else {
+        res.send(response);
+      }
+    }
+  );
+});
+app.get("/api/getAllApplications", function (req, res) {
+  db.query(
+    "SELECT ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants",
+    function (error, results, fields) {
+      if (error) {
+        console.log(error);
+      } else {
+        res.send(results);
       }
     }
   );

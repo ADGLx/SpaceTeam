@@ -109,6 +109,9 @@ export default function SignInSide() {
           } else if(token['type']=="Moderator")
           {
             navigate('/UserReports');
+          } else if(token['type']=="admin")
+          {
+            navigate('/AdminDashboard');
           } 
           //Just a job seeker
           else {

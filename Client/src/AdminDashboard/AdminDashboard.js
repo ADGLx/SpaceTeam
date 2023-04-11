@@ -24,6 +24,9 @@ import Button from '@mui/material/Button';
 import mytheme from '../theme';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
+import { useTheme} from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
 
 
 function Copyright(props) {
@@ -87,12 +90,31 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 //const mdTheme = createTheme();
 
-const mdTheme = mytheme;
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const [mode, setMode] = React.useState('light');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode],
+  );
 
 
   const handleClose = () => {
@@ -105,7 +127,7 @@ function DashboardContent() {
   };
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
@@ -138,8 +160,11 @@ function DashboardContent() {
             {/* <IconButton color="inherit">
         
             </IconButton> */}
+            <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
               <MenuItem onClick={logout}>
-                <Link href="/Sign-In" variant="body2">
+              <Link color="inherit" href="/Sign-In" variant="body2">
                     Logout
                   </Link>
                 </MenuItem>

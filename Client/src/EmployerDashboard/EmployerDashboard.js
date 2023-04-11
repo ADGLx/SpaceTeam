@@ -15,9 +15,13 @@ import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
-import { mainListItems, secondaryListItems } from './VerticalSideBar';
+import NotificationsIcon from '@mui/icons-material/Notifications';
+import { AdminListItems,mainListItems, secondaryListItems } from './VerticalSideBar';
+import Chart from './Chart';
 import Deposits from './ApplicantsNumber';
 import Orders from './ApplicantsTable';
+import Button from '@mui/material/Button';
+import theme from '../theme';
 import MenuItem from '@mui/material/MenuItem';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -89,6 +93,9 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const userRole= localStorage.getItem('user-token');
+  const user = JSON.parse(userRole);
+  const userRoleType = user.type;
   const [mode, setMode] = React.useState('light');
     const colorMode = React.useMemo(
       () => ({
@@ -148,7 +155,8 @@ function DashboardContent() {
               noWrap
               sx={{ flexGrow: 1 }}
             >
-              {JSON.parse(localStorage.getItem('user-token'))['username']}'s Employer Dashboard
+              {userRoleType === 'admin' ? 'All Applications' : `${JSON.parse(localStorage.getItem('user-token')).username}'s Employer Dashboard`}
+              
             </Typography>
             
             <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
@@ -178,7 +186,7 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+           {userRoleType === 'admin' ? AdminListItems : mainListItems}
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>
