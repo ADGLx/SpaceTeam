@@ -29,6 +29,22 @@ export default function Deposits() {
               setApplicants(response.data.length);
         })
   }
+  const [reports, setReports] = React.useState(0);
+  //Query the server for all the reports 
+  useEffect(() => {
+    getAllUserReports();
+  }, []);
+
+  function getAllUserReports()
+  {
+        //Get the changes from the server
+        Axios.get('/api/getUserReports').
+        then(function (response) {
+          //Create a quick new array
+          console.log(response.data)
+              setReports(response.data.length);
+        })
+      }
 
   return (
     <React.Fragment>
@@ -47,15 +63,15 @@ export default function Deposits() {
    {/* For admin to easily see how many job postings were created 
    recently 
    */}
-
-    
-<Title>Recent Profiles</Title>
-      <Typography component="p" variant="h4" >
-       {applicants}
+<React.Fragment>
+      <Title>Recent reports</Title>
+      <Typography component="p" variant="h4">
+        {reports}
       </Typography>
-{/* For admin to easily see how many user profiles were created 
-   recently 
-   */}
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+        on 24 February, 2023
+      </Typography>
+    </React.Fragment>
     </React.Fragment>
   );
 

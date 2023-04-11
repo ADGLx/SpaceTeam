@@ -13,6 +13,36 @@ import NotificationsIcon from '@mui/icons-material/Notifications';
 import { Link } from "react-router-dom";
 import LogoutIcon from '@mui/icons-material/Logout';
 
+export const AdminListItems = (
+  <React.Fragment>
+    <ListItemButton component={Link} to="/AdminDashboard">
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Dashboard" />
+    </ListItemButton>
+    
+    <ListItemButton component={Link} to="/JobPostings">
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="All Job Postings" />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/EmployerDashboard">
+   <ListItemIcon>
+  <LayersIcon />
+  </ListItemIcon>
+  <ListItemText primary="All Applications" />
+  </ListItemButton>
+  <ListItemButton component={Link} to="/UserReports">
+   <ListItemIcon>
+  <LayersIcon />
+  </ListItemIcon>
+  <ListItemText primary="All Reports" />
+  </ListItemButton>
+  </React.Fragment>
+);
+
 export const mainListItems = (
   
   <React.Fragment>

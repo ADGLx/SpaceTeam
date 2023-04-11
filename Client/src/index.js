@@ -23,6 +23,8 @@ import Candidate_info from './Candidate_info';
 import CheckoutLayout from './JobSeekerProfileUpdate/CheckoutLayout';
 import ProfileView from './JobSeekerProfilePage/ProfileView';
 
+
+
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
@@ -53,6 +55,9 @@ const Routing = () => {
         
         {/* Moderators Page */}
         <Route path="UserReports" element={<ProtectedRoute><UserReports /></ProtectedRoute>} />
+        
+
+        
         
         {/* Unused Page */}
         {/* <Route path="CandidateInfo" element={<ProtectedRoute><Candidate_info /></ProtectedRoute>} /> */}

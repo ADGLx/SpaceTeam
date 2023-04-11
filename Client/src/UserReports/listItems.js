@@ -9,7 +9,37 @@ import PeopleIcon from '@mui/icons-material/People';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import LayersIcon from '@mui/icons-material/Layers';
 import AssignmentIcon from '@mui/icons-material/Assignment';
+import { Link } from "react-router-dom";
 import NotificationsIcon from '@mui/icons-material/Notifications';
+
+export const AdminListItems = (
+  <React.Fragment>
+    <ListItemButton component={Link} to="/AdminDashboard">
+      <ListItemIcon>
+        <DashboardIcon />
+      </ListItemIcon>
+      <ListItemText primary="Dashboard" />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/JobPostings">
+      <ListItemIcon>
+        <LayersIcon />
+      </ListItemIcon>
+      <ListItemText primary="All Job Postings" />
+    </ListItemButton>
+    <ListItemButton component={Link} to="/EmployerDashboard">
+   <ListItemIcon>
+  <LayersIcon />
+  </ListItemIcon>
+  <ListItemText primary="All Applications" />
+  </ListItemButton>
+  <ListItemButton component={Link} to="/UserReports">
+   <ListItemIcon>
+  <LayersIcon />
+  </ListItemIcon>
+  <ListItemText primary="All Reports" />
+  </ListItemButton>
+  </React.Fragment>
+);
 
 export const mainListItems = (
   <React.Fragment>

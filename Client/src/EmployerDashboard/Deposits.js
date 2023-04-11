@@ -18,6 +18,14 @@ export default function Deposits() {
 
   function getNumberOfApplicants()
   {
+    const userRole = JSON.parse(localStorage.getItem('user-token'))['type'];
+    if (userRole === 'admin') {
+      // Get all applications
+      Axios.get('/api/getAllApplications')
+        .then(function (response) {
+          setApplicants(response.data.length);
+        });
+    } else {
     const EmployerID = JSON.parse(localStorage.getItem('user-token'))['ID']
         //Get the changes from the server
         const sentObj = {
@@ -27,12 +35,13 @@ export default function Deposits() {
         then(function (response) {
           //Create a quick new array
               setApplicants(response.data.length);
-        })
+        });
   }
+}
 
   return (
     <React.Fragment>
-      <Title>Recent Applicantions</Title>
+      <Title>Recent Applications</Title>
       <Typography component="p" variant="h4" >
        {applicants}
       </Typography>

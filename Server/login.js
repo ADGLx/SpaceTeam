@@ -6,6 +6,7 @@ const db = require('./database')
 async function login(req,res) {
     const username = req.body.username;
     const password = req.body.password;
+    
     db.query(
       "SELECT * FROM users WHERE email = ? AND password = ?",
       [username, password],

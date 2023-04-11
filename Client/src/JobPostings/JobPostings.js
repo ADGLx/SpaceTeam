@@ -17,10 +17,15 @@ import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { mainListItems, secondaryListItems } from '../EmployerDashboard/listItems';
+import { AdminListItems,mainListItems, secondaryListItems } from '../EmployerDashboard/listItems';
 import mytheme from '../theme';
 import StickyHeadTable from './StickyHeadTable';
 import CreateJob from './CreateJob';
+import { useTheme} from '@mui/material/styles';
+import Brightness4Icon from '@mui/icons-material/Brightness4';
+import Brightness7Icon from '@mui/icons-material/Brightness7';
+
+
 
 
 function Copyright(props) {
@@ -84,15 +89,39 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 //const mdTheme = createTheme();
 
-const mdTheme = mytheme;
+
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const userRole= localStorage.getItem('user-token');
+  const user = JSON.parse(userRole);
+  const userRoleType = user.type;
+  const [mode, setMode] = React.useState('light');
+  const colorMode = React.useMemo(
+    () => ({
+      toggleColorMode: () => {
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+      },
+    }),
+    [],
+  );
+
+  const theme = React.useMemo(
+    () =>
+      createTheme({
+        palette: {
+          mode,
+        },
+      }),
+    [mode],
+  );
+  
+  
 
   return (
-    <ThemeProvider theme={mdTheme}>
+    <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
         <CssBaseline />
         <AppBar position="absolute" open={open}>
@@ -122,6 +151,9 @@ function DashboardContent() {
             >
               Job Postings
             </Typography>
+            <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
             <Grid item xs={12}>
                 <Paper sx={{ p: 1, display: 'flex', flexDirection: 'column' }}>
                   <CreateJob />
@@ -149,7 +181,7 @@ function DashboardContent() {
           </Toolbar>
           <Divider />
           <List component="nav">
-            {mainListItems}
+          {userRoleType === 'admin' ? AdminListItems : mainListItems}
             <Divider sx={{ my: 1 }} />
             {secondaryListItems}
           </List>

@@ -16,7 +16,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 export const mainListItems = (
   
   <React.Fragment>
-    <ListItemButton component={Link} to="/EmployerDashboard">
+    <ListItemButton component={Link} to="/AdminDashboard">
       <ListItemIcon>
         <DashboardIcon />
       </ListItemIcon>
@@ -24,51 +24,30 @@ export const mainListItems = (
        {/*
   for admin to navigate to the dashboard*/}
     </ListItemButton>
-    <ListItemButton component={Link} to="/JobSeekerProfilePage">
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText  primary="All Employer Profiles" />
-       {/*
-  for admin to view all of the employer profiles 
-  created*/}
-    </ListItemButton>
 
-    <ListItemButton component={Link} to="/JobSeekerProfilePage">
-      <ListItemIcon>
-        <PeopleIcon />
-      </ListItemIcon>
-      <ListItemText  primary="All Job Seeker Profiles" />
-       {/*
-  for admin to view all of the job seeker profiles
-   created*/}
-    </ListItemButton>
 
-    {/* <ListItemButton >
-      <ListItemIcon>
-        <DashboardIcon />
-        
-      </ListItemIcon>
-      <ListItemText primary="Job Postings" />
-    </ListItemButton> */}
+
     <ListItemButton component={Link} to="/JobPostings">
    <ListItemIcon>
   <LayersIcon />
   </ListItemIcon>
   <ListItemText primary="All Job Postings" />
-  {/*
-  for admin to view all of the job postings created*/}
   </ListItemButton>
-  
-
-{/* <ListItemButton component={Link} to="/Sign-In">
-<ListItemIcon>
-<LogoutIcon/>
-</ListItemIcon>
-<ListItemText primary="Logout" />
-</ListItemButton> */}
+  <ListItemButton component={Link} to="/EmployerDashboard">
+   <ListItemIcon>
+  <LayersIcon />
+  </ListItemIcon>
+  <ListItemText primary="All Applications" />
+  </ListItemButton>
+  {/*
+  for admin to navigate to all job postings*/}
+  <ListItemButton component={Link} to="/UserReports">
+   <ListItemIcon>
+  <LayersIcon />
+  </ListItemIcon>
+  <ListItemText primary="All Reports" />
+  </ListItemButton>
 </React.Fragment>
-
 );
 
 export const secondaryListItems = (
