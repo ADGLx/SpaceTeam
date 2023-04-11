@@ -1,8 +1,7 @@
 import * as React from 'react';
-import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
 import Title from './Title';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import Axios from 'axios';
 
 function preventDefault(event) {
@@ -45,14 +44,6 @@ export default function Deposits() {
       <Typography component="p" variant="h4" >
        {applicants}
       </Typography>
-      {/* <Typography color="text.secondary" sx={{ flex: 1 }}>
-        as of 24 February, 2023
-      </Typography> */}
-      {/* <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View all applicants
-        </Link>
-      </div> */}
     </React.Fragment>
   );
 }

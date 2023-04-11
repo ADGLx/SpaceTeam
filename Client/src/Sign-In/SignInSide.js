@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
 import mytheme from '../theme';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 //The stuff to call the login API
@@ -248,9 +248,7 @@ export default function SignInSide() {
           }}
         />
         <Grid  item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-        <IconButton sx={{ ml: 60 }} onClick={colorMode.toggleColorMode} color="inherit">
-        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
+       
           <Box
             sx={{
               my: 8,
@@ -267,6 +265,9 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
+            <IconButton sx={{ m: 0 }} onClick={colorMode.toggleColorMode} color="inherit">
+        {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+      </IconButton>
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <ShowTextFields />
               <FormControlLabel

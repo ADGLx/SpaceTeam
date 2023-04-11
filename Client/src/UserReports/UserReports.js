@@ -19,7 +19,7 @@ import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import { AdminListItems,mainListItems, secondaryListItems } from './listItems';
 import Chart from './Chart';
-import Deposits from './Deposits';
+import Deposits from './ChartInformation';
 import Orders from './Orders';
 import myTheme from '../theme';
 import { useState,useEffect } from 'react';

@@ -7,8 +7,6 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import Title from './Title';
-import { useState, useEffect } from 'react';
-import Axios from 'axios';
 import Rating from '@mui/material/Rating';
 
 function createData(Employer, N_P, Rating) {

@@ -10,16 +10,15 @@ import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import IconButton from '@mui/material/IconButton';
 import Badge from '@mui/material/Badge';
-import Container from '@mui/material/Container';
 import Grid from '@mui/material/Grid';
 import Paper from '@mui/material/Paper';
 import Link from '@mui/material/Link';
 import MenuIcon from '@mui/icons-material/Menu';
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import NotificationsIcon from '@mui/icons-material/Notifications';
-import { AdminListItems,mainListItems, secondaryListItems } from '../EmployerDashboard/listItems';
+import { AdminListItems,mainListItems, secondaryListItems } from '../EmployerDashboard/VerticalSideBar';
 import mytheme from '../theme';
-import StickyHeadTable from './StickyHeadTable';
+import StickyHeadTable from './JobPostingsTable';
 import CreateJob from './CreateJob';
 import { useTheme} from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
@@ -225,3 +224,4 @@ function DashboardContent() {
 export default function Dashboard() {
   return <DashboardContent />;
 }
+

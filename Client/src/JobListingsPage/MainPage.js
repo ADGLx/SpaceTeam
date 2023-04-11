@@ -5,43 +5,29 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import CssBaseline from '@mui/material/CssBaseline';
 import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import SmallBar from './SmallBar';
-import JobListings from './JobListings';
 import { Grid, makeStyles } from '@mui/material';
-import Divider from '@mui/material/Divider';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
 import { CardActionArea, CardActions } from '@mui/material';
 import { useState,useEffect } from 'react';
 import Axios from 'axios';
-import WorkIcon from '@mui/icons-material/Work';
 import ReportIcon from '@mui/icons-material/Report';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Collapse from '@mui/material/Collapse';
 import { styled } from '@mui/material/styles';
-import { spacing } from '@mui/system';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Link from '@mui/material/Link';
-import Avatar from '@mui/material/Avatar';
-import AdbIcon from '@mui/icons-material/Adb';
-import Tooltip from '@mui/material/Tooltip';
-import ProfileView from '../JobSeekerProfilePage/ProfileView';
-import Search from './Search';
+import Search from './SearchBar';
 import Rating from '@mui/material/Rating';
-import DenseTable from '../UserReports/EmployerRating';
 import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import {ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
@@ -142,20 +128,13 @@ async function getAllImages()
   //This removes all duplicates
   AllIDs = [...new Set(AllIDs)];
 
-  //console.log(AllIDs)
-
   //Now we call and store all the images that are needed 
   for (let index = 0; index < AllIDs.length; index++) 
   {
     const id = AllIDs[index];
 
       const image = await handleGetPF(id);
-    //console.log(id)
-   
-  //   const obj = {
-  //     [id]: image,
-  // }
-      //console.log(id)
+  
     AllImages[id]= image;
   }
 //Im done here
@@ -261,14 +240,6 @@ async function getAllImages()
         const ImgData = PFData[EmployerID];
         
         var eachCard = ( 
-//           <Grid
-//   container
-//   spacing={0}
-//   direction="row"
-//   alignItems="center"
-//   justifyContent="center"
-//   style={{ minHeight: '0vh' }}
-// >
         <Grid  item xs = {12} sm = {6} lg={4} >
           <Card sx={{ minWidth: 200, margin: '1rem'}}>
         <CardActionArea>
@@ -276,7 +247,6 @@ async function getAllImages()
         component="img"
         height="200"
          image={`data:image/png;base64,${ImgData}`}
-        // image='https://png.pngtree.com/png-vector/20210604/ourmid/pngtree-gray-network-placeholder-png-image_3416659.jpg'
         alt='Employer Has Not Selected A Profile Picture'
         zIndex = 'tooltip'
         />
@@ -321,16 +291,10 @@ async function getAllImages()
                 <Typography paragraph>
                 {PositionInfo}
                 </Typography>
-                {/* <Typography paragraph>
-              
-                </Typography>
-                <Typography>
-                  
-                </Typography> */}
+                
               </CardContent>
             </Collapse>
         </Card>
-          {/* // </Grid> */}
           </Grid>
         )
 
@@ -388,15 +352,6 @@ async function getAllImages()
       <HideOnScroll {...props}>
         <AppBar>
           <Toolbar>
-          {/* <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-            <MenuIcon />
-          </IconButton> */}
             <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                     Welcome {JSON.parse(localStorage.getItem('user-token'))['username']}!
             </Typography>
@@ -404,19 +359,7 @@ async function getAllImages()
             <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
-            {/* <Button color="inherit">LogOut</Button> */}
-            {/* <MenuItem onClick={handleProfileMenuOpen}> */}
-        {/* <IconButton
-          size="large"
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        > */}
-          {/* <AccountCircleIcon />
-        </IconButton> */}
-        {/* <p>Profile</p>
-      </MenuItem> */}
+          
        {auth && (
             <div>
               <IconButton
@@ -463,54 +406,8 @@ async function getAllImages()
       <Toolbar />
       <Container >
       <Typography variant="h8" component="div" color= 'light'>
-      {/* <Grid container spacing={1}  >
-            <Grid item xs = {12} sm = {12} lg={12}>
-      <Box sx={{
-          fontSize: '1.88rem',
-          fontWeight: '700',
-          position: 'absolute',
-          top: 75,
-          left: '32%',
-          zIndex: 'mobile stepper',}}>   
-          WELCOME TO THE JOB POSTINGS PAGE
-        </Box>
-        </Grid>
-        </Grid> */}
-        
             </Typography>
             </Container>
-        {/* <Box sx={{
-          p: 2,
-          borderRadius: 2 ,
-          fontSize: '0.875rem',
-          fontWeight: '700',
-          position: 'absolute',
-          top: 175,
-          left: '25%',
-          zIndex: 'tooltip',}}>
-          {<SearchBar variant="h8" component="div"/> }
-        </Box>
-        <Container> */}
-        {/* <Box sx={{
-          p: 2,
-          borderRadius: 2 ,
-          fontSize: '0.875rem',
-          fontWeight: '700',
-          position: 'absolute',
-          top: 125,
-          left: '35%',
-          zIndex: 'tooltip',}}>
-        <div>
-       <Grid container spacing={3}  >
-            <Grid item xs = {12} sm = {6} lg={6}>
-            <SearchBar/>
-            </Grid>
-            <Grid item xs = {12} sm = {6} lg={6}> 
-            <SmallBar/>
-            </Grid>
-            </Grid>
-            </div>
-            </Box> */}
             <Grid
             
             container
@@ -525,85 +422,18 @@ async function getAllImages()
    Job Postings <AirlineStopsIcon fontSize="large"/>
    <Search color='#000000' onSearch={handleSearch}/>
   </Grid>   
-  {/* <Grid item xs = {12} sm = {12} lg={2}> 
-            <SmallBar/>
-            </Grid> */}
+  
 </Grid>
-        {/* <Box sx={{
-          p: 2,
-          borderRadius: 2 ,
-          fontSize: '0.875rem',
-          fontWeight: '700',
-          position: 'absolute',
-          top: 175,
-          left: '66%',
-          zIndex: 'fab',}}>
-          {<SmallBar variant="h8" component="div"/> }
-        </Box> 
-      </Container> */}
-      {/* <Container>
-       <Box sx={{
-        p: 2,
-        borderRadius: 2 ,
-        fontSize: '0.875rem',
-        fontWeight: '700',
-        position: 'absolute',
-        top: 275,
-        left: '16%',
-        zIndex: 'mobile stepper',}}>
-        {<JobListings variant="h8" component="div"/> }
-      </Box> 
-      <Box sx={{
-        p: 2,
-        borderRadius: 2 ,
-        fontSize: '0.875rem',
-        fontWeight: '700',
-        position: 'absolute',
-        top: 275,
-        left: '40%',
-        zIndex: 'tmobile stepper',}}>
-        {<JobListings variant="h8" component="div"/> }
-      </Box> 
-      <Box sx={{
-        p: 2,
-        borderRadius: 2 ,
-        fontSize: '0.875rem',
-        fontWeight: '700',
-        position: 'absolute',
-        top: 275,
-        left: '64%',
-        zIndex: 'tmobile stepper',}}>
-        {<JobListings variant="h8" component="div"/> }
-      </Box> 
-      </Container> */}
-
-{/* <div> */}
-    {/* <Box sx = {{
-         position: 'absolute',
-         top: 275,
-         left: '5%'
-    }}> */}
-     
+        
      <Grid
-     
-    
   container
   spacing={1.5}
   direction="row"
-  // alignItems="center"
-  // justifyContent="center"
   style={{ minHeight: '12vh' }}
 >
-        {/* <Grid xs = {12} sm = {6} lg={3}> */}
           <ShowCards/>
-        {/* </Grid> */}
+       
 </Grid>
-
-        {/* </Box> */}
-   
-    {/* </div> */}
-    
-    
     </React.Fragment>
     </ThemeProvider>
   );

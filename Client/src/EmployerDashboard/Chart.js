@@ -8,17 +8,6 @@ function createData(time, amount) {
   return { time, amount };
 }
 
-const data = [
-  
-  createData('Sepember', 10),
-  createData('October', 35),
-  createData('November', 40),
-  createData('December', 20),
-  createData('January', 55),
-  createData('February', 45),
- 
-  
-];
 
 export default function Chart() {
   const theme = useTheme();

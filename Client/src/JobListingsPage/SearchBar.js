@@ -17,8 +17,7 @@ const Search =({ onSearch }) => {
 return (
     <div  style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '7vh'}}>
         <TextField 
-        
-            
+
             label= "Search"
             sx={{ input: { color: 'dark' } }}
             value ={searchTerm}

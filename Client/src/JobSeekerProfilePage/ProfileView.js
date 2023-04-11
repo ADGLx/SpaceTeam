@@ -1,37 +1,20 @@
 import * as React from 'react';
 import CssBaseline from '@mui/material/CssBaseline';
 import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
 import Container from '@mui/material/Container';
 import Toolbar from '@mui/material/Toolbar';
 import Paper from '@mui/material/Paper';
-import Stepper from '@mui/material/Stepper';
-import Step from '@mui/material/Step';
-import StepLabel from '@mui/material/StepLabel';
-import Button from '@mui/material/Button';
 import Link from '@mui/material/Link';
 import Typography from '@mui/material/Typography';
-
-import ProfileLayout from './ProfileLayout';
-import MessageLayout from './MessageLayout';
-import ProfileViews from './ProfileView';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
-import { Grid, makeStyles } from '@mui/material';
-import Divider from '@mui/material/Divider';
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import { CardActionArea, CardActions } from '@mui/material';
-import { useState,useEffect } from 'react';
+import { useEffect } from 'react';
 import Axios from 'axios';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
-import theme from '../theme';
-import { useTheme, ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 
@@ -49,22 +32,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
     );
   }
   
-//   const steps = ['Update Profile'];
-  
-  // function getStepContent(step) {
-  //   switch (step) {
-  //     case 0:
-  //       return <ProfileLayout />;
-  //     case 1:
-  //       return <MessageLayout />;
-  //     case 2:
-  //       <ProfileView/>;
-      
-  //   }
-  // }
-  
-  
-  
+
   export default function ProfileView() {
     const [activeStep, setActiveStep] = React.useState(0);
     var User= JSON.parse(localStorage.getItem('user-token'))["username"];
@@ -256,7 +224,8 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
           </Toolbar>
         </AppBar>
         <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
-          <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+          <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, borderWidth: 4, 
+        borderStyle: 'solid' }}>
             <Typography component="h1" variant="h4" align="center" style={{ marginBottom: 16, textDecoration: 'underline' }}>
               My Profile
             </Typography>
@@ -277,42 +246,6 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
          Email: {JSON.parse(localStorage.getItem('user-token'))['email']}
             </Typography>
 
-        
-            {/* <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}  align="center">
-         Job ID: {JSON.parse(localStorage.getItem('user-token'))['jobID']}
-            </Typography> */}
-
-
-           
-            {/* {activeStep === steps.length ? (
-              <React.Fragment>
-                <Typography variant="h5" gutterBottom>
-                  Success!
-                </Typography>
-                <Typography variant="subtitle1">
-                  Your Profile has been updated.
-                </Typography>
-              </React.Fragment>
-            ) : (
-              <React.Fragment>
-                {getStepContent(activeStep)}
-                <Box sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-                  {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
-                      Back
-                    </Button>
-                  )}
-  
-                  <Button
-                    variant="contained"
-                    onClick={handleNext}
-                    sx={{ mt: 3, ml: 1 }}
-                  >
-                    {activeStep === steps.length - 1 ? 'Save' : 'Save'}
-                  </Button>
-                </Box>
-              </React.Fragment>
-            )} */}
           </Paper>
           <Copyright />
         </Container>
