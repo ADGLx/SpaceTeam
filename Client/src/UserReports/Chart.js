@@ -8,8 +8,6 @@ function createData(time, amount) {
   return { time, amount };
 }
 
-
-
 export default function Chart() {
   const theme = useTheme();
 
