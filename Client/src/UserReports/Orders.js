@@ -17,7 +17,7 @@ function createData(id, name, posting, type) {
   return { id, name, posting, type };
 }
 
-var rows;
+// var rows;
 
 function preventDefault(event) {
   event.preventDefault();
@@ -81,11 +81,11 @@ export default function Orders() {
   }
 
   
-  function removeRow(id)
-  {
-    delete rows[id];
-    console.log("deleted "+ id)
-  }
+  // function removeRow(id)
+  // {
+  //   delete rows[id];
+  //   console.log("deleted "+ id)
+  // }
   
   
   return (

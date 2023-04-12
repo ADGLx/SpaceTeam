@@ -35,10 +35,10 @@ function Copyright(props) {
 
 const theme = myTheme;
 
-function handleFile(e){
-  console.log(e.target.files, "$$$$");
-  console.log(e.target.files[0], "$$$$");
-}
+// function handleFile(e){
+//   console.log(e.target.files, "$$$$");
+//   console.log(e.target.files[0], "$$$$");
+// }
 
 export default function SignUp() {
   const navigate = useNavigate();
@@ -198,7 +198,7 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="Sign-In" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>

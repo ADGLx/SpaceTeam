@@ -63,8 +63,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
     createData('Dimitri Karagiannakis', 40097824, 	'github.com/DimitriKaragiannakis99', 'Backend,Database Manager'),
   ];
   
-// const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9]; Lets remove all so its all clean
-const cards = [1];
+
 //This is what chooses the theme
 const theme = myTheme;
 

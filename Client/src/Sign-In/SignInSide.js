@@ -13,11 +13,11 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider} from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useColorMode } from '../themeutils';
-import { useEffect, useState, useContext } from 'react';
+import { useEffect, useState} from 'react';
 import Axios from "axios";
 
 //Call the Auth,

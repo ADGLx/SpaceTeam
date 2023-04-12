@@ -32,7 +32,7 @@ import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useColorMode } from '../themeutils';
 
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+// const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const ExpandMore = styled((props) => {
   const { expand, ...other } = props;
   return <IconButton {...other} />;
