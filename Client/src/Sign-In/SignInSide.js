@@ -13,11 +13,10 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import IconButton from '@mui/material/IconButton';
 import { useNavigate } from 'react-router-dom';
-import mytheme from '../theme';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-//The stuff to call the login API
+import { useColorMode } from '../themeutils';
 import { useEffect, useState, useContext } from 'react';
 import Axios from "axios";
 
@@ -60,8 +59,6 @@ function Copyright(props) {
   );
 }
 
-// const theme = createTheme();
-const theme = mytheme; //Using my custom theme 
 
 export default function SignInSide() {
 
@@ -127,13 +124,6 @@ export default function SignInSide() {
       console.log(err);
     })
 
-    //Hereis the other way of calling the sv (nvm it doesnt work because it is like some sort of trigger)
-    // const [username, setUsername] = useState([{}])
-    // useEffect(() =>{
-    //   fetch("/api/login").then (response => response.json()).then(newdata=> setUsername(newdata))
-    // }, []) //this is so it can only be called the first time it oppens the page
-  
-    //Doing it n here again to see if
   };
 
   //This might handle the reply
@@ -206,31 +196,10 @@ export default function SignInSide() {
     autoMatchOsTheme: true // default: true
   }
   
-  // const darkmode = new Darkmode(options);
-  // darkmode.showWidget();
-  const [mode, setMode] = React.useState('light');
-    const colorMode = React.useMemo(
-      () => ({
-        toggleColorMode: () => {
-          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-        },
-      }),
-      [],
-    );
-  
-    const theme = React.useMemo(
-      () =>
-        createTheme({
-          palette: {
-            mode,
-          },
-        }),
-      [mode],
-    );
-  
+  const { mode, colorMode, theme } = useColorMode();
+
   return (
     <ThemeProvider theme={theme}>
-      
       <Grid  container component="main" sx={{ height: '100vh' }}>
         <CssBaseline />
         <Grid 

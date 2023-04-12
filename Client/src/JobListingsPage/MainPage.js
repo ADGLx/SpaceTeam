@@ -9,7 +9,7 @@ import Container from '@mui/material/Container';
 import Slide from '@mui/material/Slide';
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import { Grid, makeStyles } from '@mui/material';
+import { Grid} from '@mui/material';
 import Card from '@mui/material/Card';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
@@ -27,9 +27,10 @@ import Link from '@mui/material/Link';
 import Search from './SearchBar';
 import Rating from '@mui/material/Rating';
 import AirlineStopsIcon from '@mui/icons-material/AirlineStops';
-import {ThemeProvider, createTheme } from '@mui/material/styles';
+import {ThemeProvider} from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useColorMode } from '../themeutils';
 
 const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 const ExpandMore = styled((props) => {
@@ -322,26 +323,9 @@ async function getAllImages()
     localStorage.clear();
     handleClose();
   };
-  const [mode, setMode] = React.useState('light');
-    const colorMode = React.useMemo(
-      () => ({
-        toggleColorMode: () => {
-          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-        },
-      }),
-      [],
-    );
   
-    const theme = React.useMemo(
-      () =>
-        createTheme({
-          palette: {
-            mode,
-          },
-        }),
-      [mode],
-    );
-    
+  //For theme
+  const { mode, colorMode, theme } = useColorMode();
   return (
     <ThemeProvider theme={theme}>
     <React.Fragment>
