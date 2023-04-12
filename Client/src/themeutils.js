@@ -2,7 +2,11 @@ import React from 'react';
 import { createTheme } from '@mui/material/styles';
 
 export const useColorMode = () => {
-  const [mode, setMode] = React.useState('light');
+  const [mode, setMode] = React.useState(localStorage.getItem('mode') || 'light');
+  
+  React.useEffect(() => {
+    localStorage.setItem('mode', mode);
+  }, [mode]);
 
   const colorMode = React.useMemo(
     () => ({

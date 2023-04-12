@@ -22,6 +22,7 @@ import MenuItem from '@mui/material/MenuItem';
 import DenseTable from './EmployerRating' ;
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useColorMode } from '../themeutils';
 
 function Copyright(props) {
   return (
@@ -102,25 +103,7 @@ function DashboardContent() {
   const userRole= localStorage.getItem('user-token');
   const user = JSON.parse(userRole);
   const userRoleType = user.type;
-  const [mode, setMode] = React.useState('light');
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    [],
-  );
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode],
-  );
+  const { mode, colorMode, theme } = useColorMode();
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>

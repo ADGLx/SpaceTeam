@@ -47,22 +47,7 @@ export default function Deposits() {
       }
 
   return (
-    <React.Fragment>
-      <Title>Recent Postings</Title>
-      <Typography component="p" variant="h4" >
-       {applicants}
-      </Typography>
-      {/* <Typography color="text.secondary" sx={{ flex: 1 }}>
-        as of 24 February, 2023
-      </Typography> */}
-      {/* <div>
-        <Link color="primary" href="#" onClick={preventDefault}>
-          View all applicants
-        </Link>
-      </div> */}
-   {/* For admin to easily see how many job postings were created 
-   recently 
-   */}
+    
 <React.Fragment>
       <Title>Recent reports</Title>
       <Typography component="p" variant="h4">
@@ -72,12 +57,6 @@ export default function Deposits() {
         on 24 February, 2023
       </Typography>
     </React.Fragment>
-    </React.Fragment>
+    
   );
-
-
-
-
-  
-  
 }
