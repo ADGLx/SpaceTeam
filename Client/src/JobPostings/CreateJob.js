@@ -85,7 +85,7 @@ export default function CreateJob() {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handlePublish}>Publish</Button>
+          <Button onClick={() => { handlePublish(); handleClose(); }}>Publish</Button>
         </DialogActions>
       </Dialog>
       {publicationStatus && <p>{publicationStatus}</p>}{/*show message if it exists */}

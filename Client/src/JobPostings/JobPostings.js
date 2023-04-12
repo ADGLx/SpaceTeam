@@ -23,6 +23,8 @@ import CreateJob from './CreateJob';
 import MenuItem from '@mui/material/MenuItem';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useColorMode } from '../themeutils';
+
 
 const drawerWidth = 240;
 
@@ -81,28 +83,8 @@ function DashboardContent() {
   const userRole= localStorage.getItem('user-token');
   const user = JSON.parse(userRole);
   const userRoleType = user.type;
-  const [mode, setMode] = React.useState('light');
-  const colorMode = React.useMemo(
-    () => ({
-      toggleColorMode: () => {
-        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-      },
-    }),
-    [],
-  );
-
-  const theme = React.useMemo(
-    () =>
-      createTheme({
-        palette: {
-          mode,
-        },
-      }),
-    [mode],
-  );
-  
-  
-
+  const { mode, colorMode, theme } = useColorMode();
+ 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>
@@ -139,14 +121,9 @@ function DashboardContent() {
       </IconButton>
             <Grid item xs={12}>
                 <Paper sx={{ p: 1, display: 'flex', flexDirection: 'column' }}>
-                  <CreateJob />
+                  <CreateJob/>
                 </Paper>
               </Grid>
-            <IconButton color="inherit">
-              <Badge badgeContent={4} color="secondary">
-                <NotificationsIcon />
-              </Badge>
-            </IconButton>
           </Toolbar>
         </AppBar>
         <Drawer variant="permanent" open={open}>
@@ -186,7 +163,7 @@ function DashboardContent() {
               <Grid item xs={12} md={8} lg={9}>
                 <Paper
                   sx={{
-                    p: 6,
+                    p: 10,
                     display: 'flex',
                     flexDirection: 'column',
                     height: 800,
