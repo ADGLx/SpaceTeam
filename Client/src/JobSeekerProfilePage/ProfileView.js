@@ -17,7 +17,7 @@ import Stack from '@mui/material/Stack';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
-
+import { useColorMode } from '../themeutils';
 
   function Copyright() {
     return (
@@ -137,25 +137,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 
     }
 
-    const [mode, setMode] = React.useState('light');
-    const colorMode = React.useMemo(
-      () => ({
-        toggleColorMode: () => {
-          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-        },
-      }),
-      [],
-    );
-  
-    const theme = React.useMemo(
-      () =>
-        createTheme({
-          palette: {
-            mode,
-          },
-        }),
-      [mode],
-    );
+    const { mode, colorMode, theme } = useColorMode();
 
     return (
       <ThemeProvider theme={theme}>
@@ -186,7 +168,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
                 aria-controls="menu-appbar"
                 aria-haspopup="true"
                 onClick={handleMenu}
-                color="#fff"
+                color="inherit"
               >
                 <AccountCircle />
               </IconButton>

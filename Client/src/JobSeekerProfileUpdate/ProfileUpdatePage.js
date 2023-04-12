@@ -17,6 +17,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import { useColorMode } from '../themeutils';
 
 function Copyright() {
   return (
@@ -77,25 +78,8 @@ export default function CheckoutLayout() {
 
     handleClose();
   };
-  const [mode, setMode] = React.useState('light');
-    const colorMode = React.useMemo(
-      () => ({
-        toggleColorMode: () => {
-          setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
-        },
-      }),
-      [],
-    );
-  
-    const theme = React.useMemo(
-      () =>
-        createTheme({
-          palette: {
-            mode,
-          },
-        }),
-      [mode],
-    );
+ 
+  const { mode, colorMode, theme } = useColorMode();
 
   return (
     <ThemeProvider theme={theme}>

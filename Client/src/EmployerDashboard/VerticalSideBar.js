@@ -70,10 +70,5 @@ export const mainListItems = (
 export const secondaryListItems = (
   <React.Fragment>
    
-    
-   
-      
-   
-    
   </React.Fragment>
 );

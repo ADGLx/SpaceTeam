@@ -23,8 +23,6 @@ import Candidate_info from './Candidate_info';
 import CheckoutLayout from './JobSeekerProfileUpdate/ProfileUpdatePage';
 import ProfileView from './JobSeekerProfilePage/ProfileView';
 
-
-
 const rootElement = document.getElementById('root');
 const root = createRoot(rootElement);
 
