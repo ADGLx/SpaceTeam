@@ -300,17 +300,7 @@ app.post("/api/deleteUser", (req, res)=>{
   });
 });
 
-app.get("/get/getFlaggedJobs", (req, res)=>{
-  db.query(
-    "SELECT * FROM JobListing WHERE Report = 1", [], function(error, results, fields){
-      if(error){
-        console.log(error);
-      } else {
-        res.send(JSON.stringify(results));
-      }
-    }
-  );
-});
+
 app.get("/api/AllJobPostings", function (req, res) {
   db.query(
     "SELECT Position, PositionInfo, NumOfApplicants, JobID FROM JobListing",
