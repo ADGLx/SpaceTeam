@@ -11,8 +11,8 @@ import Axios from 'axios';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 
-function createData(ID, username, password, type) {
-  return { ID, username, password, type };
+function createData(ID, email, username, password, type) {
+  return { ID, email, username, password, type };
 }
 
 
@@ -40,6 +40,7 @@ export default function Orders() {
       .map((user) => {
         return createData(
           user.ID,
+          user.email,
           user.username,
           user.password,
           user.type
@@ -77,6 +78,7 @@ export default function Orders() {
           <Table size="small">
             <TableHead>
               <TableRow>
+              <TableCell>Email</TableCell>
                 <TableCell>Username</TableCell>
                 <TableCell>Password</TableCell>
                 <TableCell>Actions</TableCell>
@@ -87,6 +89,7 @@ export default function Orders() {
                 .slice(0, showAllUsers ? rowsByType[type].length : 5) // limit the number of rows to display
                 .map((row) => (
                 <TableRow key={row.ID}>
+                  <TableCell>{row.email}</TableCell>
                   <TableCell>{row.username}</TableCell>
                   <TableCell>{row.password}</TableCell>
                   <TableCell>
