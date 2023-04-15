@@ -288,7 +288,7 @@ app.get("/api/getAllUsers", (req, res)=>{
   });
 });
 app.post("/api/deleteUser", (req, res)=>{
-  const id =req.body.id;
+  const id =req.body.ID;
 
   db.query("DELETE FROM users WHERE id = ?", [id], function(error, results, fields)
   {
