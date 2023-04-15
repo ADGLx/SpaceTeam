@@ -9,6 +9,9 @@ import Title from './Title';
 import { useEffect } from 'react';
 import Axios from 'axios';
 
+import DeleteForeverIcon from '@mui/icons-material/RemoveCircleOutline';
+import IconButton from '@mui/material/IconButton';
+
 // Generate Order Data
 function createData(id, date, name, shipTo, paymentMethod, amount) {
   return { id, date, name, shipTo, paymentMethod, amount };
@@ -39,7 +42,7 @@ useEffect(() => {
       const response = await Axios.get("/api/getAllApplications");
       const newData = response.data.map((element) => {
         return {
-          id: element["ApplicationID"],
+          id: element["AplicationID"],
           date: element["Date"],
           name: element["ApplicantName"],
           shipTo: element["Position"],
@@ -65,9 +68,10 @@ useEffect(() => {
       const response = await Axios.post("/api/displayJobs", {
         EmployerID: currentUser,
       });
+
       const newData = response.data.map((element) => {
         return {
-          id: element["ApplicationID"],
+          id: element["AplicationID"],
           date: element["Date"],
           name: element["ApplicantName"],
           shipTo: element["Position"],
@@ -110,6 +114,17 @@ function handleDownloadComplete() {
   setDownloadUrl(null);
 }
 
+async function handleDeleteAplication(ID)
+{
+  console.log('Deleting aplication with id:', ID);
+  try {
+    await Axios.post("/api/deleteAplication", { ID: ID });
+    setRows(rows.filter((row) => row.id !== ID));
+  } catch (error) {
+    console.error(error);
+  }
+}
+
   return (
     <React.Fragment>
       <Title>Applications</Title>
@@ -121,6 +136,7 @@ function handleDownloadComplete() {
             <TableCell>Job Posting</TableCell>
             <TableCell>Email</TableCell>
             <TableCell >CV</TableCell>
+            <TableCell >Reject</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -135,6 +151,7 @@ function handleDownloadComplete() {
                   {row.amount}
                   </Link>
                   </TableCell>
+                  <TableCell ><IconButton onClick={() => handleDeleteAplication(row.id)}><DeleteForeverIcon /></IconButton></TableCell>
             </TableRow>
           ))}
         </TableBody>
