@@ -114,7 +114,7 @@ app.post("/api/displayJobs", function (req, res) {
   //console.log("Showing Jobs for "+ EmployerID)
 
   db.query(
-    "SELECT ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants WHERE EmployerID = ?",
+    "SELECT AplicationID, ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants WHERE EmployerID = ?",
     [EmployerID],
     function (error, results, fields) {
       if (error) {
@@ -300,6 +300,18 @@ app.post("/api/deleteUser", (req, res)=>{
   });
 });
 
+app.post("/api/deleteAplication", (req, res)=>{
+  const id =req.body.ID;
+
+  db.query("DELETE FROM JobApplicants WHERE AplicationID = ?", [id], function(error, results, fields)
+  {
+    if(error){
+      console.log(error);
+    } else{
+      res.send(true);
+    }
+  });
+});
 
 app.get("/api/AllJobPostings", function (req, res) {
   db.query(
@@ -315,7 +327,7 @@ app.get("/api/AllJobPostings", function (req, res) {
 });
 app.get("/api/getAllApplications", function (req, res) {
   db.query(
-    "SELECT ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants",
+    "SELECT AplicationID, ApplicantName, ApplicantEmail, Position, Date FROM JobApplicants",
     function (error, results, fields) {
       if (error) {
         console.log(error);
