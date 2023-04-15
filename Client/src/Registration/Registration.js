@@ -17,6 +17,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import Axios from "axios";
 import { useNavigate } from 'react-router-dom';
+import { useColorMode } from '../themeutils';
 
 const FormData = require('form-data');
 
@@ -33,7 +34,7 @@ function Copyright(props) {
   );
 }
 
-const theme = myTheme;
+// const theme = myTheme;
 
 // function handleFile(e){
 //   console.log(e.target.files, "$$$$");
@@ -99,10 +100,12 @@ export default function SignUp() {
           }
       })
   }
+  const { mode, colorMode, theme } = useColorMode();
+
 
   return (
     <ThemeProvider theme={theme}>
-      <Container component="main" maxWidth="xs">
+       <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{

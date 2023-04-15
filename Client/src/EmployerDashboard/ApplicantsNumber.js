@@ -7,6 +7,7 @@ import Axios from 'axios';
 function preventDefault(event) {
   event.preventDefault();
 }
+const currentDate = new Date();
 
 export default function Deposits() {
   const [applicants, setApplicants] = React.useState(0);
@@ -43,6 +44,9 @@ export default function Deposits() {
       <Title>Recent Applications</Title>
       <Typography component="p" variant="h4" >
        {applicants}
+      </Typography>
+      <Typography color="text.secondary" sx={{ flex: 1 }}>
+      as of {currentDate.toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' })}
       </Typography>
     </React.Fragment>
   );
