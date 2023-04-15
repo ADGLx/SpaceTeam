@@ -315,17 +315,21 @@ async function getAllImages()
     setAnchorEl(event.currentTarget);
   };
 
+
+  
+  //For theme
+  const { mode, colorMode, theme } = useColorMode(); 
+  
   const handleClose = () => {
     setAnchorEl(null);
   };
 
   const logout = () => {
     localStorage.clear();
+    localStorage.setItem('mode', mode);
     handleClose();
   };
   
-  //For theme
-  const { mode, colorMode, theme } = useColorMode();
   return (
     <ThemeProvider theme={theme}>
     <React.Fragment>

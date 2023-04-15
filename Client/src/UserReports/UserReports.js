@@ -85,14 +85,6 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== 'open' 
 
 
 
-const handleClose = () => {
-  setAnchorEl(null);
-};
-
-const logout = () => {
-  localStorage.clear();
-  handleClose();
-};
 
 function DashboardContent() {
   const [open, setOpen] = React.useState(true);
@@ -100,10 +92,21 @@ function DashboardContent() {
   const toggleDrawer = () => {
     setOpen(!open);
   };
+  const { mode, colorMode, theme } = useColorMode();
   const userRole= localStorage.getItem('user-token');
   const user = JSON.parse(userRole);
   const userRoleType = user.type;
-  const { mode, colorMode, theme } = useColorMode();
+  
+  const handleClose = () => {
+  setAnchorEl(null);
+};
+
+const logout = () => {
+  localStorage.clear();
+  localStorage.setItem('mode', mode);
+  handleClose();
+};
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ display: 'flex' }}>

@@ -89,15 +89,7 @@ import { useColorMode } from '../themeutils';
       setAnchorEl(event.currentTarget);
     };
   
-    const handleClose = () => {
-      setAnchorEl(null);
-    };
-  
-    const logout = () => {
-      localStorage.clear();
-      handleClose();
-    };
-
+    
     const redirect = () => {
       // console.log(localStorage.getItem("user-token"));
       if (JSON.parse(localStorage.getItem('user-token'))["type"] == "Employer") {
@@ -138,6 +130,17 @@ import { useColorMode } from '../themeutils';
     }
 
     const { mode, colorMode, theme } = useColorMode();
+
+    const handleClose = () => {
+      setAnchorEl(null);
+    };
+  
+    const logout = () => {
+      localStorage.clear();
+      localStorage.setItem('mode', mode);
+      handleClose();
+    };
+
 
     return (
       <ThemeProvider theme={theme}>

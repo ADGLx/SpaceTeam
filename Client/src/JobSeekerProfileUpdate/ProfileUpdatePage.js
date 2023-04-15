@@ -57,14 +57,7 @@ export default function CheckoutLayout() {
     setAnchorEl(event.currentTarget);
   };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
   
-  const logout = () => {
-    localStorage.clear();
-    handleClose();
-  };
 
   const redirect = () => {
     // console.log(localStorage.getItem("user-token"));
@@ -80,6 +73,16 @@ export default function CheckoutLayout() {
   };
  
   const { mode, colorMode, theme } = useColorMode();
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  
+  const logout = () => {
+    localStorage.clear();
+    localStorage.setItem('mode', mode);
+    handleClose();
+  };
 
   return (
     <ThemeProvider theme={theme}>

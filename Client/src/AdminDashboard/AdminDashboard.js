@@ -103,6 +103,7 @@ function DashboardContent() {
 
   const logout = () => {
     localStorage.clear();
+    localStorage.setItem('mode', mode);
     handleClose();
   };
 
