@@ -19,6 +19,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7';
 import { useColorMode } from '../themeutils';
 import { useEffect, useState} from 'react';
 import Axios from "axios";
+import Container from '@mui/material/Container';
 
 //Call the Auth,
 //import AuthContext from "../AuthProvider";
@@ -59,8 +60,14 @@ function Copyright(props) {
   );
 }
 
+const styles = {
+  paperContainer: {
+      backgroundImage: `url(https://www.stellantis.com/content/dam/stellantis-corporate/careers/overview/work-with-us-background-sky-mobile.jpg)`
+  }
+};
 
 export default function SignInSide() {
+
 
   // const {setAuth} = useContext(AuthContext);
   const navigate = useNavigate();
@@ -200,7 +207,7 @@ export default function SignInSide() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Grid  container component="main" sx={{ height: '100vh' }}>
+      {/* <Grid  container component="main" sx={{ height: '100vh' }} > */}
         <CssBaseline />
         <Grid 
 
@@ -209,23 +216,31 @@ export default function SignInSide() {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://cdn.discordapp.com/attachments/1067497158439354408/1087911144510988348/received_755283892625460.jpg)',
-            backgroundColor: (t) =>
-              t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-            backgroundSize: '100%',
-            backgroundPosition: 'right',
+            backgroundImage: 'url(https://tbcdn.talentbrew.com/company/185/v2_0/img/bg-career-areas3.jpg)',
+            // backgroundColor: (t) =>
+            //   t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+             backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        display: 'flex', // Add display: 'flex'
+        alignItems: 'center', // Add alignItems: 'center'
+        justifyContent: 'center', 
           }}
-        />
-        <Grid  item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
-       
+        >
+       <Container component="main" maxWidth="sm" sx={{ mb: 4 }}>
+        <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 }, backgroundColor: (theme) =>
+        theme.palette.background.default + '80',}}>
+        {/* <Container component="main" maxWidth="xs"> */}
           <Box
-            sx={{
-              my: 8,
-              mx: 4,
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              
+           sx={{
+            my: 8,
+          mx: 'auto',
+          maxWidth: '400px',
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center',
+          justifyContent: 'center',
+          textAlign: 'center',
+          
             }}
           >
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
@@ -234,9 +249,9 @@ export default function SignInSide() {
             <Typography component="h1" variant="h5">
               Sign in
             </Typography>
-            <IconButton sx={{ m: 0 }} onClick={colorMode.toggleColorMode} color="inherit">
+            {/* <IconButton sx={{ m: 0 }} onClick={colorMode.toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-      </IconButton>
+      </IconButton> */}
             <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1 }}>
               <ShowTextFields />
               <FormControlLabel
@@ -268,8 +283,12 @@ export default function SignInSide() {
               
             </Box>
           </Box>
+          </Paper>
+          </Container>
         </Grid>
-      </Grid>
+        
+      {/* </Grid> */}
+     
     </ThemeProvider>
   );
 }

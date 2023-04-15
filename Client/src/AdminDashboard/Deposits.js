@@ -34,6 +34,7 @@ export default function Deposits() {
   useEffect(() => {
     getAllUserReports();
   }, []);
+  const currentDate = new Date();
 
   function getAllUserReports()
   {
@@ -54,7 +55,7 @@ export default function Deposits() {
         {reports}
       </Typography>
       <Typography color="text.secondary" sx={{ flex: 1 }}>
-        on 24 February, 2023
+      as of {currentDate.toLocaleDateString("en-US", { month: 'long', day: 'numeric', year: 'numeric' })}
       </Typography>
     </React.Fragment>
     
