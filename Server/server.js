@@ -131,7 +131,7 @@ app.post("/api/displayJobs", function (req, res) {
 app.post("/api/getCV", function (req, res) {
   const name = req.body.name;
   db.query(
-    "SELECT CV FROM users WHERE ID = ?",
+    "SELECT CV FROM users WHERE email = ?",
     [name],
     function (error, results, fields) {
       if (error) {
