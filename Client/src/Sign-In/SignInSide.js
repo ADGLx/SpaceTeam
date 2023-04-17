@@ -246,8 +246,8 @@ export default function SignInSide() {
             <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
               <LockOutlinedIcon />
             </Avatar>
-            <Typography component="h1" variant="h5">
-              Sign in
+            <Typography component="h1" variant="h5" >
+              Sign in 
             </Typography>
             {/* <IconButton sx={{ m: 0 }} onClick={colorMode.toggleColorMode} color="inherit">
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
@@ -264,7 +264,7 @@ export default function SignInSide() {
                 variant="contained"
                 sx={{ mt: 3, mb: 2 }}
               >
-                Sign In
+                Sign In 
               </Button>
               <Grid container>
                 <Grid item xs>

@@ -117,8 +117,8 @@ function DashboardContent() {
         {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
       </IconButton>
             <Grid item xs={12}>
-                <Paper sx={{ p: 1, display: 'flex', flexDirection: 'column' }}>
-                  <CreateJob/>
+                <Paper sx={{ p: 1, display: userRoleType !== 'admin' ? 'flex' : 'none', flexDirection: 'column' }}>
+                   {userRoleType !== 'admin' && <CreateJob />}
                 </Paper>
               </Grid>
           </Toolbar>
