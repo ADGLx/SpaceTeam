@@ -285,9 +285,9 @@ async function getAllImages()
                 <Typography paragraph>Details:</Typography>
                 <Typography paragraph>
     
-        <Button size="small" color="primary">
+        {/* <Button size="small" color="primary">
         PLACEHOLDER_INFO
-        </Button>
+        </Button> */}
                 </Typography>
                 <Typography paragraph>
                 {PositionInfo}
