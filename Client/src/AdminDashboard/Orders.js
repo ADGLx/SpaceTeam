@@ -12,7 +12,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import IconButton from '@mui/material/IconButton';
 
 function createData(ID, email, username, password, type) {
-  return { ID, email, username, password, type };
+  return { ID, email, username, password: '*******', type };
 }
 
 
@@ -91,7 +91,7 @@ export default function Orders() {
                 <TableRow key={row.ID}>
                   <TableCell>{row.email}</TableCell>
                   <TableCell>{row.username}</TableCell>
-                  <TableCell>{row.password}</TableCell>
+                   <TableCell>{row.password}</TableCell>
                   <TableCell>
                     <IconButton onClick={() => handleDeleteUser(row.ID)}><DeleteForeverIcon /></IconButton>
                   </TableCell>
