@@ -69,7 +69,8 @@ useEffect(() => {
         EmployerID: currentUser,
       });
 
-      const newData = response.data.map((element) => {
+      const newData = await Promise.all(response.data.map(async(element) => {
+        const CVBlob = await handleGetCV(element.ApplicantEmail)
         return {
           id: element["AplicationID"],
           date: element["Date"],
@@ -79,14 +80,14 @@ useEffect(() => {
           amount: (
             <a
               style={{ color: "rgb(255, 191, 0)" }}
-              href={`data:image/png;base64,${element["CVBlob"]}`}
+              href={`data:image/png;base64,${CVBlob}`}
               download={`${element["ApplicantName"]}.png`}
             >
               {element["ApplicantName"]}'s CV
             </a>
           ),
         };
-      });
+      }));
       setRows(newData);
     } catch (error) {
       console.error(error);
